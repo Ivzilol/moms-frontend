@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './LoginForm.module.css';
+import logo from '../../assets/MCK-logo.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const LoginForm = () => {
@@ -13,7 +14,7 @@ const LoginForm = () => {
                         <div className={classes.shape}></div>
                     </div>
                     <form className={classes.poppins}>
-                        <h3>Вход</h3>
+                        <img src={logo} alt="Logo" className={classes.logo} />
 
                         <label htmlFor="email">Имейл</label>
                         <input type="text" placeholder="Имейл" id="username" className={classes.input} />

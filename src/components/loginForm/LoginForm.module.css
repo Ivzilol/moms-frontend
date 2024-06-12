@@ -18,7 +18,7 @@
 }
 body{
     /* background-color: #080710; */
-    background-color: grey;
+    background-color: #858585;
     /* background-color: #FAF8FF; */
 
 }
@@ -73,6 +73,13 @@ form *{
     letter-spacing: 0.5px;
     outline: none;
     border: none;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 50px; 
+    max-width: 20%;
+    height: auto;
 }
 form h3{
     font-size: 32px;
