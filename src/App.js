@@ -12,8 +12,8 @@ const App = () => {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/login" component={LoginPage} />
+            <Route exact path="/" element={<HomePage/>} />
+            <Route path="/login" element={<LoginPage/>} />
             <Route path="/register" component={RegisterPage} />
             <Route path="/orders" component={OrderPage} />
             <Route component={NotFoundPage} />
