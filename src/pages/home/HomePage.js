@@ -1,10 +1,9 @@
 import React from 'react'
 
-import LoginForm from '../../components/loginForm/LoginForm'
 
 const HomePage = () => {
   return (
-    <div><LoginForm/></div>
+    <div>This should be the dashboard after login</div>
   )
 }
 
