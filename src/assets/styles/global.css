@@ -1,0 +1,120 @@
+/*---------------------------------------
+  CUSTOM PROPERTIES ( VARIABLES )             
+-----------------------------------------*/
+:root {
+    --white-color:                  #ffffff;
+    --primary-color:                #5d52ba;
+    --secondary-color:              #0dcaf0;
+    --section-bg-color:             #f0f8ff;
+    --custom-btn-bg-color:          #f65129;
+    --social-icon-link-bg-color:    #7f73eb;
+    --dark-color:                   #000000;
+    --p-color:                      #717275;
+    --border-color:                 #e9eaeb;
+  
+    --body-font-family:             'League Spartan', sans-serif;
+  
+    --h1-font-size:                 62px;
+    --h2-font-size:                 48px;
+    --h3-font-size:                 36px;
+    --h4-font-size:                 32px;
+    --h5-font-size:                 24px;
+    --h6-font-size:                 22px;
+    --p-font-size:                  20px;
+    --btn-font-size:                16px;
+    --copyright-font-size:          14px;
+  
+    --border-radius-large:          100px;
+    --border-radius-medium:         30px;
+    --border-radius-small:          10px;
+  
+    --font-weight-thin:             100;
+    --font-weight-light:            300;
+    --font-weight-normal:           400;
+    --font-weight-semibold:         600;
+    --font-weight-bold:             700;
+  }
+  
+  body {
+    background-color: var(--white-color);
+    font-family: var(--body-font-family); 
+  }
+  
+  
+  /*---------------------------------------
+    TYPOGRAPHY               
+  -----------------------------------------*/
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--dark-color);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.5px;
+  }
+  
+  h1,
+  h2 {
+    letter-spacing: -1.5px;
+  }
+  
+  h1 {
+    font-size: var(--h1-font-size);
+    line-height: normal;
+    font-weight: var(--font-weight-bold);
+  }
+  
+  h2 {
+    font-size: var(--h2-font-size);
+  }
+  
+  h3 {
+    font-size: var(--h3-font-size);
+  }
+  
+  h4 {
+    font-size: var(--h4-font-size);
+  }
+  
+  h5 {
+    font-size: var(--h5-font-size);
+  }
+  
+  h6 {
+    font-size: var(--h6-font-size);
+  }
+  
+  p {
+    color: var(--p-color);
+    font-size: var(--p-font-size);
+    font-weight: var(--font-weight-light);
+  }
+  
+  ul li {
+    color: var(--p-color);
+    font-size: var(--p-font-size);
+    font-weight: var(--font-weight-light);
+  }
+  
+  a, 
+  button {
+    touch-action: manipulation;
+    transition: all 0.3s;
+  }
+  
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: var(--custom-btn-bg-color);
+  }
+  
+  b,
+  strong {
+    font-weight: var(--font-weight-bold);
+  }
+  
