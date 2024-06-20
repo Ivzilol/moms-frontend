@@ -1,17 +1,17 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './Header.module.css';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/MCK-logo.png';
 
 export default function Header() {
     return (
-        <nav className={'${styles.navbar}, ${navbar-expand-lg}'}>
-            <div className="container">
-                <a className={classNames("d-flex", "align-items-center", styles['navbar-brand'])} href='index.html'>
+        <nav className={classNames(styles.navbar, 'navbar-expand-lg')}>
+            <div className="container d-flex justify-content-between align-items-center">
+                <a className={classNames('d-flex', 'align-items-center', styles['navbar-brand'])} href='/'>
                     <img src={logo} className={classNames(styles['img-fluid'], styles['logo-image'])} alt='Logo' />
-                    <div className={classNames(['d-flex'], ['flex-column'])}>
-                        <strong className={styles['logo-text']}>Gotto</strong>
-                        <small className={styles['logo-slogan']}>Online Job Portal</small>
+                    <div className="d-flex flex-column">
+                        <strong className={styles['logo-text']}>Supply</strong>
+                        <small className={styles['logo-slogan']}>Manager</small>
                     </div>
                 </a>
 
@@ -19,29 +19,29 @@ export default function Header() {
                     <span className={styles['navbar-toggler-icon']}></span>
                 </button>
 
-                <div className={classNames(styles['collapse'], styles['navbar-collapse'])} id='navbarNav'>
-                    <ul className={classNames(styles['navbar-nav'], ['align-items-center'], ['ms-lg-5'])}>
-                        <li className='nav-item'>
-                            <a className='nav-link active' href='index.html'>Homepage</a>
+                <div className={classNames('collapse', 'navbar-collapse')} id='navbarNav'>
+                    <ul className={classNames('navbar-nav', 'ms-auto', 'd-flex', 'align-items-center')}>
+                        {/* <li className='nav-item me-4'>
+                            <a className='nav-link active' href='index.html'>Item1</a>
                         </li>
-                        <li className='nav-item'>
-                            <a className='nav-link' href='about.html'>About Gotto</a>
+                        <li className='nav-item me-4'>
+                            <a className='nav-link' href='about.html'>Item2</a>
                         </li>
-                        <li className='nav-item dropdown'>
+                        <li className='nav-item dropdown me-4'>
                             <a className='nav-link dropdown-toggle' href='#' id='navbarLightDropdownMenuLink' role='button' data-bs-toggle='dropdown' aria-expanded='false'>Pages</a>
                             <ul className='dropdown-menu dropdown-menu-light' aria-labelledby='navbarLightDropdownMenuLink'>
-                                <li><a className='dropdown-item' href='job-listings.html'>Job Listings</a></li>
-                                <li><a className='dropdown-item' href='job-details.html'>Job Details</a></li>
+                                <li><a className='dropdown-item' href='job-listings.html'>Item3</a></li>
+                                <li><a className='dropdown-item' href='job-details.html'>Item4</a></li>
                             </ul>
                         </li>
-                        <li className='nav-item'>
-                            <a className='nav-link' href='contact.html'>Contact</a>
+                        <li className='nav-item me-4'>
+                            <a className='nav-link' href='contact.html'>Item6</a>
                         </li>
-                        <li className='nav-item ms-lg-auto'>
-                            <a className='nav-link' href='#'>Register</a>
-                        </li>
+                        <li className='nav-item ms-lg-auto me-4'>
+                            <a className='nav-link' href='#'>Item7</a>
+                        </li> */}
                         <li className='nav-item'>
-                            <a className={classNames('nav-link', styles['custom-btn'], 'btn')} href='#'>Login</a>
+                            <a className={classNames('nav-link', styles['custom-btn'], 'btn')} href='#'>Вход</a>
                         </li>
                     </ul>
                 </div>

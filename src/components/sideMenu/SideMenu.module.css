@@ -1,0 +1,60 @@
+/* SideMenu.module.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sideMenuContainer {
+    height: 90%; 
+    display: flex;
+    max-width: 100%;
+  }
+  
+  .navPills .navLink {
+    font-size: 20px !important; 
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 25px; 
+    padding: 20px; 
+  }
+  
+  .navPills .navLink.active {
+    background-color: var(--primary-color);
+    color: #fff;
+  }
+  
+  .navPills .navLink:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+  }
+  
+  .tabContent {
+    padding: 40px; 
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 18px 40px;
+    background-color: var(--p-color);
+    flex-grow: 1; 
+    height: 100%;
+    width: 100%; 
+    overflow-y: auto; /* Add scroll if content overflows */
+  }
+
+  .flex_container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    height: 100vh; /* Full height of viewport */
+    max-width: 100%; /* Prevent horizontal overflow */
+}
+
+
+  
