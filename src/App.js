@@ -8,7 +8,7 @@ import NotFoundPage from './pages/404/NotFoundPage';
 import { AuthProvider } from './context/AuthContext';
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
 import Header from './components/Header/Header';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
