@@ -1,0 +1,10 @@
+.side-menu {
+    width: 250px; /* Adjust width as needed */
+    margin-right: 20px; /* Adjust margin as needed */
+    float: left; /* Ensure the SideMenu stays on the left side */
+  }
+  
+  .content {
+    margin-left: 270px; /* Adjust based on the SideMenu width and margin */
+    padding: 20px; /* Optional padding for content */
+  }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import loginValidation from './loginValidation';
 import classes from './LoginForm.module.css';
-import logo from '../../assets/MCK-logo.png';
+import logo from '../../assets/images/MCK-logo.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import useAuth from '../../hooks/useAuth';
 
