@@ -15,7 +15,7 @@ function App() {
     <ErrorBoundary>
       <AuthProvider>
         <>
-          <Header />
+          {/* <Header /> */}
           <div className="main-wraper">
             <main className="main-content">
               <Router>
