@@ -41,7 +41,7 @@ export default function Header() {
                             <a className='nav-link' href='#'>Item7</a>
                         </li> */}
                         <li className='nav-item'>
-                            <a className={classNames('nav-link', styles['custom-btn'], 'btn')} href='#'>Вход</a>
+                            <a className={classNames('nav-link', styles['custom-btn'], 'btn')} href='#'>Изход</a>
                         </li>
                     </ul>
                 </div>
