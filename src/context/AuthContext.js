@@ -20,8 +20,37 @@ export const AuthProvider = ({ children }) => {
     navigate(PATH.home);
   };
 
+  const registerSubmitHandler = async ({
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    role,
+  }) => {
+    const result = await authService.register({
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      role,
+    });
+
+    setAuth(result);
+
+    localStorage.setItem('accessToken', result.token);
+
+    navigate(PATH.home);
+  }
+
   const values = {
-    loginSubmitHandler
+    loginSubmitHandler,
+    registerSubmitHandler,
+    email: auth?.email,
+    isAuthenticated: !!auth.token,
+    userId: auth?.userId,
+    roles: auth?.roles || [],  
   }
 
   return (
