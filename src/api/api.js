@@ -14,7 +14,7 @@
 
 // export default api;
 
-import { ContentType, tokenName, host } from '../core/environments/constants';
+import { ContentType, tokenName, host, hostRegister } from '../core/environments/constants';
 
 const buildOptions = (data, requestType) => {
     const options = {};
@@ -24,9 +24,10 @@ const buildOptions = (data, requestType) => {
         options.headers = {
             'Content-Type': ContentType.ApplicationJSON,
         };
-    } else if (requestType === ContentType.MulitpartFormData) {
-        options.body = data;
-    }
+    } 
+    // else if (requestType === ContentType.MulitpartFormData) {
+    //     options.body = data;
+    // }
 
     const token = localStorage.getItem(tokenName);
 
@@ -63,9 +64,34 @@ const api = async (method, url, data, requestType) => {
     return result;
 };
 
+const apiRegister = async (method, url, data, requestType) => {
+    const response = await fetch(hostRegister + url, {
+        ...buildOptions(data, requestType),
+        method,
+    });
+
+    if (response.status === 204) {
+        return {};
+    }
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        if (response.status === 403) {
+            localStorage.removeItem(tokenName);
+        }
+
+        throw result;
+    }
+
+    return result;
+};
+
 export const get = api.bind(null, 'GET');
 export const post = api.bind(null, 'POST');
 export const put = api.bind(null, 'PUT');
 export const patch = api.bind(null, 'PATCH');
 export const remove = api.bind(null, 'DELETE');
+
+export const registerPost = apiRegister.bind(null, 'POST');
 
