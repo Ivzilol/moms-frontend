@@ -7,6 +7,8 @@ import usePersistedState from "../hooks/usePersistedState";
 
 const AuthContext = createContext();
 
+const accessToken = '';
+
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = usePersistedState('auth', {});
   const navigate = useNavigate();
@@ -14,11 +16,31 @@ export const AuthProvider = ({ children }) => {
   const loginSubmitHandler = async (values) => {
     const result = await authService.login(values.email, values.password);
 
-    localStorage.setItem('accessToken', result.token);
+    localStorage.setItem('accessToken', result.headers?.authorization?.split(' ')[1]);
+   
+    if(result){
+      console.log(result);
+    } else console.log("error")
 
     setAuth(result);
-    navigate(PATH.home);
+
+    console.log(result);
+    if (!!result.id) {
+       navigate(PATH.home);
+       console.log(result)
+
+    }
+   
   };
+
+  const logoutHandler = () => {
+    setAuth({});
+
+    localStorage.removeItem('accessToken');
+
+    navigate(PATH.login);
+};
+
 
   const registerSubmitHandler = async ({
     firstName,
@@ -39,7 +61,9 @@ export const AuthProvider = ({ children }) => {
 
     setAuth(result);
 
-    localStorage.setItem('accessToken', result.token);
+    console.log(result)
+
+    // localStorage.setItem('accessToken', result.token);
 
     navigate(PATH.home);
   }
@@ -47,9 +71,11 @@ export const AuthProvider = ({ children }) => {
   const values = {
     loginSubmitHandler,
     registerSubmitHandler,
+    logoutHandler,
     email: auth?.email,
-    isAuthenticated: !!auth.token,
-    userId: auth?.userId,
+    // isAuthenticated: !!auth.id,
+    isAuthenticated: !!localStorage.accessToken,
+    userId: auth?.id,
     roles: auth?.roles || [],  
   }
 

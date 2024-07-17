@@ -7,9 +7,9 @@ import AuthContext from '../context/AuthContext';
 export default function AuthGuard() {
     const { isAuthenticated } = useContext(AuthContext);
 
-    // if (!isAuthenticated) {
-    //     return <Navigate to={PATH.login} />;
-    // }
+    if (!isAuthenticated) {
+        return <Navigate to={PATH.login} />;
+    } 
 
     return <Outlet />;
 }

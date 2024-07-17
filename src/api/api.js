@@ -14,7 +14,7 @@
 
 // export default api;
 
-import { ContentType, tokenName, host, hostRegister } from '../core/environments/constants';
+import { ContentType, tokenName, host } from '../core/environments/constants';
 
 const buildOptions = (data, requestType) => {
     const options = {};
@@ -64,28 +64,28 @@ const api = async (method, url, data, requestType) => {
     return result;
 };
 
-const apiRegister = async (method, url, data, requestType) => {
-    const response = await fetch(hostRegister + url, {
-        ...buildOptions(data, requestType),
-        method,
-    });
+// const apiRegister = async (method, url, data, requestType) => {
+//     const response = await fetch(hostRegister + url, {
+//         ...buildOptions(data, requestType),
+//         method,
+//     });
 
-    if (response.status === 204) {
-        return {};
-    }
+//     if (response.status === 204) {
+//         return {};
+//     }
 
-    const result = await response.json();
+//     const result = await response.json();
 
-    if (!response.ok) {
-        if (response.status === 403) {
-            localStorage.removeItem(tokenName);
-        }
+//     if (!response.ok) {
+//         if (response.status === 403) {
+//             localStorage.removeItem(tokenName);
+//         }
 
-        throw result;
-    }
+//         throw result;
+//     }
 
-    return result;
-};
+//     return result;
+// };
 
 export const get = api.bind(null, 'GET');
 export const post = api.bind(null, 'POST');
@@ -93,5 +93,5 @@ export const put = api.bind(null, 'PUT');
 export const patch = api.bind(null, 'PATCH');
 export const remove = api.bind(null, 'DELETE');
 
-export const registerPost = apiRegister.bind(null, 'POST');
+// export const registerPost = apiRegister.bind(null, 'POST');
 

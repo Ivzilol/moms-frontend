@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
 import styles from './Header.module.css';
 import logo from '../../assets/images/MCK-logo.png';
+import AuthContext from '../../context/AuthContext';
 
 export default function Header() {
+    
+    const { isAuthenticated, logoutHandler } = useContext(AuthContext);
+
     return (
         <nav className={classNames(styles.navbar, 'navbar-expand-lg')}>
             <div className="container d-flex justify-content-between align-items-center">
@@ -41,7 +45,16 @@ export default function Header() {
                             <a className='nav-link' href='#'>Item7</a>
                         </li> */}
                         <li className='nav-item'>
-                            <a className={classNames('nav-link', styles['custom-btn'], 'btn')} href='#'>Изход</a>
+                            <a 
+                                className={classNames('nav-link', 'btn')} 
+                                href='#' 
+                                onClick={(e) => {
+                                e.preventDefault();
+                                logoutHandler();
+                                }}
+                            >
+                                Изход
+                            </a>
                         </li>
                     </ul>
                 </div>
