@@ -1,4 +1,4 @@
-import { endpoints, hostRegister } from '../environments/constants';
+import { endpoints } from '../environments/constants';
 import { ContentType } from '../environments/constants';
 
 import * as api from '../../api/api';
@@ -15,4 +15,4 @@ export const login = async (email, password) => {
 };
 
 export const register = async (values) =>
-    await api.registerPost(endpoints.register, values, ContentType.ApplicationJSON);
+    await api.post(endpoints.register, values, ContentType.ApplicationJSON);
