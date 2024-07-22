@@ -3,6 +3,9 @@ import classes from './SideMenu.module.css';
 
 import TopTabsNavUsers from '../topTabsNav/TopTabsNavUsers';
 import ProfileCard from '../profile/ProfileCard';
+import OrderCard from '../orderCard/OrderCard';
+import sampleOrder from '../orderCard/sampleOrder.json'
+import OrderPage from '../../pages/orderPage/OrderPage';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends ,
@@ -39,7 +42,7 @@ const SideMenu = () => {
       </div>
       <div className={`tab-content ${classes.tabContent}`} id="v-pills-tabContent">
         <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabIndex="0">Home content...</div>
-        <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabIndex="0">Order content....</div>
+        <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabIndex="0"><OrderPage/></div>
         <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabIndex="0"><ProfileCard/></div>
         {roles.includes('SUPERADMIN')  && (
             <div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabIndex="0"><TopTabsNavUsers/></div>

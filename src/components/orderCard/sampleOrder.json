@@ -1,0 +1,33 @@
+{
+    "orderDescription": "testOrder",
+    "deliveryDate": "2025-07-07T14:40:19.928417100+03:00",
+    "constructionSite": {
+      "name": "Кауфланд Горубляне",
+      "constructionNumber": "18.24.1"
+    },
+    "materialType": "FASTENERS",
+    "specificationFileUrl": "https://test.dropbox.com",
+    "fasteners": [
+      {
+        "quantity": 30.0,
+        "description": null,
+        "specificationFileUrl": null,
+        "type": "Гайка М16",
+        "diameter": "М16",
+        "length": null,
+        "model": "ISO 4032",
+        "clazz": "8"
+      },
+      {
+        "quantity": 10.0,
+        "description": null,
+        "specificationFileUrl": null,
+        "type": "Болт М20х80",
+        "diameter": "М20х80",
+        "length": 80.0,
+        "model": "DIN 931",
+        "clazz": "10.9"
+      }
+    ]
+  }
+  
