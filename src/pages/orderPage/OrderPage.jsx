@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import OrderCard from '../../components/orderCard/OrderCard';
-import sampleOrders from './sampleOrders.json'; // Import the orders data
+import sampleOrders from './sampleOrders.json'; 
 
 const ITEMS_PER_PAGE = 15; // Number of cards per page
 
@@ -13,10 +13,10 @@ const OrderPage = () => {
   const indexOfFirstOrder = indexOfLastOrder - ITEMS_PER_PAGE;
   const currentOrders = sampleOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
-  // Calculate the total number of pages
+  // total number of pages
   const totalPages = Math.ceil(sampleOrders.length / ITEMS_PER_PAGE);
 
-  // Function to handle page changes
+  // page changes handling
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
