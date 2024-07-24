@@ -92,15 +92,8 @@ const LoginForm = () => {
     const handleCustomSubmit = (e) => {
         e.preventDefault();
         sendLoginRequest(e)
-        // navigateHome()
     };
 
-    // function navigateHome(){
-    //     const jwt = localStorage.getItem('jwt')
-    //     if (jwt !== null) {
-    //         navigate('/')
-    //     }
-    // }
 
     return (
         <div className="container mt-5">

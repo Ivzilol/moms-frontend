@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useUser} from "../userProvider/UserProvider";
 import {Navigate} from "react-router-dom";
-import ajax from "../service/FetchService";
-
 
 
 const PrivateRoute = ({ children }) => {

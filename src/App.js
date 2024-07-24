@@ -5,13 +5,13 @@ import LoginForm from "./components/loginForm/LoginForm";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import {useUser} from "./userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
+import SideMenu from "./components/sideMenu/SideMenu";
 
 
 function App() {
 
     const user = useUser();
     const [roles, setRoles] = useState(getRolesFromJWT());
-
 
     useEffect(() => {
         setRoles(getRolesFromJWT())
@@ -31,7 +31,9 @@ function App() {
         <Routes>
             <Route path="/"
                    element={
-                       roles[0] === 'SUPERADMIN' || roles[1] === 'ADMIN' || roles[2] === 'USER' ?
+                       roles.includes('SUPERADMIN')
+                       || roles.includes('ADMIN')
+                       || roles.includes('USER') ?
                            <PrivateRoute>
                                <HomePage/>
                            </PrivateRoute>

@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     const result = await authService.login(values.email, values.password);
 
     localStorage.setItem('accessToken', result.headers?.authorization?.split(' ')[1]);
-   
+
     if(result){
       console.log(result);
     } else console.log("error")
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
        console.log(result)
 
     }
-   
+
   };
 
   const logoutHandler = () => {
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }) => {
     // isAuthenticated: !!auth.id,
     isAuthenticated: !!localStorage.accessToken,
     userId: auth?.id,
-    roles: auth?.roles || [],  
+    roles: auth?.roles || [],
   }
 
   return (
