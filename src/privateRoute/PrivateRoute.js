@@ -1,33 +1,55 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useUser} from "../userProvider/UserProvider";
 import {Navigate} from "react-router-dom";
 import ajax from "../service/FetchService";
 
 
 
-const PrivateRoute = (props) => {
+const PrivateRoute = ({ children }) => {
     const user = useUser();
     const [isLoading, setIsLoading] = useState(true);
-    const [isValid, setIsValid] = useState(null);
-    const {children} = props;
+    const [isValid, setIsValid] = useState(false);
 
-    if (user) {
-        ajax(`http://localhost:8080/api/auth/validate?token=${user.jwt}`, "GET", user.jwt)
-            .then(isValid => {
-                setIsValid(isValid);
+    useEffect(() => {
+        const validateToken = async () => {
+            if (user.jwt) {
+                try {
+                    const response = await fetch(`http://localhost:8080/v1/authentication/validate?token=${user.jwt}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${user.jwt}`,
+                            "Content-Type": "application/json"
+                        }
+                    });
+                    const text = await response.text();
+                    if (text === "Token is valid") {
+                        setIsValid(true);
+                    } else {
+                        setIsValid(false);
+                    }
+                } catch (error) {
+                    console.error("Error validating token:", error);
+                    setIsValid(false);
+                } finally {
+                    setIsLoading(false);
+                }
+            } else {
                 setIsLoading(false);
-            });
-    } else {
-        return <Navigate to="/login"/>
+            }
+        };
+
+        validateToken();
+    }, [user.jwt]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
     }
 
-    return isLoading ? (
-        <div>Loading...</div>
-    ) : isValid === true ? (
-        children
-    ) : (
-        <Navigate to="/login"/>
-    );
+    if (isValid) {
+        return children;
+    }
+
+    return <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

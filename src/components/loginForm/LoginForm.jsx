@@ -68,12 +68,12 @@ const LoginForm = () => {
             })
             .then(({data, headers}) => {
                 const authHeader = data.token;
-                const token = authHeader.replace(/^Bearer\s/, "");
-                if (token) {
-                    user.setJwt(token);
-                    localStorage.setItem('jwt', token);
+                const token = authHeader.split(' ')
+                if (token[1]) {
+                    user.setJwt(token[1]);
+                    localStorage.setItem('jwt', token[1]);
                     setIsLoading(false);
-                    navigateHome()
+                    navigate('/')
                  } else {
                     console.error("Authorization header not found");
                 }
@@ -95,12 +95,12 @@ const LoginForm = () => {
         // navigateHome()
     };
 
-    function navigateHome(){
-        const jwt = localStorage.getItem('jwt')
-        if (jwt !== null) {
-            navigate('/')
-        }
-    }
+    // function navigateHome(){
+    //     const jwt = localStorage.getItem('jwt')
+    //     if (jwt !== null) {
+    //         navigate('/')
+    //     }
+    // }
 
     return (
         <div className="container mt-5">

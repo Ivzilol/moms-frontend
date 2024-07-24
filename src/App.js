@@ -1,78 +1,98 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Route, Routes} from 'react-router-dom';
 import HomePage from './pages/home/HomePage';
-import LoginPage from './pages/login/LoginPage';
-import RegisterPage from './pages/register/RegisterPage';
-import OrderPage from './pages/orderPage/OrderPage';
-import NotFoundPage from './pages/404/NotFoundPage';
-import { AuthProvider } from './context/AuthContext';
-import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
-import Header from './components/Header/Header';
-
-import AuthGuard from './guards/AuthGuard';
-import LoggedInGuard from './guards/LoggedInGuard';
-import { PATH } from './core/environments/constants';
 import LoginForm from "./components/loginForm/LoginForm";
-import SideMenu from "./components/sideMenu/SideMenu";
+import PrivateRoute from "./privateRoute/PrivateRoute";
+import {useUser} from "./userProvider/UserProvider";
+import {jwtDecode} from "jwt-decode";
 
 
 function App() {
-  return (
 
-    <Routes>
-        <Route path="/login" element={<LoginForm/>}/>
-        <Route path="/" element={<HomePage/>}/>
-    </Routes>
+    const user = useUser();
+    const [roles, setRoles] = useState(getRolesFromJWT());
 
-    // <ErrorBoundary>
-    //   <AuthProvider>
-    //     <>
-    //       {/* <Header /> */}
-    //       <div className="main-wraper">
-    //         <main className="main-content">
-    //
-    //             <Routes>
-    //               <Route element={<LoggedInGuard />}>
-    //                   <Route
-    //                       path={PATH.login}
-    //                       element={<LoginPage />}
-    //                   />
-    //               </Route>
-    //               <Route element={<AuthGuard />}>
-    //                   <Route
-    //                       path={PATH.home}
-    //                       element={<HomePage/>}
-    //                   />
-    //               </Route>
-    //             </Routes>
-    //         </main>
-    //       </div>
-    //     </>
-    //   </AuthProvider>
-    // </ErrorBoundary>
 
-    // <ErrorBoundary>
-    //   <AuthProvider>
-    //     <>
-    //       {/* <Header /> */}
-    //       <div className="main-wraper">
-    //         <main className="main-content">
-    //           <Router>
-    //             <Routes>
-    //               <Route exact path="/" element={<HomePage />} />
-    //               <Route path="/login" element={<LoginPage />} />
-    //               <Route path="/register" component={RegisterPage} />
-    //               <Route path="/orders" component={OrderPage} />
-    //               <Route component={NotFoundPage} />
-    //             </Routes>
-    //           </Router>
-    //         </main>
-    //       </div>
-    //     </>
-    //   </AuthProvider>
-    // </ErrorBoundary>
+    useEffect(() => {
+        setRoles(getRolesFromJWT())
+    }, [user.jwt])
 
-  );
+    function getRolesFromJWT() {
+        if (user.jwt) {
+            const decodeJwt = jwtDecode(user.jwt)
+            return decodeJwt.roles.split(",")
+        }
+        return [];
+    }
+
+
+    return (
+
+        <Routes>
+            <Route path="/"
+                   element={
+                       roles[0] === 'SUPERADMIN' || roles[1] === 'ADMIN' || roles[2] === 'USER' ?
+                           <PrivateRoute>
+                               <HomePage/>
+                           </PrivateRoute>
+                           :
+                           <PrivateRoute>
+                               <LoginForm/>
+                           </PrivateRoute>
+
+                   }/>
+            <Route path="/login" element={<LoginForm/>}/>
+        </Routes>
+
+        // <ErrorBoundary>
+        //   <AuthProvider>
+        //     <>
+        //       {/* <Header /> */}
+        //       <div className="main-wraper">
+        //         <main className="main-content">
+        //
+        //             <Routes>
+        //               <Route element={<LoggedInGuard />}>
+        //                   <Route
+        //                       path={PATH.login}
+        //                       element={<LoginPage />}
+        //                   />
+        //               </Route>
+        //               <Route element={<AuthGuard />}>
+        //                   <Route
+        //                       path={PATH.home}
+        //                       element={<HomePage/>}
+        //                   />
+        //               </Route>
+        //             </Routes>
+        //         </main>
+        //       </div>
+        //     </>
+        //   </AuthProvider>
+        // </ErrorBoundary>
+
+        // <ErrorBoundary>
+        //   <AuthProvider>
+        //     <>
+        //       {/* <Header /> */}
+        //       <div className="main-wraper">
+        //         <main className="main-content">
+        //           <Router>
+        //             <Routes>
+        //               <Route exact path="/" element={<HomePage />} />
+        //               <Route path="/login" element={<LoginPage />} />
+        //               <Route path="/register" component={RegisterPage} />
+        //               <Route path="/orders" component={OrderPage} />
+        //               <Route component={NotFoundPage} />
+        //             </Routes>
+        //           </Router>
+        //         </main>
+        //       </div>
+        //     </>
+        //   </AuthProvider>
+        // </ErrorBoundary>
+
+    );
 }
 
 export default App;
