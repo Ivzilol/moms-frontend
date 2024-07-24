@@ -26,7 +26,6 @@ const PrivateRoute = ({ children }) => {
                         setIsValid(false);
                     }
                 } catch (error) {
-                    console.error("Error validating token:", error);
                     setIsValid(false);
                 } finally {
                     setIsLoading(false);

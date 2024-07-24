@@ -6,11 +6,11 @@ import PrivateRoute from "./privateRoute/PrivateRoute";
 import {useUser} from "./userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
 import SideMenu from "./components/sideMenu/SideMenu";
+import LoginPage from "./pages/login/LoginPage";
 
 
 function App() {
-
-    const user = useUser();
+    const user = useUser([]);
     const [roles, setRoles] = useState(getRolesFromJWT());
 
     useEffect(() => {
@@ -24,16 +24,13 @@ function App() {
         }
         return [];
     }
-
-
+    const hasValidRole = ['SUPERADMIN', 'ADMIN', 'USER'].some(role => roles.includes(role));
     return (
 
         <Routes>
             <Route path="/"
                    element={
-                       roles.includes('SUPERADMIN')
-                       || roles.includes('ADMIN')
-                       || roles.includes('USER') ?
+                       hasValidRole ?
                            <PrivateRoute>
                                <HomePage/>
                            </PrivateRoute>
@@ -43,57 +40,8 @@ function App() {
                            </PrivateRoute>
 
                    }/>
-            <Route path="/login" element={<LoginForm/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
         </Routes>
-
-        // <ErrorBoundary>
-        //   <AuthProvider>
-        //     <>
-        //       {/* <Header /> */}
-        //       <div className="main-wraper">
-        //         <main className="main-content">
-        //
-        //             <Routes>
-        //               <Route element={<LoggedInGuard />}>
-        //                   <Route
-        //                       path={PATH.login}
-        //                       element={<LoginPage />}
-        //                   />
-        //               </Route>
-        //               <Route element={<AuthGuard />}>
-        //                   <Route
-        //                       path={PATH.home}
-        //                       element={<HomePage/>}
-        //                   />
-        //               </Route>
-        //             </Routes>
-        //         </main>
-        //       </div>
-        //     </>
-        //   </AuthProvider>
-        // </ErrorBoundary>
-
-        // <ErrorBoundary>
-        //   <AuthProvider>
-        //     <>
-        //       {/* <Header /> */}
-        //       <div className="main-wraper">
-        //         <main className="main-content">
-        //           <Router>
-        //             <Routes>
-        //               <Route exact path="/" element={<HomePage />} />
-        //               <Route path="/login" element={<LoginPage />} />
-        //               <Route path="/register" component={RegisterPage} />
-        //               <Route path="/orders" component={OrderPage} />
-        //               <Route component={NotFoundPage} />
-        //             </Routes>
-        //           </Router>
-        //         </main>
-        //       </div>
-        //     </>
-        //   </AuthProvider>
-        // </ErrorBoundary>
-
     );
 }
 

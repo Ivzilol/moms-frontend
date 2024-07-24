@@ -74,14 +74,10 @@ const LoginForm = () => {
                     localStorage.setItem('jwt', token[1]);
                     setIsLoading(false);
                     navigate('/')
-                 } else {
-                    console.error("Authorization header not found");
-                }
-
+                 }
             })
             .catch(error => {
                 setIsLoading(false);
-                console.error(error);
             });
     }
 
@@ -116,11 +112,11 @@ const LoginForm = () => {
                                 onBlur={handleBlur}
                                 placeholder="Имейл"
                                 id="username"
-                                // className={`${classes.input} ${touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? 'is-invalid' : ''}`}
+                                className={`${classes.input} ${touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? 'is-invalid' : ''}`}
                             />
-                            {/*{touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? (*/}
-                            {/*    <div className="invalid-feedback">{errors[LoginFormKeys.Email]}</div>*/}
-                            {/*) : null}*/}
+                            {touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? (
+                                <div className="invalid-feedback">{errors[LoginFormKeys.Email]}</div>
+                            ) : null}
 
                             <label htmlFor="password">Парола</label>
                             <input
@@ -131,11 +127,11 @@ const LoginForm = () => {
                                 onBlur={handleBlur}
                                 placeholder="Парола"
                                 id="password"
-                                // className={`${classes.input} ${touched[LoginFormKeys.Password] && errors[LoginFormKeys.password] ? 'is-invalid' : ''}`}
+                                className={`${classes.input} ${touched[LoginFormKeys.Password] && errors[LoginFormKeys.password] ? 'is-invalid' : ''}`}
                             />
-                            {/*{touched[LoginFormKeys.Password] && errors[LoginFormKeys.Password] ? (*/}
-                            {/*    <div className="invalid-feedback">{errors[LoginFormKeys.Password]}</div>*/}
-                            {/*) : null}*/}
+                            {touched[LoginFormKeys.Password] && errors[LoginFormKeys.Password] ? (
+                                <div className="invalid-feedback">{errors[LoginFormKeys.Password]}</div>
+                            ) : null}
 
                             <button type="submit" className={classes.button}
                                     onClick={handleCustomSubmit}

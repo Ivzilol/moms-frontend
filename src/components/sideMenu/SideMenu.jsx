@@ -17,7 +17,7 @@ import {jwtDecode} from "jwt-decode";
 
 const SideMenu = () => {
 
-    const user = useUser();
+    const user = useUser([]);
     const [roles, setRoles] = useState(getRolesFromJWT());
 
 
