@@ -12,37 +12,44 @@ import Header from './components/Header/Header';
 import AuthGuard from './guards/AuthGuard';
 import LoggedInGuard from './guards/LoggedInGuard';
 import { PATH } from './core/environments/constants';
+import LoginForm from "./components/loginForm/LoginForm";
+import SideMenu from "./components/sideMenu/SideMenu";
 
 
 function App() {
   return (
 
-    <ErrorBoundary>
-      <AuthProvider>
-        <>
-          {/* <Header /> */}
-          <div className="main-wraper">
-            <main className="main-content">
-              
-                <Routes>
-                  <Route element={<LoggedInGuard />}>
-                      <Route
-                          path={PATH.login}
-                          element={<LoginPage />}
-                      />
-                  </Route>
-                  <Route element={<AuthGuard />}>
-                      <Route
-                          path={PATH.home}
-                          element={<HomePage/>}
-                      />                  
-                  </Route>
-                </Routes> 
-            </main>
-          </div>
-        </>
-      </AuthProvider>
-    </ErrorBoundary>
+    <Routes>
+        <Route path="/login" element={<LoginForm/>}/>
+        <Route path="/" element={<HomePage/>}/>
+    </Routes>
+
+    // <ErrorBoundary>
+    //   <AuthProvider>
+    //     <>
+    //       {/* <Header /> */}
+    //       <div className="main-wraper">
+    //         <main className="main-content">
+    //
+    //             <Routes>
+    //               <Route element={<LoggedInGuard />}>
+    //                   <Route
+    //                       path={PATH.login}
+    //                       element={<LoginPage />}
+    //                   />
+    //               </Route>
+    //               <Route element={<AuthGuard />}>
+    //                   <Route
+    //                       path={PATH.home}
+    //                       element={<HomePage/>}
+    //                   />
+    //               </Route>
+    //             </Routes>
+    //         </main>
+    //       </div>
+    //     </>
+    //   </AuthProvider>
+    // </ErrorBoundary>
 
     // <ErrorBoundary>
     //   <AuthProvider>
@@ -66,6 +73,6 @@ function App() {
     // </ErrorBoundary>
 
   );
-};
+}
 
 export default App;
