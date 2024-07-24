@@ -1,100 +1,152 @@
-import React, {useContext, useState } from 'react';
-import { useFormik } from 'formik';
+import React, {useContext, useState} from 'react';
+import {useFormik} from 'formik';
 
-import { LoginFormKeys, PATH } from '../../core/environments/constants';
+import {LoginFormKeys, PATH} from '../../core/environments/constants';
 import loginValidation from './loginValidation';
 import AuthContext from '../../context/AuthContext';
 import classes from './LoginForm.module.css';
 import logo from '../../assets/images/MCK-logo.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import {useUser} from "../../userProvider/UserProvider";
+import {useNavigate} from "react-router-dom";
 
 
 const initialValues = {
-  [LoginFormKeys.Email]: '',
-  [LoginFormKeys.Password]: ''
+    [LoginFormKeys.Email]: '',
+    [LoginFormKeys.Password]: ''
 }
 
 const LoginForm = () => {
-  const [serverError, setServerError] = useState({});
-  const {
-      values,
-      errors,
-      touched,
-      isSubmitting,
-      handleSubmit,
-      handleChange,
-      handleBlur,
-  } = useFormik({
-      initialValues,
-      onSubmit,
-      validationSchema: loginValidation,
-  });
+    const [serverError, setServerError] = useState({});
+    const {
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        handleSubmit,
+        handleChange,
+        handleBlur,
+    } = useFormik({
+        initialValues,
+        // onSubmit,
+        validationSchema: loginValidation,
+    });
 
-  const { loginSubmitHandler } = useContext(AuthContext);
+    // const { loginSubmitHandler } = useContext(AuthContext);
 
-  async function onSubmit(values) {
-      try {
-          await loginSubmitHandler(values);
-      } catch (error) {
-          setServerError(error);
-      }
-  }
-  return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-4">
-          <div className="card-body">
-            <div className={classes.background}>
-              <div className={classes.shape}></div>
-              <div className={classes.shape}></div>
+    // async function onSubmit(values) {
+    //     try {
+    //         await loginSubmitHandler(values);
+    //     } catch (error) {
+    //         setServerError(error);
+    //     }
+    // }
+    const [isLoading, setIsLoading] = useState(false);
+    const user = useUser();
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const navigate = useNavigate()
+
+    function sendLoginRequest(event) {
+        setIsLoading(true);
+        const requestBody = {
+            "email": email,
+            "password": password,
+        };
+        fetch(`http://localhost:8080/v1/user/user/query/login`, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    return Promise.reject("Invalid login attempt");
+                }
+                return response.json().then(data => ({data, headers: response.headers}));
+            })
+            .then(({data, headers}) => {
+                const authHeader = data.token;
+                const token = authHeader.split(' ')
+                if (token[1]) {
+                    user.setJwt(token[1]);
+                    localStorage.setItem('jwt', token[1]);
+                    setIsLoading(false);
+                    navigate('/')
+                 }
+            })
+            .catch(error => {
+                setIsLoading(false);
+            });
+    }
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    const handleCustomSubmit = (e) => {
+        e.preventDefault();
+        sendLoginRequest(e)
+    };
+
+
+    return (
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-md-4">
+                    <div className="card-body">
+                        <div className={classes.background}>
+                            <div className={classes.shape}></div>
+                            <div className={classes.shape}></div>
+                        </div>
+                        <form className={classes.poppins}>
+                            <img src={logo} alt="Logo" className={classes.logo}/>
+
+                            <label htmlFor={LoginFormKeys.Email}>Имейл</label>
+                            <input
+                                type="text"
+                                name="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                onBlur={handleBlur}
+                                placeholder="Имейл"
+                                id="username"
+                                className={`${classes.input} ${touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? 'is-invalid' : ''}`}
+                            />
+                            {touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? (
+                                <div className="invalid-feedback">{errors[LoginFormKeys.Email]}</div>
+                            ) : null}
+
+                            <label htmlFor="password">Парола</label>
+                            <input
+                                type="password"
+                                name="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                onBlur={handleBlur}
+                                placeholder="Парола"
+                                id="password"
+                                className={`${classes.input} ${touched[LoginFormKeys.Password] && errors[LoginFormKeys.password] ? 'is-invalid' : ''}`}
+                            />
+                            {touched[LoginFormKeys.Password] && errors[LoginFormKeys.Password] ? (
+                                <div className="invalid-feedback">{errors[LoginFormKeys.Password]}</div>
+                            ) : null}
+
+                            <button type="submit" className={classes.button}
+                                    onClick={handleCustomSubmit}
+                            >
+                                Вход
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <form className={classes.poppins} onSubmit={handleSubmit}>
-              <img src={logo} alt="Logo" className={classes.logo} />
-
-              <label htmlFor={LoginFormKeys.Email}>Имейл</label>
-              <input
-                type="text"
-                name="email"
-                value={values[LoginFormKeys.Email]}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Имейл"
-                id="username"
-                className={`${classes.input} ${touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? 'is-invalid' : ''}`}
-              />
-              {touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? (
-                <div className="invalid-feedback">{errors[LoginFormKeys.Email]}</div>
-              ) : null}
-
-              <label htmlFor="password">Парола</label>
-              <input
-                type="password"
-                name="password"
-                value={values[LoginFormKeys.Password]}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Парола"
-                id="password"
-                className={`${classes.input} ${touched[LoginFormKeys.Password] && errors[LoginFormKeys.password] ? 'is-invalid' : ''}`}
-              />
-              {touched[LoginFormKeys.Password] && errors[LoginFormKeys.Password]? (
-                <div className="invalid-feedback">{errors[LoginFormKeys.Password]}</div>
-              ) : null}
-
-              <button type="submit" className={classes.button} disabled={isSubmitting}>
-                Вход
-              </button>
-            </form>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default LoginForm;
-
-
 
 
 // import React, { useState } from 'react';

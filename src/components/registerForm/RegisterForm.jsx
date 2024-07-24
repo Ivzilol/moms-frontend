@@ -195,7 +195,7 @@ const RegisterForm = () => {
                         }}
                     />
                 </div>
-          
+
     );
 };
 

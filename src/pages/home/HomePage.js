@@ -1,9 +1,9 @@
 import React from 'react'
 import './HomePage.module.css';
-import Header from '../../components/Header/Header';
 
 
 import SideMenu from '../../components/sideMenu/SideMenu';
+import {Header} from "antd/es/layout/layout";
 
 
 const HomePage = () => {
