@@ -9,7 +9,7 @@ import SideMenu from '../../components/sideMenu/SideMenu';
 const HomePage = () => {
   return (
     <div>
-      <Header/>
+      {/*<Header/>*/}
       <div className="side-menu">
         <SideMenu />
       </div>

@@ -68,9 +68,10 @@ const LoginForm = () => {
             })
             .then(({data, headers}) => {
                 const authHeader = data.token;
-                if (authHeader) {
-                    user.setJwt(authHeader);
-                    localStorage.setItem('jwt', authHeader);
+                const token = authHeader.replace(/^Bearer\s/, "");
+                if (token) {
+                    user.setJwt(token);
+                    localStorage.setItem('jwt', token);
                     setIsLoading(false);
                     navigateHome()
                  } else {
