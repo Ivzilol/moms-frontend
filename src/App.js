@@ -8,6 +8,7 @@ import {jwtDecode} from "jwt-decode";
 import SideMenu from "./components/sideMenu/SideMenu";
 import LoginPage from "./pages/login/LoginPage";
 import CreateConstructionSite from "./components/createConstructionSite/CreateConstructionSite";
+import CreateOrder from "./components/createOrder/CreateOrder";
 
 
 function App() {
@@ -54,7 +55,19 @@ function App() {
                                <HomePage/>
                            </PrivateRoute>
                    }/>
-
+            <Route
+                path="/create-order"
+                element={
+                    hasValidRole ?
+                        <PrivateRoute>
+                            <CreateOrder/>
+                        </PrivateRoute>
+                        :
+                        <PrivateRoute>
+                            <LoginForm/>
+                        </PrivateRoute>
+                }
+            />
             <Route path="/login" element={<LoginPage/>}/>
         </Routes>
     );
