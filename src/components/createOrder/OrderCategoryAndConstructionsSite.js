@@ -1,7 +1,7 @@
 import {useState} from "react";
 import './OrderCategoryAndConstructionsSite.css'
 
-const OrderCategoryAndConstructionsSite = () => {
+const OrderCategoryAndConstructionsSite = ({onSelect}) => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedSite, setSelectedSite] = useState("");
 
@@ -26,6 +26,16 @@ const OrderCategoryAndConstructionsSite = () => {
         "Цех за панели"
     ];
 
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+        onSelect(e.target.value, selectedSite);
+    };
+
+    const handleSiteChange = (e) => {
+        setSelectedSite(e.target.value);
+        onSelect(selectedCategory, e.target.value);
+    };
+
     return (
         <div className="dropdown-container">
             <div>
@@ -34,7 +44,7 @@ const OrderCategoryAndConstructionsSite = () => {
                     id="category"
                     className="dropdown"
                     value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={handleCategoryChange}
                 >
                     <option value="" disabled>Изберете категория</option>
                     {categories.map((category) => (
@@ -50,7 +60,7 @@ const OrderCategoryAndConstructionsSite = () => {
                     id="construction-site"
                     className="dropdown"
                     value={selectedSite}
-                    onChange={(e) => setSelectedSite(e.target.value)}
+                    onChange={handleSiteChange}
                 >
                     <option value="" disabled>Изберете строителен обект</option>
                     {constructionSites.map((site) => (
