@@ -1,78 +1,60 @@
 import {useState} from "react";
 import './OrderCategoryAndConstructionsSite.css'
+import FastenersTemplate from "../template/FastenersTemplate";
+import InsulationTemplate from "../template/InsulationTemplate";
 
-const OrderCategoryAndConstructionsSite = ({onSelect}) => {
+const OrderCategoryAndConstructionsSite = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedSite, setSelectedSite] = useState("");
 
-    const categories = [
-        "FASTENERS",
-        "GALVANIZED_SHEET",
-        "INSULATION",
-        "METAL",
-        "PANELS",
-        "REBAR",
-        "SET",
-        "UNSPECIFIED",
-        "SERVICE"
-    ];
-
-    const constructionSites = [
-        "Цех за преработка на метали",
-        "Кауфланд Малинова Долина",
-        "Къща Бояна",
-        "Жилищна сграда SoHome",
-        "Склад за храни",
-        "Цех за панели"
-    ];
-
-    const handleCategoryChange = (e) => {
-        setSelectedCategory(e.target.value);
-        onSelect(e.target.value, selectedSite);
-    };
-
-    const handleSiteChange = (e) => {
-        setSelectedSite(e.target.value);
-        onSelect(selectedCategory, e.target.value);
-    };
+    let template;
+    if (selectedCategory === "FASTENERS") {
+        template = <FastenersTemplate />;
+    } else if (selectedCategory === "INSULATION") {
+        template = <InsulationTemplate />;
+    }
 
     return (
-        <div className="dropdown-container">
-            <div>
-                <label className="label" htmlFor="category">Категории:</label>
-                <select
-                    id="category"
-                    className="dropdown"
-                    value={selectedCategory}
-                    onChange={handleCategoryChange}
-                >
-                    <option value="" disabled>Изберете категория</option>
-                    {categories.map((category) => (
-                        <option key={category} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
+        <>
+            <div className="dropdown-container">
+                <div className="dropdown">
+                    <label htmlFor="category">Категория:</label>
+                    <select
+                        id="category"
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}>
+                        <option value="">Изберете категория</option>
+                        <option value="FASTENERS">FASTENERS</option>
+                        <option value="GALVANIZED_SHEET">GALVANIZED_SHEET</option>
+                        <option value="INSULATION">INSULATION</option>
+                        <option value="METAL">METAL</option>
+                        <option value="PANELS">PANELS</option>
+                        <option value="REBAR">REBAR</option>
+                        <option value="SET">SET</option>
+                        <option value="UNSPECIFIED">UNSPECIFIED</option>
+                        <option value="SERVICE">SERVICE</option>
+                    </select>
+                </div>
+                <div className="dropdown">
+                    <label htmlFor="constructionSite">Construction Site:</label>
+                    <select id="constructionSite"
+                            value={selectedSite}
+                            onChange={(e) => setSelectedSite(e.target.value)}>
+                        <option value="">Изберете Construction Site</option>
+                        <option value="Цех за преработка на метали">Цех за преработка на метали</option>
+                        <option value="Кауфланд Малинова Долина">Кауфланд Малинова Долина</option>
+                        <option value="Къща Бояна">Къща Бояна</option>
+                        <option value="Жилищна сграда SoHome">Жилищна сграда SoHome</option>
+                        <option value="Склад за храни">Склад за храни</option>
+                        <option value="Цех за панели">Цех за панели</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                <label className="label" htmlFor="construction-site">Construction Site:</label>
-                <select
-                    id="construction-site"
-                    className="dropdown"
-                    value={selectedSite}
-                    onChange={handleSiteChange}
-                >
-                    <option value="" disabled>Изберете строителен обект</option>
-                    {constructionSites.map((site) => (
-                        <option key={site} value={site}>
-                            {site}
-                        </option>
-                    ))}
-                </select>
+            <div className="template-container">
+                {template}
             </div>
-        </div>
+        </>
     );
-
 }
 
 export default OrderCategoryAndConstructionsSite;
