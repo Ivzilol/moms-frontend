@@ -22,12 +22,8 @@ const CreateConstructionSite = () => {
                     navigate('/');
                 }
             })
-            .catch((error) => {
-                if (error.response && error.response.status === 409) {
+            .catch(() => {
                     alert("Construction site already exists. Please choose a different name or number.");
-                } else {
-                    alert("Construction site already exists. Please choose a different name or number.");
-                }
             });
     }
 
