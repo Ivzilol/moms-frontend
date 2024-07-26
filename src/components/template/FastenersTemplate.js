@@ -1,7 +1,7 @@
 import {useState} from "react";
 import '../createOrder/CreateAndSendOrder.css'
 
-const FastenersTemplate = (onSave) => {
+const FastenersTemplate = ({ onSave }) => {
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [diameter, setDiameter] = useState('');
@@ -17,7 +17,28 @@ const FastenersTemplate = (onSave) => {
     };
 
     const handleSave = () => {
-        // Вашата логика за запазване
+        const data = {
+            name,
+            type,
+            diameter,
+            length,
+            model,
+            classType,
+            quantity,
+            description,
+            specification
+        };
+        onSave(data);
+        // clear the form
+        setName('');
+        setType('');
+        setDiameter('');
+        setLength('');
+        setModel('');
+        setClassType('');
+        setQuantity('');
+        setDescription('');
+        setSpecification(null);
     };
 
     return (
@@ -63,6 +84,7 @@ const FastenersTemplate = (onSave) => {
             </label>
         </div>
     );
-}
+};
+
 
 export default FastenersTemplate;
