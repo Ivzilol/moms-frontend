@@ -6,6 +6,7 @@ import ajax from "../../service/FetchService";
 import baseURL from "../baseURL/BaseURL";
 import {useUser} from "../../userProvider/UserProvider";
 import {json} from "react-router-dom";
+import ItemList from "./ItemList";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -50,7 +51,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 type: "application/json",
             })
         );
-
+        console.log(formData);
         fetch(`${baseURL}user/order/command/create-order`, {
             method: "POST",
             headers: {
@@ -109,6 +110,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 <div className="dropdown">
                     <label htmlFor="constructionSite">Дата на доставка</label>
                     <input
+                        className="constructionSite-data"
                         id="timeOfDelivery"
                         type="datetime-local"
                         value={dateOfDelivery}
@@ -119,6 +121,7 @@ const OrderCategoryAndConstructionsSite = () => {
             <div className="template-container">
                 {template}
             </div>
+            <ItemList items={requestBody} />
             <div>
                 {requestBody.length !== 0 ?
                     <button
