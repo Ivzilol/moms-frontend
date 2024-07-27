@@ -16,7 +16,7 @@
 
 .item-list th, .item-list td {
     border: 1px solid #ddd;
-    padding: 8px;
+    /*padding: 8px;*/
     text-align: left;
 }
 
@@ -26,4 +26,8 @@
 
 .item-list tbody tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+.item-list-button {
+    height: 20px;
 }

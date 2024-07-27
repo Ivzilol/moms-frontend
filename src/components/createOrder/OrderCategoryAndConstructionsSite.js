@@ -7,6 +7,7 @@ import baseURL from "../baseURL/BaseURL";
 import {useUser} from "../../userProvider/UserProvider";
 import {json} from "react-router-dom";
 import ItemList from "./ItemList";
+import EditItemModal from "./EditItemModal";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -14,28 +15,47 @@ const OrderCategoryAndConstructionsSite = () => {
     const [selectedSite, setSelectedSite] = useState("");
     const [dateOfDelivery, setDateOfDelivery] = useState("");
     const [requestBody, setRequestBody] = useState([]);
-    const [showTemplate, setShowTemplate] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
+    const [currentItem, setCurrentItem] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(null);
 
-    const handleSaveTemplate = (data) => {
-        setRequestBody([...requestBody, data]);
-        setShowTemplate(false);
-        setTimeout(() => setShowTemplate(true), 0);
-    };
+    let template;
+    if (selectedCategory === "FASTENERS") {
+        template = <FastenersTemplate onSave={handleSave} />;
+    } else if (selectedCategory === "INSULATION") {
+        template = <InsulationTemplate onSave={handleSave} />;
+    }
 
+    function handleSave(item) {
+        setRequestBody([...requestBody, item]);
+    }
 
-    const createOrder = () => {
+    function handleEdit(item, index) {
+        setCurrentItem(item);
+        setCurrentIndex(index);
+        setIsEditing(true);
+    }
+
+    function handleSaveEdit(editedItem) {
+        const updatedRequestBody = [...requestBody];
+        updatedRequestBody[currentIndex] = editedItem;
+        setRequestBody(updatedRequestBody);
+        setIsEditing(false);
+    }
+
+    function createOrder() {
         const formData = new FormData();
+
         const formattedDate = new Date(dateOfDelivery).toISOString();
-        const files = requestBody.flatMap(item => item.specification);
-        files.forEach(file => formData.append("files", file));
-        const date = new Date();
+
         const payload = {
             constructionSite: {
                 name: selectedSite
             },
             materialType: selectedCategory,
-            deliveryDate: formattedDate,
+            dateOfDelivery: formattedDate,
             [selectedCategory.toLowerCase()]: requestBody.map(item => ({
+                name: item.name,
                 type: item.type,
                 diameter: item.diameter,
                 length: item.length,
@@ -51,25 +71,11 @@ const OrderCategoryAndConstructionsSite = () => {
                 type: "application/json",
             })
         );
-        console.log(formData);
-        fetch(`${baseURL}user/order/command/create-order`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${user.jwt}`
-            },
-            body: formData,
-        })
+
+        ajax(`${baseURL}user/order/command/create-order`, "POST", user.jwt, formData)
             .then((response) => {
-
+                // Обработка на отговора
             })
-
-    };
-
-    let template;
-    if (selectedCategory === "FASTENERS" && showTemplate) {
-        template = <FastenersTemplate onSave={handleSaveTemplate}/>;
-    } else if (selectedCategory === "INSULATION" && showTemplate) {
-        template = <InsulationTemplate onSave={handleSaveTemplate}/>;
     }
 
     return (
@@ -108,9 +114,9 @@ const OrderCategoryAndConstructionsSite = () => {
                     </select>
                 </div>
                 <div className="dropdown">
-                    <label htmlFor="constructionSite">Дата на доставка</label>
+                    <label htmlFor="timeOfDelivery">Дата на доставка</label>
                     <input
-                        className="constructionSite-data"
+                        className="dropdown-container-date"
                         id="timeOfDelivery"
                         type="datetime-local"
                         value={dateOfDelivery}
@@ -121,18 +127,19 @@ const OrderCategoryAndConstructionsSite = () => {
             <div className="template-container">
                 {template}
             </div>
-            <ItemList items={requestBody} />
+            <ItemList items={requestBody} onEdit={handleEdit} />
+            {isEditing && (
+                <EditItemModal
+                    item={currentItem}
+                    onSave={handleSaveEdit}
+                    onClose={() => setIsEditing(false)}
+                />
+            )}
             <div>
-                {requestBody.length !== 0 ?
-                    <button
-                        type="submit"
-                        onClick={createOrder}
-                    >
-                        Send Order
-                    </button>
-                    :
-                    <></>
-                }
+                <button
+                    type="submit"
+                    onClick={createOrder}
+                >Send Order</button>
             </div>
         </>
     );
