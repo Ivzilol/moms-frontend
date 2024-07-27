@@ -2,10 +2,8 @@ import {useState} from "react";
 import './OrderCategoryAndConstructionsSite.css'
 import FastenersTemplate from "../template/FastenersTemplate";
 import InsulationTemplate from "../template/InsulationTemplate";
-import ajax from "../../service/FetchService";
 import baseURL from "../baseURL/BaseURL";
 import {useUser} from "../../userProvider/UserProvider";
-import {json} from "react-router-dom";
 import ItemList from "./ItemList";
 import EditItemModal from "./EditItemModal";
 
@@ -70,11 +68,6 @@ const OrderCategoryAndConstructionsSite = () => {
                 type: "application/json",
             })
         );
-
-        // ajax(`${baseURL}user/order/command/create-order`, "POST", user.jwt, formData)
-        //     .then((response) => {
-        //         // Обработка на отговора
-        //     })
 
         fetch(`${baseURL}user/order/command/create-order`, {
             method: "POST",
