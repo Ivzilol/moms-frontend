@@ -39,6 +39,14 @@ const EditItemModal = ({ item, onSave, onClose }) => {
                     <input type="text" name="length" value={editedItem.length} onChange={handleChange} />
                 </label>
                 <label>
+                    м. ед.:
+                    <select value={editedItem.lengthUnit} onChange={handleChange}>
+                        <option value="mm">mm</option>
+                        <option value="cm">cm</option>
+                        <option value="m">m</option>
+                    </select>
+                </label>
+                <label>
                     Модел:
                     <input type="text" name="model" value={editedItem.model} onChange={handleChange} />
                 </label>

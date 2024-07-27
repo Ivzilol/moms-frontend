@@ -6,6 +6,7 @@ const FastenersTemplate = ({ onSave }) => {
     const [type, setType] = useState('');
     const [diameter, setDiameter] = useState('');
     const [length, setLength] = useState('');
+    const [lengthUnit, setLengthUnit] = useState('mm');
     const [model, setModel] = useState('');
     const [classType, setClassType] = useState('');
     const [quantity, setQuantity] = useState('');
@@ -22,6 +23,7 @@ const FastenersTemplate = ({ onSave }) => {
             type,
             diameter,
             length,
+            lengthUnit,
             model,
             classType,
             quantity,
@@ -34,6 +36,7 @@ const FastenersTemplate = ({ onSave }) => {
         setType('');
         setDiameter('');
         setLength('');
+        setLengthUnit('mm');
         setModel('');
         setClassType('');
         setQuantity('');
@@ -58,6 +61,14 @@ const FastenersTemplate = ({ onSave }) => {
             <label>
                 Дължина:
                 <input type="text" value={length} onChange={(e) => setLength(e.target.value)} required />
+            </label>
+            <label>
+                м. ед. :
+                <select value={lengthUnit} onChange={(e) => setLengthUnit(e.target.value)} required>
+                    <option value="MM">MM</option>
+                    <option value="CM">CM</option>
+                    <option value="M">M</option>
+                </select>
             </label>
             <label>
                 Модел:

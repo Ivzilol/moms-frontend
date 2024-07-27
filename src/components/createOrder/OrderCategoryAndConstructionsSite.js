@@ -45,7 +45,6 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createOrder() {
         const formData = new FormData();
-
         const formattedDate = new Date(dateOfDelivery).toISOString();
 
         const payload = {
@@ -53,12 +52,12 @@ const OrderCategoryAndConstructionsSite = () => {
                 name: selectedSite
             },
             materialType: selectedCategory,
-            dateOfDelivery: formattedDate,
+            deliveryDate: formattedDate,
             [selectedCategory.toLowerCase()]: requestBody.map(item => ({
-                name: item.name,
                 type: item.type,
                 diameter: item.diameter,
                 length: item.length,
+                lengthUnit: item.lengthUnit,
                 model: item.model,
                 clazz: item.classType,
                 quantity: item.quantity,
@@ -72,10 +71,20 @@ const OrderCategoryAndConstructionsSite = () => {
             })
         );
 
-        ajax(`${baseURL}user/order/command/create-order`, "POST", user.jwt, formData)
-            .then((response) => {
-                // Обработка на отговора
-            })
+        // ajax(`${baseURL}user/order/command/create-order`, "POST", user.jwt, formData)
+        //     .then((response) => {
+        //         // Обработка на отговора
+        //     })
+
+        fetch(`${baseURL}user/order/command/create-order`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${user.jwt}`
+            },
+            body: formData
+        }).then((response) => {
+
+        })
     }
 
     return (

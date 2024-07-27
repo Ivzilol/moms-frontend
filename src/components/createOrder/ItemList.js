@@ -16,6 +16,7 @@ const ItemList = ({ items, onEdit }) => {
                         <th>Тип</th>
                         <th>Диаметър</th>
                         <th>Дължина</th>
+                        <th>м. ед.</th>
                         <th>Модел</th>
                         <th>Клас</th>
                         <th>Количество</th>
@@ -31,6 +32,7 @@ const ItemList = ({ items, onEdit }) => {
                             <td>{item.type}</td>
                             <td>{item.diameter}</td>
                             <td>{item.length}</td>
+                            <td>{item.lengthUnit}</td>
                             <td>{item.model}</td>
                             <td>{item.classType}</td>
                             <td>{item.quantity}</td>
