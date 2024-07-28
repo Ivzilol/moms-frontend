@@ -70,7 +70,7 @@ const FastenersTemplate = ({ onSave }) => {
     return (
         <div className="template-form">
             <label>
-                Име:
+                Търси:
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>

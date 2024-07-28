@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './EditItemModal.css'; // Създайте файл EditItemModal.css за стилове
+import './EditItemModal.css';
 
 const EditItemModal = ({ item, onSave, onClose }) => {
     const [editedItem, setEditedItem] = useState(item);
