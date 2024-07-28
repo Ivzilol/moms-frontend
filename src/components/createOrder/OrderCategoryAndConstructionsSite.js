@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import './OrderCategoryAndConstructionsSite.css'
 import FastenersTemplate from "../template/FastenersTemplate";
 import InsulationTemplate from "../template/InsulationTemplate";
@@ -16,6 +16,22 @@ const OrderCategoryAndConstructionsSite = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(null);
+
+
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+            if (requestBody.length > 0) {
+                const confirmationMessage = "Не сте завършил своята поръчка. Преди да излезете от страницата, моля да я завършите.";
+                e.preventDefault();
+                e.returnValue = confirmationMessage;
+                return alert(confirmationMessage);
+            }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [requestBody]);
 
     let template;
     if (selectedCategory === "FASTENERS") {
