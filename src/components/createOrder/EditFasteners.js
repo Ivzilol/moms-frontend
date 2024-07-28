@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './EditItemModal.css';
+import './EditFasteners.css';
 
-const EditItemModal = ({ item, onSave, onClose }) => {
+const EditFasteners = ({ item, onSave, onClose }) => {
     const [editedItem, setEditedItem] = useState(item);
 
     useEffect(() => {
@@ -72,4 +72,4 @@ const EditItemModal = ({ item, onSave, onClose }) => {
     );
 };
 
-export default EditItemModal;
+export default EditFasteners;

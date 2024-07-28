@@ -5,7 +5,7 @@ import InsulationTemplate from "../template/InsulationTemplate";
 import baseURL from "../baseURL/BaseURL";
 import {useUser} from "../../userProvider/UserProvider";
 import ItemList from "./ItemList";
-import EditItemModal from "./EditItemModal";
+import EditFasteners from "./EditFasteners";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -37,6 +37,17 @@ const OrderCategoryAndConstructionsSite = () => {
         template = <FastenersTemplate onSave={handleSave} />;
     } else if (selectedCategory === "INSULATION") {
         template = <InsulationTemplate onSave={handleSave} />;
+    }
+
+    let templateEdit;
+    if (selectedCategory === "FASTENERS") {
+        templateEdit = <EditFasteners
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
+    } else if (selectedCategory === "INSULATION") {
+
     }
 
     function handleSave(item) {
@@ -148,17 +159,16 @@ const OrderCategoryAndConstructionsSite = () => {
                     />
                 </div>
             </div>
+            {isEditing && (
+                <>
+                    {templateEdit}
+                </>
+
+                )}
             <div className="template-container">
                 {template}
             </div>
             <ItemList items={requestBody} onEdit={handleEdit} onDelete={handleDelete}/>
-            {isEditing && (
-                <EditItemModal
-                    item={currentItem}
-                    onSave={handleSaveEdit}
-                    onClose={() => setIsEditing(false)}
-                />
-            )}
             <div>
                 <button
                     type="submit"
