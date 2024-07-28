@@ -50,3 +50,9 @@
 .constructionSite-data {
     background-color: white;
 }
+
+.template-form .error {
+    color: red;
+    font-size: 8px;
+    margin-top: 2px;
+}
