@@ -20,7 +20,9 @@ const OrderCategoryAndConstructionsSite = () => {
     useEffect(() => {
         const handleBeforeUnload = (e) => {
             if (requestBody.length > 0) {
-                const confirmationMessage = "Не сте завършил своята поръчка. Преди да излезете от страницата, моля да я завършите.";
+                const confirmationMessage =
+                    "Не сте завършил своята поръчка. Преди да излезете от страницата, " +
+                    "моля да я завършите.";
                 e.preventDefault();
                 e.returnValue = confirmationMessage;
                 return alert(confirmationMessage);
