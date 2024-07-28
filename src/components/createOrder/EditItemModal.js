@@ -18,6 +18,7 @@ const EditItemModal = ({ item, onSave, onClose }) => {
         onClose();
     };
 
+
     return (
         <div className="edit-item-modal">
             <div className="modal-content">
@@ -40,10 +41,10 @@ const EditItemModal = ({ item, onSave, onClose }) => {
                 </label>
                 <label>
                     м. ед.:
-                    <select name="lengthUnit" value={editedItem.lengthUnit} onChange={handleChange}>
-                        <option value="mm">mm.</option>
-                        <option value="cm">cm.</option>
-                        <option value="m">m.</option>
+                    <select value={editedItem.lengthUnit} onChange={handleChange}>
+                        <option value="MM">ММ</option>
+                        <option value="CM">СМ</option>
+                        <option value="M">М</option>
                     </select>
                 </label>
                 <label>

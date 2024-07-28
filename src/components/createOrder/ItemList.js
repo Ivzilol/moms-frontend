@@ -2,7 +2,7 @@
 import React from 'react';
 import './ItemList.css'
 
-const ItemList = ({ items, onEdit }) => {
+const ItemList = ({ items, onEdit, onDelete }) => {
     return (
         <div className="item-list">
             {items.length === 0 ? (
@@ -22,6 +22,7 @@ const ItemList = ({ items, onEdit }) => {
                         <th>Количество</th>
                         <th>Описани</th>
                         <th>Редакция</th>
+                        <th>Изтриване</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,6 +43,13 @@ const ItemList = ({ items, onEdit }) => {
                                     className="fas fa-edit"
                                     onClick={() => onEdit(item, index)}
                                     title="Edit"
+                                ></i>
+                            </td>
+                            <td>
+                                <i
+                                    className="fas fa-trash"
+                                    onClick={() => onDelete(index)}
+                                    title="Delete"
                                 ></i>
                             </td>
                         </tr>

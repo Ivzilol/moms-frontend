@@ -41,6 +41,12 @@ const OrderCategoryAndConstructionsSite = () => {
         setIsEditing(false);
     }
 
+    function handleDelete(index) {
+        const updatedRequestBody = requestBody.filter((_, i) => i !== index);
+        setRequestBody(updatedRequestBody);
+    }
+
+
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
@@ -129,7 +135,7 @@ const OrderCategoryAndConstructionsSite = () => {
             <div className="template-container">
                 {template}
             </div>
-            <ItemList items={requestBody} onEdit={handleEdit} />
+            <ItemList items={requestBody} onEdit={handleEdit} onDelete={handleDelete}/>
             {isEditing && (
                 <EditItemModal
                     item={currentItem}
