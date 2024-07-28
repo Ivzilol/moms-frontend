@@ -12,7 +12,6 @@ const ItemList = ({ items, onEdit, onDelete }) => {
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Име</th>
                         <th>Тип</th>
                         <th>Диаметър</th>
                         <th>Дължина</th>
@@ -29,7 +28,6 @@ const ItemList = ({ items, onEdit, onDelete }) => {
                     {items.map((item, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{item.name}</td>
                             <td>{item.type}</td>
                             <td>{item.diameter}</td>
                             <td>{item.length}</td>

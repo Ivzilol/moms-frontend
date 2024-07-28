@@ -173,6 +173,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 <button
                     type="submit"
                     onClick={createOrder}
+                    disabled={!selectedCategory || !selectedSite || !dateOfDelivery}
                 >Send Order</button>
             </div>
         </>
