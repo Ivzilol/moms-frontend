@@ -65,9 +65,9 @@ const FastenersTemplate = ({ onSave }) => {
             <label>
                 м. ед. :
                 <select value={lengthUnit} onChange={(e) => setLengthUnit(e.target.value)} required>
-                    <option value="MM">MM</option>
-                    <option value="CM">CM</option>
-                    <option value="M">M</option>
+                    <option value="MM">мм.</option>
+                    <option value="CM">см.</option>
+                    <option value="M">м.</option>
                 </select>
             </label>
             <label>
