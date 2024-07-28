@@ -17,7 +17,6 @@ const OrderCategoryAndConstructionsSite = () => {
     const [currentItem, setCurrentItem] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(null);
 
-
     useEffect(() => {
         const handleBeforeUnload = (e) => {
             if (requestBody.length > 0) {
@@ -61,7 +60,6 @@ const OrderCategoryAndConstructionsSite = () => {
         const updatedRequestBody = requestBody.filter((_, i) => i !== index);
         setRequestBody(updatedRequestBody);
     }
-
 
     function createOrder() {
         const formData = new FormData();
@@ -110,7 +108,9 @@ const OrderCategoryAndConstructionsSite = () => {
                     <select
                         id="category"
                         value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}>
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        disabled={selectedCategory && requestBody.length > 0}
+                    >
                         <option value="">Изберете категория</option>
                         <option value="FASTENERS">FASTENERS</option>
                         <option value="GALVANIZED_SHEET">GALVANIZED_SHEET</option>
