@@ -17,6 +17,9 @@ import EditMetal from "./editItemLists/EditMetal";
 import PanelsTemplate from "./template/PanelsTemplate";
 import ItemListPanel from "./itemLists/ItemListPanel";
 import EditPanel from "./editItemLists/EditPanel";
+import RebarTemplate from "./template/RebarTemplate";
+import ItemListRebar from "./itemLists/ItemListRebar";
+import EditRebar from "./editItemLists/EditRebar";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -109,7 +112,17 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'REBAR') {
-
+        template = <RebarTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListRebar
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditRebar
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'SET') {
 
     } else if (selectedCategory === 'UNSPECIFIED') {
@@ -241,6 +254,24 @@ const OrderCategoryAndConstructionsSite = () => {
         };
     }
 
+    function createRequestBodyRebar(formattedDate) {
+        return {
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            rebars: requestBody.map(item => ({
+                maxLength: item.maxLength,
+                maxLengthUnit: item.maxLengthUnit,
+                weight: item.weight,
+                weightUnit: item.weightUnit,
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
@@ -255,6 +286,8 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodyMetal(formattedDate);
         } else if (selectedCategory === 'PANELS') {
             payload = createRequestBodyPanel(formattedDate);
+        } else if (selectedCategory === 'REBAR') {
+            payload = createRequestBodyRebar(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
