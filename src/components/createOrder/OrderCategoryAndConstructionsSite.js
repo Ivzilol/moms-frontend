@@ -14,6 +14,9 @@ import EditGalvanizedSheet from "./editItemLists/EditGalvanizedSheet";
 import MetalTemplate from "./template/MetalTemplate";
 import ItemListMetal from "./itemLists/ItemListMetal";
 import EditMetal from "./editItemLists/EditMetal";
+import PanelsTemplate from "./template/PanelsTemplate";
+import ItemListPanel from "./itemLists/ItemListPanel";
+import EditPanel from "./editItemLists/EditPanel";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -94,7 +97,17 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'PANELS') {
-
+        template = <PanelsTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListPanel
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditPanel
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'REBAR') {
 
     } else if (selectedCategory === 'SET') {
@@ -202,6 +215,32 @@ const OrderCategoryAndConstructionsSite = () => {
         };
     }
 
+    function createRequestBodyPanel(formattedDate) {
+        return {
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            panels: requestBody.map(item => ({
+                type: item.type,
+                color: item.color,
+                length: item.length,
+                lengthUnit: item.lengthUnit,
+                width: item.width,
+                widthUnit: item.widthUnit,
+                totalThickness: item.totalThickness,
+                totalThicknessUnit: item.totalThicknessUnit,
+                frontSheetThickness: item.frontSheetThickness,
+                frontSheetThicknessUnit: item.frontSheetThicknessUnit,
+                backSheetThickness: item.backSheetThickness,
+                backSheetThicknessUnit: item.backSheetThicknessUnit,
+                quantity: item.quantity,
+                description: item.description
+            }))
+        };
+    }
+
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
@@ -214,6 +253,8 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodyInsulation(formattedDate);
         } else if (selectedCategory === 'METAL') {
             payload = createRequestBodyMetal(formattedDate);
+        } else if (selectedCategory === 'PANELS') {
+            payload = createRequestBodyPanel(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
