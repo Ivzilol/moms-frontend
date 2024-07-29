@@ -11,6 +11,7 @@ const ItemListGalvanizedSheet = ({ items, onEdit, onDelete }) => {
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>Тип</th>
                         <th>Дължина</th>
                         <th>м. ед.</th>
                         <th>Площ</th>
@@ -25,8 +26,9 @@ const ItemListGalvanizedSheet = ({ items, onEdit, onDelete }) => {
                     {items.map((item, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
+                            <td>{item.type}</td>
                             <td>{item.length}</td>
-                            <td>{item.lengthUnit}</td>
+                            <td>{item.maxLengthUnit}</td>
                             <td>{item.area}</td>
                             <td>{item.areaUnit}</td>
                             <td>{item.quantity}</td>

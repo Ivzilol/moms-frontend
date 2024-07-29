@@ -25,12 +25,16 @@ const EditGalvanizedSheet = ({ item, onSave, onClose }) => {
             <div className="modal-content">
                 <h2>Редактиране на елемент</h2>
                 <label>
+                    Тип:
+                    <input type="text" name="type" value={editedItem.type} onChange={handleChange} />
+                </label>
+                <label>
                     Дължина:
                     <input type="text" name="length" value={editedItem.length} onChange={handleChange} />
                 </label>
                 <label>
                     м. ед.:
-                    <select name="lengthUnit" value={editedItem.lengthUnit} onChange={handleChange}>
+                    <select name="maxLengthUnit" value={editedItem.lengthUnit} onChange={handleChange}>
                         <option value="MM">MM</option>
                         <option value="CM">CM</option>
                         <option value="M">M</option>

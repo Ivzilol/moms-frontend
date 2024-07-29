@@ -117,11 +117,8 @@ const OrderCategoryAndConstructionsSite = () => {
         setRequestBody(updatedRequestBody);
     }
 
-    function createOrder() {
-        const formData = new FormData();
-        const formattedDate = new Date(dateOfDelivery).toISOString();
-
-        const payload = {
+    function createRequestBodyFasteners(formattedDate) {
+        return {
             constructionSite: {
                 name: selectedSite
             },
@@ -131,14 +128,43 @@ const OrderCategoryAndConstructionsSite = () => {
                 type: item.type,
                 diameter: item.diameter,
                 length: item.length,
-                lengthUnit: item.lengthUnit,
+                maxLengthUnit: item.maxLengthUnit,
                 model: item.model,
                 clazz: item.classType,
                 quantity: item.quantity,
                 description: item.description,
             }))
         };
+    }
 
+    function createRequestBodyGalvanizedSheet(formattedDate) {
+        return {
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            galvanisedSheets: requestBody.map(item => ({
+                type: item.type,
+                maxLength: item.length,
+                lengthUnit: item.lengthUnit,
+                area: item.area,
+                areaUnit: item.areaUnit,
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
+    function createOrder() {
+        const formData = new FormData();
+        const formattedDate = new Date(dateOfDelivery).toISOString();
+        let payload;
+        if (selectedCategory === "FASTENERS") {
+            payload = createRequestBodyFasteners(formattedDate);
+        } else if (selectedCategory === 'GALVANIZED_SHEET') {
+            payload = createRequestBodyGalvanizedSheet(formattedDate);
+        }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
                 type: "application/json",

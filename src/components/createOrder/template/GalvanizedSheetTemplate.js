@@ -3,8 +3,9 @@ import '../CreateAndSendOrder.css'
 const GalvanizedSheetTemplate = ({ onSave }) => {
 
     const [name, setName] = useState('');
+    const [type, setType] = useState('');
     const [maxLength, setMaxLength] = useState('');
-    const [lengthUnit, setLengthUnit] = useState('');
+    const [maxLengthUnit, setMaxLengthUnit] = useState('');
     const [area, setArea] = useState('');
     const [areaUnit, setAreaUnit] = useState('');
     const [quantity, setQuantity] = useState('');
@@ -18,6 +19,7 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
 
     const validate = () => {
         const newErrors = {};
+        if (!type) newErrors.type = 'Моля добавете тип';
         if (!maxLength) {
             newErrors.length = 'Моля добавете дължина';
         } else if (maxLength <= 0) {
@@ -28,7 +30,7 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
         } else if (area <= 0) {
             newErrors.area = 'Площ не може да е отрицателно число или 0';
         }
-        if (!lengthUnit) newErrors.lengthUnit = 'Моля изберете м. ед.';
+        if (!maxLengthUnit) newErrors.lengthUnit = 'Моля изберете м. ед.';
         if (!quantity) newErrors.quantity = 'Моля добавете количество';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -39,8 +41,9 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
 
         const data = {
             name,
+            type,
             length: maxLength,
-            lengthUnit,
+            maxLengthUnit,
             area,
             areaUnit,
             quantity,
@@ -48,10 +51,10 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
             specification
         };
         onSave(data);
-
         setName('');
+        setType('');
         setMaxLength('');
-        setLengthUnit('');
+        setMaxLengthUnit('');
         setArea('');
         setAreaUnit('');
         setQuantity('');
@@ -67,13 +70,18 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>
+                Тип:
+                <input type="text" value={type} onChange={(e) => setType(e.target.value)} />
+                {errors.type && <span className="error">{errors.type}</span>}
+            </label>
+            <label>
                 Дължина:
                 <input type="text" value={maxLength} onChange={(e) => setMaxLength(e.target.value)} />
                 {errors.length && <span className="error">{errors.length}</span>}
             </label>
             <label>
                 м. ед. :
-                <select name="lengthUnit" value={lengthUnit} onChange={(e) => setLengthUnit(e.target.value)}>
+                <select name="lengthUnit" value={maxLengthUnit} onChange={(e) => setMaxLengthUnit(e.target.value)}>
                     <option value="">м. ед.</option>
                     <option value="MM">ММ</option>
                     <option value="CM">СМ</option>
