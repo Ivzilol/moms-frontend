@@ -156,6 +156,23 @@ const OrderCategoryAndConstructionsSite = () => {
         };
     }
 
+    function createRequestBodyInsulation(formattedDate) {
+        return {
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            insulation: requestBody.map(item => ({
+                type: item.type,
+                thickness: item.thickness,
+                thicknessUnit: item.lengthUnit,
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
@@ -164,13 +181,14 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodyFasteners(formattedDate);
         } else if (selectedCategory === 'GALVANIZED_SHEET') {
             payload = createRequestBodyGalvanizedSheet(formattedDate);
+        } else if (selectedCategory === 'INSULATION') {
+            payload = createRequestBodyInsulation(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
                 type: "application/json",
             })
         );
-
         fetch(`${baseURL}user/order/command/create-order`, {
             method: "POST",
             headers: {
@@ -197,15 +215,16 @@ const OrderCategoryAndConstructionsSite = () => {
                         disabled={selectedCategory && requestBody.length > 0}
                     >
                         <option value="">Изберете категория</option>
-                        <option value="FASTENERS">FASTENERS</option>
-                        <option value="GALVANIZED_SHEET">GALVANIZED_SHEET</option>
-                        <option value="INSULATION">INSULATION</option>
-                        <option value="METAL">METAL</option>
-                        <option value="PANELS">PANELS</option>
-                        <option value="REBAR">REBAR</option>
-                        <option value="SET">SET</option>
-                        <option value="UNSPECIFIED">UNSPECIFIED</option>
-                        <option value="SERVICE">SERVICE</option>
+                        <option value="FASTENERS">Крепежи</option>
+                        <option value="GALVANIZED_SHEET">Ламарина</option>
+                        <option value="INSULATION">Изолация</option>
+                        <option value="METAL">Метали</option>
+                        <option value="PANELS">Панели</option>
+                        <option value="REBAR">Армировка</option>
+                        <option value="SET">Обшивки</option>
+                        <option value="UNSPECIFIED">Други</option>
+                        <option value="SERVICE">Услуги</option>
+                        <option value="TRANSPORT">Транспорт</option>
                     </select>
                 </div>
                 <div className="dropdown">
