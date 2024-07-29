@@ -178,6 +178,9 @@ const OrderCategoryAndConstructionsSite = () => {
             },
             body: formData
         }).then((response) => {
+            if (response.ok) {
+                setRequestBody([]);
+            }
 
         })
     }
