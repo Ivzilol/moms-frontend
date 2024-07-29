@@ -6,6 +6,7 @@ import baseURL from "../baseURL/BaseURL";
 import {useUser} from "../../userProvider/UserProvider";
 import ItemListFasteners from "./itemLists/ItemListFasteners";
 import EditFasteners from "./editItemLists/EditFasteners";
+import EditInsulation from "./editItemLists/EditInsulation";
 import ItemListInsulation from "./itemLists/ItemListInsulation";
 
 const OrderCategoryAndConstructionsSite = () => {
@@ -57,7 +58,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onEdit={handleEdit}
             onDelete={handleDelete}
         />
-        templateEdit = <EditFasteners
+        templateEdit = <EditInsulation
             item={currentItem}
             onSave={handleSaveEdit}
             onClose={() => setIsEditing(false)}

@@ -1,4 +1,5 @@
 import React from "react";
+import './ItemListFasteners.css'
 
 const ItemListInsulation = ({ items, onEdit, onDelete }) => {
     return (
