@@ -1,0 +1,69 @@
+/*body, html {*/
+/*    height: 100%;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+/*.container {*/
+/*    display: flex;*/
+/*    align-items: flex-end;*/
+/*    justify-content: center;*/
+/*    height: 100%;*/
+/*    padding-bottom: 10%;*/
+
+/*}*/
+
+/*.template-form {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));*/
+/*    gap: 10px;*/
+/*    padding: 10px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*    border-radius: 8px;*/
+/*    background-color: #f9f9f9;*/
+/*    width: 100%;*/
+/*    font-size: 12px;*/
+/*}*/
+
+/*.template-form label {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    font-weight: bold;*/
+/*    font-size: 10px;*/
+/*    margin-top: 0;*/
+/*    margin-bottom: 0;*/
+/*}*/
+
+/*.template-form input,*/
+/*.template-form textarea {*/
+/*    width: 100px;*/
+/*}*/
+/*.template-form select {*/
+/*    padding: 0;*/
+/*    margin-top: 2px;*/
+/*    font-size: 12px;*/
+/*    height: 20px; !* Set all form elements to the same height *!*/
+/*}*/
+
+/*.template-form button {*/
+/*    grid-column: span 2;*/
+/*    padding: 5px;*/
+/*    background-color: #007bff;*/
+/*    color: white;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    font-size: 12px;*/
+/*    width: 100%;*/
+/*    align-self: center;*/
+/*    justify-self: center;*/
+/*}*/
+
+/*.template-form button:disabled {*/
+/*    background-color: #cccccc;*/
+/*    cursor: not-allowed;*/
+/*}*/
+
+/*.error {*/
+/*    color: red;*/
+/*    font-size: 10px;*/
+/*}*/

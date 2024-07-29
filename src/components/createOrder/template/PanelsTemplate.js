@@ -1,5 +1,5 @@
 import {useState} from "react";
-import '../CreateAndSendOrder.css'
+import './PanelsTemplate.css'
 const PanelsTemplate = ({ onSave }) => {
     const [name, setName] = useState('');
     const [type, setType] = useState('');
