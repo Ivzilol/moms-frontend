@@ -6,6 +6,7 @@ import baseURL from "../baseURL/BaseURL";
 import {useUser} from "../../userProvider/UserProvider";
 import ItemListFasteners from "./itemLists/ItemListFasteners";
 import EditFasteners from "./editItemLists/EditFasteners";
+import ItemListInsulation from "./itemLists/ItemListInsulation";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -35,37 +36,32 @@ const OrderCategoryAndConstructionsSite = () => {
     }, [requestBody]);
 
     let template;
-    if (selectedCategory === "FASTENERS") {
-        template = <FastenersTemplate onSave={handleSave} />;
-    } else if (selectedCategory === "INSULATION") {
-        template = <InsulationTemplate onSave={handleSave} />;
-    } else if (selectedCategory === 'GALVANIZED_SHEET') {
-
-    } else if (selectedCategory === 'METAL') {
-
-    } else if (selectedCategory === 'PANELS') {
-
-    } else if (selectedCategory === 'REBAR') {
-
-    } else if(selectedCategory === 'SET') {
-
-    } else if (selectedCategory === 'UNSPECIFIED') {
-
-    } else if (selectedCategory === 'SERVICE') {
-
-    } else if (selectedCategory === 'TRANSPORT') {
-
-    }
-
+    let itemListTemplate
     let templateEdit;
     if (selectedCategory === "FASTENERS") {
+        template = <FastenersTemplate onSave={handleSave}/>;
+        itemListTemplate = <ItemListFasteners
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
         templateEdit = <EditFasteners
             item={currentItem}
             onSave={handleSaveEdit}
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === "INSULATION") {
-
+        template = <InsulationTemplate onSave={handleSave}/>;
+        itemListTemplate = <ItemListInsulation
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditFasteners
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'GALVANIZED_SHEET') {
 
     } else if (selectedCategory === 'METAL') {
@@ -74,7 +70,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     } else if (selectedCategory === 'REBAR') {
 
-    } else if(selectedCategory === 'SET') {
+    } else if (selectedCategory === 'SET') {
 
     } else if (selectedCategory === 'UNSPECIFIED') {
 
@@ -83,6 +79,7 @@ const OrderCategoryAndConstructionsSite = () => {
     } else if (selectedCategory === 'TRANSPORT') {
 
     }
+
 
     function handleSave(item) {
         setRequestBody([...requestBody, item]);
@@ -198,17 +195,20 @@ const OrderCategoryAndConstructionsSite = () => {
                     {templateEdit}
                 </>
 
-                )}
+            )}
             <div className="template-container">
                 {template}
             </div>
-            <ItemListFasteners items={requestBody} onEdit={handleEdit} onDelete={handleDelete}/>
+            <>
+                {itemListTemplate}
+            </>
             <div>
                 <button
                     type="submit"
                     onClick={createOrder}
                     disabled={!selectedCategory || !selectedSite || !dateOfDelivery}
-                >Send Order</button>
+                >Send Order
+                </button>
             </div>
         </>
     );
