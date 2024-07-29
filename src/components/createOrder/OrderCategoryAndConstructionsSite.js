@@ -39,6 +39,22 @@ const OrderCategoryAndConstructionsSite = () => {
         template = <FastenersTemplate onSave={handleSave} />;
     } else if (selectedCategory === "INSULATION") {
         template = <InsulationTemplate onSave={handleSave} />;
+    } else if (selectedCategory === 'GALVANIZED_SHEET') {
+
+    } else if (selectedCategory === 'METAL') {
+
+    } else if (selectedCategory === 'PANELS') {
+
+    } else if (selectedCategory === 'REBAR') {
+
+    } else if(selectedCategory === 'SET') {
+
+    } else if (selectedCategory === 'UNSPECIFIED') {
+
+    } else if (selectedCategory === 'SERVICE') {
+
+    } else if (selectedCategory === 'TRANSPORT') {
+
     }
 
     let templateEdit;
@@ -49,6 +65,22 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === "INSULATION") {
+
+    } else if (selectedCategory === 'GALVANIZED_SHEET') {
+
+    } else if (selectedCategory === 'METAL') {
+
+    } else if (selectedCategory === 'PANELS') {
+
+    } else if (selectedCategory === 'REBAR') {
+
+    } else if(selectedCategory === 'SET') {
+
+    } else if (selectedCategory === 'UNSPECIFIED') {
+
+    } else if (selectedCategory === 'SERVICE') {
+
+    } else if (selectedCategory === 'TRANSPORT') {
 
     }
 
