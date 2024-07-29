@@ -20,6 +20,9 @@ import EditPanel from "./editItemLists/EditPanel";
 import RebarTemplate from "./template/RebarTemplate";
 import ItemListRebar from "./itemLists/ItemListRebar";
 import EditRebar from "./editItemLists/EditRebar";
+import SetTemplate from "./template/SetTemplate";
+import ItemListSet from "./itemLists/ItemListSet";
+import EditSet from "./editItemLists/EditSet";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -124,7 +127,17 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'SET') {
-
+        template = <SetTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListSet
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditSet
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'UNSPECIFIED') {
 
     } else if (selectedCategory === 'SERVICE') {
@@ -272,6 +285,25 @@ const OrderCategoryAndConstructionsSite = () => {
         };
     }
 
+    function createRequestBodySet(formattedDate) {
+        return {
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            sets: requestBody.map(item => ({
+                galvanisedSheetThickness: item.galvanisedSheetThickness,
+                galvanisedSheetThicknessUnit: item.galvanisedSheetThicknessUnit,
+                color: item.color,
+                maxLength: item.maxLength,
+                maxLengthUnit: item.maxLengthUnit,
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
@@ -288,6 +320,8 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodyPanel(formattedDate);
         } else if (selectedCategory === 'REBAR') {
             payload = createRequestBodyRebar(formattedDate);
+        } else if (selectedCategory === 'SET') {
+            payload = createRequestBodySet(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
