@@ -1,8 +1,8 @@
 
 import React from 'react';
-import './ItemList.css'
+import './ItemListFasteners.css'
 
-const ItemList = ({ items, onEdit, onDelete }) => {
+const ItemListFasteners = ({ items, onEdit, onDelete }) => {
     return (
         <div className="item-list">
             {items.length === 0 ? (
@@ -59,4 +59,4 @@ const ItemList = ({ items, onEdit, onDelete }) => {
     );
 };
 
-export default ItemList;
+export default ItemListFasteners;

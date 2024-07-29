@@ -42,9 +42,9 @@ const EditFasteners = ({ item, onSave, onClose }) => {
                 <label>
                     м. ед.:
                     <select name="lengthUnit" value={editedItem.lengthUnit} onChange={handleChange}>
-                        <option value="mm">mm</option>
-                        <option value="cm">cm</option>
-                        <option value="m">m</option>
+                        <option value="MM">MM</option>
+                        <option value="CM">CM</option>
+                        <option value="M">M</option>
                     </select>
                 </label>
                 <label>

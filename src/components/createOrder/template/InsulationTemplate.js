@@ -1,5 +1,5 @@
 import {useState} from "react";
-import '../createOrder/CreateAndSendOrder.css'
+import '../CreateAndSendOrder.css'
 const InsulationTemplate = ({ onSave }) => {
     const [name, setName] = useState("");
     const [type, setType] = useState("");

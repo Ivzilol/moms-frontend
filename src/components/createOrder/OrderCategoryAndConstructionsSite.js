@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import './OrderCategoryAndConstructionsSite.css'
-import FastenersTemplate from "../template/FastenersTemplate";
-import InsulationTemplate from "../template/InsulationTemplate";
+import FastenersTemplate from "./template/FastenersTemplate";
+import InsulationTemplate from "./template/InsulationTemplate";
 import baseURL from "../baseURL/BaseURL";
 import {useUser} from "../../userProvider/UserProvider";
-import ItemList from "./ItemList";
-import EditFasteners from "./EditFasteners";
+import ItemListFasteners from "./itemLists/ItemListFasteners";
+import EditFasteners from "./editItemLists/EditFasteners";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -170,7 +170,7 @@ const OrderCategoryAndConstructionsSite = () => {
             <div className="template-container">
                 {template}
             </div>
-            <ItemList items={requestBody} onEdit={handleEdit} onDelete={handleDelete}/>
+            <ItemListFasteners items={requestBody} onEdit={handleEdit} onDelete={handleDelete}/>
             <div>
                 <button
                     type="submit"

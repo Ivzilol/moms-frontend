@@ -1,12 +1,12 @@
 import {useState} from "react";
-import '../createOrder/CreateAndSendOrder.css'
+import '../CreateAndSendOrder.css'
 
 const FastenersTemplate = ({ onSave }) => {
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [diameter, setDiameter] = useState('');
     const [length, setLength] = useState('');
-    const [lengthUnit, setLengthUnit] = useState('mm');
+    const [lengthUnit, setLengthUnit] = useState('');
     const [model, setModel] = useState('');
     const [classType, setClassType] = useState('');
     const [quantity, setQuantity] = useState('');
@@ -28,6 +28,7 @@ const FastenersTemplate = ({ onSave }) => {
         } else if (length <= 0) {
             newErrors.length = 'Дължината не може да е отрицателно число или 0';
         }
+        if (!lengthUnit) newErrors.lengthUnit = 'Моля изберете м. ед.';
         if (!model) newErrors.model = 'Моля добавете модел';
         if (!classType) newErrors.classType = 'Моля добавете клас';
         if (!quantity) newErrors.quantity = 'Моля добавете количество';
@@ -58,7 +59,7 @@ const FastenersTemplate = ({ onSave }) => {
         setType('');
         setDiameter('');
         setLength('');
-        setLengthUnit('mm');
+        setLengthUnit('');
         setModel('');
         setClassType('');
         setQuantity('');
@@ -90,11 +91,13 @@ const FastenersTemplate = ({ onSave }) => {
             </label>
             <label>
                 м. ед. :
-                <select value={lengthUnit} onChange={(e) => setLengthUnit(e.target.value)}>
+                <select name="lengthUnit" value={lengthUnit} onChange={(e) => setLengthUnit(e.target.value)}>
+                    <option value="">м. ед.</option>
                     <option value="MM">ММ</option>
                     <option value="CM">СМ</option>
                     <option value="M">М</option>
                 </select>
+                {errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}
             </label>
             <label>
                 Модел:
