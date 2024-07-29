@@ -1,5 +1,5 @@
 import {useState} from "react";
-
+import '../CreateAndSendOrder.css'
 const GalvanizedSheetTemplate = ({ onSave }) => {
 
     const [name, setName] = useState('');

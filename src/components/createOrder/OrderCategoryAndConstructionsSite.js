@@ -9,6 +9,8 @@ import EditFasteners from "./editItemLists/EditFasteners";
 import EditInsulation from "./editItemLists/EditInsulation";
 import ItemListInsulation from "./itemLists/ItemListInsulation";
 import GalvanizedSheetTemplate from "./template/GalvanizedSheetTemplate";
+import ItemListGalvanizedSheet from "./itemLists/ItemListGalvanizedSheet";
+import EditGalvanizedSheet from "./editItemLists/EditGalvanizedSheet";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -66,6 +68,16 @@ const OrderCategoryAndConstructionsSite = () => {
         />
     } else if (selectedCategory === 'GALVANIZED_SHEET') {
         template = <GalvanizedSheetTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListGalvanizedSheet
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditGalvanizedSheet
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'METAL') {
 
     } else if (selectedCategory === 'PANELS') {
