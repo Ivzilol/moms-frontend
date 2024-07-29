@@ -11,6 +11,9 @@ import ItemListInsulation from "./itemLists/ItemListInsulation";
 import GalvanizedSheetTemplate from "./template/GalvanizedSheetTemplate";
 import ItemListGalvanizedSheet from "./itemLists/ItemListGalvanizedSheet";
 import EditGalvanizedSheet from "./editItemLists/EditGalvanizedSheet";
+import MetalTemplate from "./template/MetalTemplate";
+import ItemListMetal from "./itemLists/ItemListMetal";
+import EditMetal from "./editItemLists/EditMetal";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -79,7 +82,17 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'METAL') {
-
+        template = <MetalTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListMetal
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditMetal
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'PANELS') {
 
     } else if (selectedCategory === 'REBAR') {
@@ -173,6 +186,22 @@ const OrderCategoryAndConstructionsSite = () => {
         };
     }
 
+    function createRequestBodyMetal(formattedDate) {
+        return {
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            metals: requestBody.map(item => ({
+                totalWeight: item.totalWeight,
+                totalWeightUnit: item.totalWeightUnit,
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
@@ -183,6 +212,8 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodyGalvanizedSheet(formattedDate);
         } else if (selectedCategory === 'INSULATION') {
             payload = createRequestBodyInsulation(formattedDate);
+        } else if (selectedCategory === 'METAL') {
+            payload = createRequestBodyMetal(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
