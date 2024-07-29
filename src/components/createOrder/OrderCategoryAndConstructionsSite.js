@@ -269,6 +269,7 @@ const OrderCategoryAndConstructionsSite = () => {
             body: formData
         }).then((response) => {
             if (response.ok) {
+                alert('Вашата заявка е изпратена успешно');
                 setRequestBody([]);
             }
 
