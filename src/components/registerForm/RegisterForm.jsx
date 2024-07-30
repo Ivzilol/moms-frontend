@@ -21,6 +21,7 @@ const initialValues = {
 const RegisterForm = () => {
     const [serverError, setServerError] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(null);
 
     const { register  } = useUser();
 
@@ -54,6 +55,7 @@ const RegisterForm = () => {
     // Modal setups
     const handleClose = async() => {
         setShowModal(false);
+        setSuccessMessage(null);
     };
 
     const handleConfirm = async() => {
@@ -62,12 +64,13 @@ const RegisterForm = () => {
 
         try {
             await register(values);
-            console.log("values" + values)
+            setSuccessMessage('Регистрацията е успешна!');
             setServerError(null);
             setShowModal(false); 
         } catch (error) {
             console.error('Registration error:', error);
             setServerError(error.message || 'An error occurred during registration.');
+            setSuccessMessage(null);
         }
     };
 
@@ -182,6 +185,12 @@ const RegisterForm = () => {
                                 <button type="submit" className={`btn btn-primary ${styles.submitButton}`} disabled={isSubmitting}>Създайте Акаунт</button>
 
                                 {serverError && <div className={`alert alert-danger ${styles.errorContainer}`} role="alert">{serverError}</div>}
+                
+                                {successMessage && (
+                                    <div className={`alert alert-success ${styles.successContainer}`} role="alert">
+                                        {successMessage}
+                                    </div>
+                                )}
                             </form>
                         </div>
                     </div>
