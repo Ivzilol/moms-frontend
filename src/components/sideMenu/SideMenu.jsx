@@ -58,7 +58,7 @@ const SideMenu = () => {
         <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabIndex="0"><OrderPage/></div>
         <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabIndex="0"><ProfileCard/></div>
         {roles.includes('SUPERADMIN')  && (
-            <div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabIndex="0">TopNavBar</div>
+            <div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabIndex="0"><TopTabsNavUsers/></div>
           )}
       </div>
     </div>

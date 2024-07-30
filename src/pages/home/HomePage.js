@@ -3,7 +3,8 @@ import './HomePage.module.css';
 
 
 import SideMenu from '../../components/sideMenu/SideMenu';
-import {Header} from "antd/es/layout/layout";
+// import {Header} from "antd/es/layout/layout";
+import Header from '../../components/Header/Header'
 
 
 const HomePage = () => {

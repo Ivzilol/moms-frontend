@@ -8,7 +8,7 @@ const ConfirmRegisterModal = ({ show, handleClose, handleConfirm, userInfo }) =>
                 <Modal.Title>Потвърдете Регистрацията</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>Потребител с име {userInfo.firstName} {userInfo.lastName} и имейл {userInfo.email} ще бъде създаден.</p>
+                <p>Потребител с име {userInfo.firstName} {userInfo.lastName}, имейл {userInfo.email} и телефон {userInfo.phoneNumber} ще бъде създаден.</p>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>

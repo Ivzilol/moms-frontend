@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { RegisterFormKeys } from '../../core/environments/constants';
-import AuthContext from '../../context/AuthContext';
 import registerValidation from './registerValidation';
+import { useUser } from '../../userProvider/UserProvider'
 
 import ConfirmRegisterModal from './ConfirmRegisterModal';
 
-import styles from './RegisterForm.module.css'; // Import CSS module
+import styles from './RegisterForm.module.css'; 
 
 const initialValues = {
     [RegisterFormKeys.FirstName]: '',
@@ -20,16 +19,17 @@ const initialValues = {
 };
 
 const RegisterForm = () => {
-    const { registerSubmitHandler } = useContext(AuthContext);
     const [serverError, setServerError] = useState(null);
     const [showModal, setShowModal] = useState(false);
+
+    const { register  } = useUser();
 
     const formik = useFormik({
         initialValues,
         validationSchema: registerValidation,
         onSubmit: async (values, { setSubmitting, setErrors }) => {
             try {
-                await registerSubmitHandler(values);
+                await register(values);
                 setServerError(null);
                 setShowModal(true);
             } catch (error) {
@@ -52,16 +52,19 @@ const RegisterForm = () => {
     } = formik;
 
     // Modal setups
-
     const handleClose = async() => {
         setShowModal(false);
     };
 
     const handleConfirm = async() => {
+
+        const { values } = formik;
+
         try {
-            await registerSubmitHandler(values);
-            setServerError(null); // Clear any previous server error
-            setShowModal(false); // Close modal after successful registration
+            await register(values);
+            console.log("values" + values)
+            setServerError(null);
+            setShowModal(false); 
         } catch (error) {
             console.error('Registration error:', error);
             setServerError(error.message || 'An error occurred during registration.');
@@ -192,6 +195,7 @@ const RegisterForm = () => {
                             firstName: values[RegisterFormKeys.FirstName],
                             lastName: values[RegisterFormKeys.LastName],
                             email: values[RegisterFormKeys.Email],
+                            phoneNumber: values[RegisterFormKeys.PhoneNumber],
                         }}
                     />
                 </div>
