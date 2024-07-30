@@ -23,6 +23,7 @@ import EditRebar from "./editItemLists/EditRebar";
 import SetTemplate from "./template/SetTemplate";
 import ItemListSet from "./itemLists/ItemListSet";
 import EditSet from "./editItemLists/EditSet";
+import Header from "../Header/Header";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -345,6 +346,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     return (
         <>
+            <Header/>
             <div className="dropdown-container">
                 <div className="dropdown">
                     <label htmlFor="category">Категория:</label>

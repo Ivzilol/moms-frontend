@@ -6,7 +6,7 @@ const ItemListFasteners = ({ items, onEdit, onDelete }) => {
     return (
         <div className="item-list">
             {items.length === 0 ? (
-                <p>Няма добавени елементи.</p>
+                <p>Няма добавени материали.</p>
             ) : (
                 <table>
                     <thead>
