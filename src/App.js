@@ -7,6 +7,8 @@ import {useUser} from "./userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
 import SideMenu from "./components/sideMenu/SideMenu";
 import LoginPage from "./pages/login/LoginPage";
+import CreateConstructionSite from "./components/createConstructionSite/CreateConstructionSite";
+import CreateOrder from "./components/createOrder/CreateOrder";
 
 
 function App() {
@@ -24,7 +26,9 @@ function App() {
         }
         return [];
     }
+
     const hasValidRole = ['SUPERADMIN', 'ADMIN', 'USER'].some(role => roles.includes(role));
+    const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
     return (
 
         <Routes>
@@ -40,6 +44,30 @@ function App() {
                            </PrivateRoute>
 
                    }/>
+            <Route path="/create-construction-site"
+                   element={
+                       hasAdminSuperadminRole ?
+                           <PrivateRoute>
+                               <CreateConstructionSite/>
+                           </PrivateRoute>
+                           :
+                           <PrivateRoute>
+                               <HomePage/>
+                           </PrivateRoute>
+                   }/>
+            <Route
+                path="/create-order"
+                element={
+                    hasValidRole ?
+                        <PrivateRoute>
+                            <CreateOrder/>
+                        </PrivateRoute>
+                        :
+                        <PrivateRoute>
+                            <LoginForm/>
+                        </PrivateRoute>
+                }
+            />
             <Route path="/login" element={<LoginPage/>}/>
         </Routes>
     );

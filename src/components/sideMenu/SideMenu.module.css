@@ -17,6 +17,7 @@ body {
     height: 90%; 
     display: flex;
     max-width: 100%;
+    background-color: #cccccc;
   }
   
   .navPills .navLink {

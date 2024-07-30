@@ -9,7 +9,6 @@ import {Header} from "antd/es/layout/layout";
 const HomePage = () => {
   return (
     <div>
-      <Header/>
       <div className="side-menu">
         <SideMenu />
       </div>
