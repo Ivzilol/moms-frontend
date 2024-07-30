@@ -26,7 +26,6 @@
   label {
     display: block;
     margin-bottom: 5px;
-    color: black !important;
   }
   
   input[type="text"],
@@ -40,9 +39,6 @@
     border-radius: 3px;
   }
 
-  option {
-    color: black;
-  }
   
   .errorInput {
     border-color: red;
