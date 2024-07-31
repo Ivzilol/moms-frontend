@@ -73,3 +73,20 @@
     display: block;
   }
   
+  /* successful message*/
+
+  .successContainer {
+    position: relative;
+    padding-right: 2.5rem; /* Space for the close button */
+    margin-bottom: 1rem;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

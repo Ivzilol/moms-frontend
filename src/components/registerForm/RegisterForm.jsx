@@ -28,11 +28,12 @@ const RegisterForm = ({ onSuccess }) => {
     const formik = useFormik({
         initialValues,
         validationSchema: registerValidation,
-        onSubmit: async (values, { setSubmitting, setErrors }) => {
+        onSubmit: async (values, { setSubmitting, setErrors, resetForm }) => {
             try {
                 await register(values);
                 setServerError(null);
                 setShowModal(true);
+                resetForm();
             } catch (error) {
                 console.error('Registration error:', error);
                 setErrors({ serverError: error.message || 'An error occurred' });

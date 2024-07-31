@@ -25,6 +25,10 @@ const TopTabsNav = () => {
     setSuccessMessage('Регистрацията е успешна!');
   };
 
+  const handleCloseMessage = () => {
+    setSuccessMessage('');
+  };
+
   return (
     <div className={styles.flex_container}>
       <nav className={`nav nav-pills flex-column ${styles.sideMenuContainer}`}>
@@ -68,6 +72,12 @@ const TopTabsNav = () => {
           {successMessage && (
             <div className={`alert alert-success ${styles.successContainer}`} role="alert">
               {successMessage}
+              <button 
+                type="button" 
+                className={`btn-close ${styles.closeButton}`} 
+                onClick={handleCloseMessage} 
+                aria-label="Close"
+              />
             </div>
           )}
           <p><UserList/></p>
