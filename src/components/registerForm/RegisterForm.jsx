@@ -50,7 +50,6 @@ const RegisterForm = ({ onSuccess }) => {
         isSubmitting,
         handleChange,
         handleBlur,
-        handleSubmit,
     } = formik;
 
     // Modal setups
@@ -64,6 +63,14 @@ const RegisterForm = ({ onSuccess }) => {
         const { values } = formik;
 
         try {
+
+            await formik.validateForm(); 
+            const hasErrors = Object.keys(formik.errors).length > 0 || serverError!== null;
+            if (hasErrors) {
+                console.log('Form validation errors:', formik.errors);
+                return; 
+            }
+
             await register(values);
             setSuccessMessage('Регистрацията е успешна!');
             onSuccess();

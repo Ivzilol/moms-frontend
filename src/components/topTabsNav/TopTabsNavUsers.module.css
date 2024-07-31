@@ -76,17 +76,23 @@
   /* successful message*/
 
   .successContainer {
-    position: relative;
-    padding-right: 2.5rem; /* Space for the close button */
-    margin-bottom: 1rem;
-}
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 0.25rem;
+  }
 
-.closeButton {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    padding: 0.25rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
+  .successMessage {
+      flex: 1;
+      margin-right: 10px;
+  }
+
+  .closeButton {
+      flex-shrink: 0;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+  }

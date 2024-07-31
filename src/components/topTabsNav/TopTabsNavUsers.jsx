@@ -70,15 +70,15 @@ const TopTabsNav = () => {
         <div className={`tab-pane fade ${activeTab === 'v-pills-home' ? 'show active' : ''}`} id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
           <h3>Всички</h3>
           {successMessage && (
-            <div className={`alert alert-success ${styles.successContainer}`} role="alert">
-              {successMessage}
-              <button 
-                type="button" 
-                className={`btn-close ${styles.closeButton}`} 
-                onClick={handleCloseMessage} 
-                aria-label="Close"
-              />
-            </div>
+              <div className={`alert alert-success ${styles.successContainer}`} role="alert">
+                  <span className={styles.successMessage}>{successMessage}</span>
+                  <button 
+                      type="button" 
+                      className={`btn-close ${styles.closeButton}`} 
+                      onClick={handleCloseMessage} 
+                      aria-label="Close"
+                  />
+              </div>
           )}
           <p><UserList/></p>
         </div>
