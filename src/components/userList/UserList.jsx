@@ -1,4 +1,5 @@
 import React from 'react'
+import ajax from '../../service/FetchService'
 
 const UserList = () => {
   return (

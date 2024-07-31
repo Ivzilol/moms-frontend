@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { RegisterFormKeys } from '../../core/environments/constants';
-import AuthContext from '../../context/AuthContext';
 import registerValidation from './registerValidation';
+import { useUser } from '../../userProvider/UserProvider'
 
 import ConfirmRegisterModal from './ConfirmRegisterModal';
 
-import styles from './RegisterForm.module.css'; // Import CSS module
+import styles from './RegisterForm.module.css'; 
 
 const initialValues = {
     [RegisterFormKeys.FirstName]: '',
@@ -19,19 +18,22 @@ const initialValues = {
     [RegisterFormKeys.Role]: 'USER', // Default role
 };
 
-const RegisterForm = () => {
-    const { registerSubmitHandler } = useContext(AuthContext);
+const RegisterForm = ({ onSuccess }) => {
     const [serverError, setServerError] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(null);
+
+    const { register  } = useUser();
 
     const formik = useFormik({
         initialValues,
         validationSchema: registerValidation,
-        onSubmit: async (values, { setSubmitting, setErrors }) => {
+        onSubmit: async (values, { setSubmitting, setErrors, resetForm }) => {
             try {
-                await registerSubmitHandler(values);
+                await register(values);
                 setServerError(null);
                 setShowModal(true);
+                resetForm();
             } catch (error) {
                 console.error('Registration error:', error);
                 setErrors({ serverError: error.message || 'An error occurred' });
@@ -48,23 +50,36 @@ const RegisterForm = () => {
         isSubmitting,
         handleChange,
         handleBlur,
-        handleSubmit,
     } = formik;
 
     // Modal setups
-
     const handleClose = async() => {
         setShowModal(false);
+        setSuccessMessage(null);
     };
 
     const handleConfirm = async() => {
+
+        const { values } = formik;
+
         try {
-            await registerSubmitHandler(values);
-            setServerError(null); // Clear any previous server error
-            setShowModal(false); // Close modal after successful registration
+
+            await formik.validateForm(); 
+            const hasErrors = Object.keys(formik.errors).length > 0 || serverError!== null;
+            if (hasErrors) {
+                console.log('Form validation errors:', formik.errors);
+                return; 
+            }
+
+            await register(values);
+            setSuccessMessage('Регистрацията е успешна!');
+            onSuccess();
+            setServerError(null);
+            setShowModal(false); 
         } catch (error) {
             console.error('Registration error:', error);
             setServerError(error.message || 'An error occurred during registration.');
+            setSuccessMessage(null);
         }
     };
 
@@ -179,6 +194,12 @@ const RegisterForm = () => {
                                 <button type="submit" className={`btn btn-primary ${styles.submitButton}`} disabled={isSubmitting}>Създайте Акаунт</button>
 
                                 {serverError && <div className={`alert alert-danger ${styles.errorContainer}`} role="alert">{serverError}</div>}
+                
+                                {successMessage && (
+                                    <div className={`alert alert-success ${styles.successContainer}`} role="alert">
+                                        {successMessage}
+                                    </div>
+                                )}
                             </form>
                         </div>
                     </div>
@@ -192,6 +213,7 @@ const RegisterForm = () => {
                             firstName: values[RegisterFormKeys.FirstName],
                             lastName: values[RegisterFormKeys.LastName],
                             email: values[RegisterFormKeys.Email],
+                            phoneNumber: values[RegisterFormKeys.PhoneNumber],
                         }}
                     />
                 </div>

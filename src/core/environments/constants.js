@@ -8,7 +8,10 @@ export const PATH = {
 export const endpoints = {
     // AUTH
     login: 'user/user/query/login',
-    register: 'superadmin/user/command/register'
+    register: 'superadmin/user/command/register',
+
+    // USERS
+    getUserProfile: (id) => `user/user/query/user/${id}`,
 };
 
 export const ContentType = {

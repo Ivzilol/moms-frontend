@@ -16,7 +16,7 @@ import {
 import {useUser} from "../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
 import {useNavigate} from "react-router-dom";
-import Header from "../Header/Header";
+
 
 const SideMenu = () => {
 
@@ -44,7 +44,6 @@ const SideMenu = () => {
 
     return (
         <div className={classes.flex_container}>
-            <Header/>
             <div className={classes.sideMenuContainer}>
                 <div className={`nav flex-column nav-pills me-3 ${classes.navPills}`} id="v-pills-tab"
                      role="tablist"
@@ -93,7 +92,7 @@ const SideMenu = () => {
                          aria-labelledby="v-pills-messages-tab" tabIndex="0"><ProfileCard/></div>
                     {roles.includes('SUPERADMIN') && (
                         <div className="tab-pane fade" id="v-pills-settings" role="tabpanel"
-                             aria-labelledby="v-pills-settings-tab" tabIndex="0">TopNavBar</div>
+                             aria-labelledby="v-pills-settings-tab" tabIndex="0"><TopTabsNavUsers/></div>
                     )}
                 </div>
             </div>
