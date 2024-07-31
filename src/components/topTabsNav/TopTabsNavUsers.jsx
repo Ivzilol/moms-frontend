@@ -53,7 +53,7 @@ const TopTabsNav = () => {
 
         <div className={`tab-pane fade ${activeTab === 'v-pills-new' ? 'show active' : ''}`} id="v-pills-new" role="tabpanel" aria-labelledby="v-pills-home-tab">
           <h3>Нов Акаунт</h3>
-          <p><RegisterForm/></p>
+          <p><RegisterForm onSuccess={() => handleTabClick('v-pills-home')} /></p>
         </div>
         <div className={`tab-pane fade ${activeTab === 'v-pills-home' ? 'show active' : ''}`} id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
           <h3>Всички</h3>

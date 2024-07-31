@@ -18,7 +18,7 @@ const initialValues = {
     [RegisterFormKeys.Role]: 'USER', // Default role
 };
 
-const RegisterForm = () => {
+const RegisterForm = ({ onSuccess }) => {
     const [serverError, setServerError] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [successMessage, setSuccessMessage] = useState(null);
@@ -65,6 +65,7 @@ const RegisterForm = () => {
         try {
             await register(values);
             setSuccessMessage('Регистрацията е успешна!');
+            onSuccess();
             setServerError(null);
             setShowModal(false); 
         } catch (error) {
