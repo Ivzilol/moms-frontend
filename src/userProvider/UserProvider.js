@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState } from "react";
+import React, {createContext, useContext, useState, useCallback } from "react";
 import {useLocalState} from "../util/useLocalState";
 import { host, endpoints } from '../core/environments/constants'
 
@@ -9,7 +9,7 @@ const UserProvider = ({ children }) => {
     const [userProfile, setUserProfile] = useState(null);
   
 
-    const getUserDetails = async (id) => {
+    const getUserDetails = useCallback(async (id) => {
         if (!jwt) {
             throw new Error('JWT token is required to fetch user details');
         }
@@ -31,7 +31,8 @@ const UserProvider = ({ children }) => {
             console.error('Error fetching user details:', error);
             throw error;
         }
-    };
+    }, [jwt]); // Only re-create the function if jwt changes
+
 
     const register = async (values) => {
         try {
