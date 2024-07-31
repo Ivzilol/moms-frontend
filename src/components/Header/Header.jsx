@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
+import React, {useContext, useState} from 'react';
 import classNames from 'classnames';
 import styles from './Header.module.css';
 import logo from '../../assets/images/MCK-logo.png';
-import { useUser } from '../../userProvider/UserProvider'
+import AuthContext from '../../context/AuthContext';
+import {useUser} from "../../userProvider/UserProvider";
 
 export default function Header() {
 
-    const { logout } = useUser();
+    const { isAuthenticated, logoutHandler } = useState();
+    const user = useUser();
+    function logout() {
+        user.setJwt(null)
+    }
 
     return (
         <nav className={classNames(styles.navbar, 'navbar-expand-lg')}>
@@ -48,10 +53,7 @@ export default function Header() {
                             <a
                                 className={classNames('nav-link', 'btn')}
                                 href='#'
-                                onClick={(e) => {
-                                e.preventDefault();
-                                logout();
-                                }}
+                                onClick={logout}
                             >
                                 Изход
                             </a>
