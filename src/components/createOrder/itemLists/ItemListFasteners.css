@@ -36,3 +36,11 @@
     border: none;
     cursor: pointer;
 }
+
+.item-list input[type="checkbox"] {
+    transform: scale(0.4);
+}
+
+.item-list tr.selected {
+    background-color: #d3d3d3;
+}
