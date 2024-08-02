@@ -14,12 +14,17 @@ const ProcessingOrdersAdmin = () => {
     useEffect(() => {
         ajax(`${baseURL}admin/order/query/get-all`, "GET", user.jwt)
             .then((response) => {
+                console.log('Fetched orders:', response);
                 setOrders(response);
+            })
+            .catch((error) => {
+                console.error("Error fetching orders:", error);
             });
     }, [user.jwt]);
 
-    const handleOrderClick = (orderNumber) => {
-        navigate(`/order-details/${orderNumber}`);
+    const handleOrderClick = (id) => {
+        console.log('Clicked order ID:', id);
+            navigate(`/order-details/${id}`);
     };
 
     return (
@@ -29,7 +34,7 @@ const ProcessingOrdersAdmin = () => {
                 {orders.map((order) => (
                     <div key={order.id}
                          className="order-summary"
-                         onClick={() => handleOrderClick(order.orderNumber)}>
+                         onClick={() => handleOrderClick(parseFloat(order.id))}>
                         <p>Обект: {order.constructionSite.name}</p>
                         <p>Статус: {order.orderStatus}</p>
                         <p>Тип материал: {order.materialType}</p>

@@ -5,13 +5,13 @@ import ProcessingOrdersAdmin from "../../components/ordersAdmin/ProcessingOrders
 import OrdersUser from "../../components/ordersUser/OrdersUser";
 
 
-const OrderPage = () => {
-    return (
-        <>
-            <ProcessingOrdersAdmin/>
-            <OrdersUser/>
-        </>
-    )
-};
-
-export default OrderPage;
+// const OrderPage = () => {
+//     return (
+//         <>
+//             <ProcessingOrdersAdmin/>
+//             <OrdersUser/>
+//         </>
+//     )
+// };
+//
+// export default OrderPage;

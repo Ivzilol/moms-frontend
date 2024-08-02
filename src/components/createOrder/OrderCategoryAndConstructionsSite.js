@@ -184,7 +184,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 length: item.length,
                 lengthUnit: item.lengthUnit,
                 model: item.model,
-                clazz: item.classType,
+                clazz: item.clazz,
                 quantity: item.quantity,
                 description: item.description,
             }))

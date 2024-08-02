@@ -7,32 +7,39 @@ import {useEffect, useState} from "react";
 import ajax from "../../service/FetchService";
 
 const OrderDetails = () => {
-    const { orderNumber } = useParams();
+    const id = window.location.href.split("/order-details/")[1];
     const user = useUser();
     const [order, setOrder] = useState([]);
 
     useEffect(() => {
-        ajax(`${baseURL}user/order/query/get-order-by-orderNumber/${orderNumber}`, "GET", user.jwt)
+        ajax(`${baseURL}admin/order/query/get-order/${parseInt(id)}`, "GET", user.jwt)
             .then((response) => {
                 setOrder(response);
+            })
+            .catch((error) => {
+                console.error("Failed to fetch order details:", error);
             });
-    }, [user.jwt, orderNumber]);
+    }, [user.jwt, id]);
 
     if (!order) return <p>Loading...</p>;
 
     return (
         <div className="order-details-container">
-            <h3>Детайли за поръчка #{order.orderNumber}</h3>
+            <h3>Детайли за поръчка #{order.id}</h3>
             {order.galvanisedSheets && (
                 <div>
                     <h4>Галванизирани листове</h4>
-                    <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {}} onDelete={() => {}} />
+                    <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {
+                    }} onDelete={() => {
+                    }}/>
                 </div>
             )}
             {order.fasteners && (
                 <div>
                     <h4>Закопчалки</h4>
-                    <ItemListFasteners items={order.fasteners} onEdit={() => {}} onDelete={() => {}} />
+                    <ItemListFasteners items={order.fasteners} onEdit={() => {
+                    }} onDelete={() => {
+                    }}/>
                 </div>
             )}
         </div>

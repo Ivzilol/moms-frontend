@@ -8,7 +8,7 @@ const FastenersTemplate = ({ onSave }) => {
     const [length, setLength] = useState('');
     const [lengthUnit, setLengthUnit] = useState('');
     const [model, setModel] = useState('');
-    const [classType, setClassType] = useState('');
+    const [clazz, setClazz] = useState('');
     const [quantity, setQuantity] = useState('');
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
@@ -30,7 +30,7 @@ const FastenersTemplate = ({ onSave }) => {
         }
         if (!lengthUnit) newErrors.lengthUnit = 'Моля изберете м. ед.';
         if (!model) newErrors.model = 'Моля добавете модел';
-        if (!classType) newErrors.classType = 'Моля добавете клас';
+        if (!clazz) newErrors.classType = 'Моля добавете клас';
         if (!quantity) newErrors.quantity = 'Моля добавете количество';
 
         setErrors(newErrors);
@@ -47,7 +47,7 @@ const FastenersTemplate = ({ onSave }) => {
             length,
             lengthUnit,
             model,
-            classType,
+            clazz,
             quantity,
             description,
             specification
@@ -61,7 +61,7 @@ const FastenersTemplate = ({ onSave }) => {
         setLength('');
         setLengthUnit('');
         setModel('');
-        setClassType('');
+        setClazz('');
         setQuantity('');
         setDescription('');
         setSpecification(null);
@@ -106,7 +106,7 @@ const FastenersTemplate = ({ onSave }) => {
             </label>
             <label>
                 Клас:
-                <input type="text" value={classType} onChange={(e) => setClassType(e.target.value)} />
+                <input type="text" value={clazz} onChange={(e) => setClazz(e.target.value)} />
                 {errors.classType && <span className="error">{errors.classType}</span>}
             </label>
             <label>

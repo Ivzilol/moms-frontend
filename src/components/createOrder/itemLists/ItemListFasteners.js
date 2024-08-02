@@ -33,7 +33,7 @@ const ItemListFasteners = ({ items, onEdit, onDelete }) => {
                             <td>{item.length}</td>
                             <td>{item.lengthUnit}</td>
                             <td>{item.model}</td>
-                            <td>{item.classType}</td>
+                            <td>{item.clazz}</td>
                             <td>{item.quantity}</td>
                             <td>{item.description}</td>
                             <td>

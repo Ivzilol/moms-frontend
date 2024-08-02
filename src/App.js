@@ -71,8 +71,27 @@ function App() {
                         </PrivateRoute>
                 }
             />
-            <Route path="/orders-admin" element={<ProcessingOrdersAdmin/>}/>
-            <Route path="/order-details/:orderNumber" element={<OrderDetails/>} />
+            <Route path="/orders-admin" element={
+                hasAdminSuperadminRole ?
+                    <PrivateRoute>
+                        <ProcessingOrdersAdmin/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+
+            <Route path="/order-details/:orderNumber" element={
+                hasAdminSuperadminRole ?
+                    <PrivateRoute>
+                        <OrderDetails/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
             <Route path="/orders-user" element={<OrdersUser/>}/>
             <Route path="/login" element={<LoginPage/>}/>
         </Routes>
