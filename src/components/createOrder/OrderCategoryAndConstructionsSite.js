@@ -24,6 +24,7 @@ import SetTemplate from "./template/SetTemplate";
 import ItemListSet from "./itemLists/ItemListSet";
 import EditSet from "./editItemLists/EditSet";
 import Header from "../Header/Header";
+import ajax from "../../service/FetchService";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -344,6 +345,15 @@ const OrderCategoryAndConstructionsSite = () => {
         })
     }
 
+    const [constructions, setConstructions] = useState([]);
+
+    useEffect(() => {
+        ajax(`${baseURL}user/order/query/construction/all`, "GET", user.jwt)
+            .then((response) => {
+                setConstructions(response)
+            })
+    }, [])
+
     return (
         <>
             <Header/>
@@ -370,17 +380,19 @@ const OrderCategoryAndConstructionsSite = () => {
                     </select>
                 </div>
                 <div className="dropdown">
-                    <label htmlFor="constructionSite">Construction Site:</label>
+                    <label htmlFor="constructionSite">Строителен Обект:</label>
                     <select id="constructionSite"
                             value={selectedSite}
                             onChange={(e) => setSelectedSite(e.target.value)}>
-                        <option value="">Изберете Construction Site</option>
-                        <option value="Цех за преработка на метали">Цех за преработка на метали</option>
-                        <option value="Кауфланд Малинова Долина">Кауфланд Малинова Долина</option>
-                        <option value="Къща Бояна">Къща Бояна</option>
-                        <option value="Жилищна сграда SoHome">Жилищна сграда SoHome</option>
-                        <option value="Склад за храни">Склад за храни</option>
-                        <option value="Цех за панели">Цех за панели</option>
+
+                        <option value="">Изберете Строителен Обект</option>
+                        {constructions.length > 0
+                            ?
+                            constructions.map((site) => (
+                                <option key={site.id}>{site.name}</option>
+                            )) : (
+                                <></>
+                            )}
                     </select>
                 </div>
                 <div className="dropdown">
