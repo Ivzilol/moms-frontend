@@ -14,16 +14,11 @@ const ProcessingOrdersAdmin = () => {
     useEffect(() => {
         ajax(`${baseURL}admin/order/query/get-all`, "GET", user.jwt)
             .then((response) => {
-                console.log('Fetched orders:', response);
                 setOrders(response);
-            })
-            .catch((error) => {
-                console.error("Error fetching orders:", error);
             });
     }, [user.jwt]);
 
     const handleOrderClick = (id) => {
-        console.log('Clicked order ID:', id);
             navigate(`/order-details/${id}`);
     };
 

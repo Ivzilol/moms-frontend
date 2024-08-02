@@ -16,9 +16,6 @@ const OrderDetails = () => {
             .then((response) => {
                 setOrder(response);
             })
-            .catch((error) => {
-                console.error("Failed to fetch order details:", error);
-            });
     }, [user.jwt, id]);
 
     if (!order) return <p>Loading...</p>;
