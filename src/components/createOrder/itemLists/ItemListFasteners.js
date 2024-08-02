@@ -6,11 +6,15 @@ import {jwtDecode} from "jwt-decode";
 const ItemListFasteners = ({ items, onEdit, onDelete }) => {
     const user = useUser([]);
     const [roles, setRoles] = useState(getRolesFromJWT());
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState(getSelectedItemsFromStorage());
 
     useEffect(() => {
         setRoles(getRolesFromJWT());
     }, [user.jwt]);
+
+    useEffect(() => {
+        saveSelectedItemsToStorage(selectedItems);
+    }, [selectedItems]);
 
     function getRolesFromJWT() {
         if (user.jwt) {
@@ -18,6 +22,15 @@ const ItemListFasteners = ({ items, onEdit, onDelete }) => {
             return decodeJwt.roles.split(",");
         }
         return [];
+    }
+
+    function getSelectedItemsFromStorage() {
+        const storedItems = localStorage.getItem('selectedItems');
+        return storedItems ? JSON.parse(storedItems) : [];
+    }
+
+    function saveSelectedItemsToStorage(items) {
+        localStorage.setItem('selectedItems', JSON.stringify(items));
     }
 
     const userRole = ['USER'].some(role => roles.includes(role));
