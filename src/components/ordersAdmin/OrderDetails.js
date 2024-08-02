@@ -34,7 +34,7 @@ const OrderDetails = () => {
             {order.fasteners && (
                 <div>
                     <h4>Закопчалки</h4>
-                    <ItemListFasteners items={order.fasteners} onEdit={() => {
+                    <ItemListFasteners orderId={parseInt(id)} items={order.fasteners} onEdit={() => {
                     }} onDelete={() => {
                     }}/>
                 </div>

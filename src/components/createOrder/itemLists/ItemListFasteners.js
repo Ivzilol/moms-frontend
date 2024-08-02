@@ -3,18 +3,18 @@ import './ItemListFasteners.css'
 import {useUser} from "../../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
 
-const ItemListFasteners = ({ items, onEdit, onDelete }) => {
+const ItemListFasteners = ({orderId, items, onEdit, onDelete }) => {
     const user = useUser([]);
     const [roles, setRoles] = useState(getRolesFromJWT());
-    const [selectedItems, setSelectedItems] = useState(getSelectedItemsFromStorage());
+    const [selectedItems, setSelectedItems] = useState(getSelectedItemsFromStorage(orderId));
 
     useEffect(() => {
         setRoles(getRolesFromJWT());
     }, [user.jwt]);
 
     useEffect(() => {
-        saveSelectedItemsToStorage(selectedItems);
-    }, [selectedItems]);
+        saveSelectedItemsToStorage(orderId, selectedItems);
+    }, [selectedItems, orderId]);
 
     function getRolesFromJWT() {
         if (user.jwt) {
@@ -24,13 +24,13 @@ const ItemListFasteners = ({ items, onEdit, onDelete }) => {
         return [];
     }
 
-    function getSelectedItemsFromStorage() {
-        const storedItems = localStorage.getItem('selectedItems');
+    function getSelectedItemsFromStorage(orderId) {
+        const storedItems = localStorage.getItem(`selectedItems_${orderId}`);
         return storedItems ? JSON.parse(storedItems) : [];
     }
 
-    function saveSelectedItemsToStorage(items) {
-        localStorage.setItem('selectedItems', JSON.stringify(items));
+    function saveSelectedItemsToStorage(orderId, items) {
+        localStorage.setItem(`selectedItems_${orderId}`, JSON.stringify(items));
     }
 
     const userRole = ['USER'].some(role => roles.includes(role));
@@ -77,6 +77,7 @@ const ItemListFasteners = ({ items, onEdit, onDelete }) => {
                                     type="checkbox"
                                     onChange={handleSelectAll}
                                     checked={selectedItems.length === items.length}
+                                    style={{ transform: 'scale(0.5)' }} // Намалява размера на checkbox на половина
                                 />
                             </th>
                         )}
