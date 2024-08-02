@@ -182,7 +182,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 type: item.type,
                 diameter: item.diameter,
                 length: item.length,
-                maxLengthUnit: item.maxLengthUnit,
+                lengthUnit: item.lengthUnit,
                 model: item.model,
                 clazz: item.classType,
                 quantity: item.quantity,

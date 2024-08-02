@@ -41,6 +41,15 @@ const SideMenu = () => {
         navigate('/create-order');
     };
 
+    const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
+
+    const navigateToOrder = () => {
+        if (hasAdminSuperadminRole) {
+            navigate('/orders-admin')
+        } else {
+            navigate('/orders-user')
+        }
+    }
 
     return (
         <div className={classes.flex_container}>
@@ -58,14 +67,19 @@ const SideMenu = () => {
                         onClick={handleNavigate}
                         aria-selected="true">
                         <FontAwesomeIcon icon={faPlus} className={classes.icon}
-
                         /> Създай Поръчки
                     </button>
-                    <button className={`nav-link ${classes.navLink}`} id="v-pills-profile-tab" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-profile" type="button" role="tab"
+                    <button className={`nav-link ${classes.navLink}`}
+                            id="v-pills-profile-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-profile"
+                            type="button"
+                            role="tab"
                             aria-controls="v-pills-profile"
+                            onClick={navigateToOrder}
                             aria-selected="false">
-                        <FontAwesomeIcon icon={faClipboardList} className={classes.icon}/>Поръчки
+                        <FontAwesomeIcon icon={faClipboardList} className={classes.icon}
+                        />
+                        Поръчки
                     </button>
                     <button className={`nav-link ${classes.navLink}`} id="v-pills-messages-tab"
                             data-bs-toggle="pill"

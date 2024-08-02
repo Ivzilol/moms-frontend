@@ -9,6 +9,9 @@ import SideMenu from "./components/sideMenu/SideMenu";
 import LoginPage from "./pages/login/LoginPage";
 import CreateConstructionSite from "./components/createConstructionSite/CreateConstructionSite";
 import CreateOrder from "./components/createOrder/CreateOrder";
+import ProcessingOrdersAdmin from "./components/ordersAdmin/ProcessingOrdersAdmin";
+import OrdersUser from "./components/ordersUser/OrdersUser";
+import OrderDetails from "./components/ordersAdmin/OrderDetails";
 
 
 function App() {
@@ -68,6 +71,9 @@ function App() {
                         </PrivateRoute>
                 }
             />
+            <Route path="/orders-admin" element={<ProcessingOrdersAdmin/>}/>
+            <Route path="/order-details/:orderNumber" element={<OrderDetails/>} />
+            <Route path="/orders-user" element={<OrdersUser/>}/>
             <Route path="/login" element={<LoginPage/>}/>
         </Routes>
     );
