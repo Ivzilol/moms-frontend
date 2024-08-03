@@ -423,7 +423,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 </div>
                 <div className="dropdown">
                     <label>
-                        Описани:
+                        Описание:
                         <textarea value={orderDescription}
                                   onChange={(e) => setOrderDescription(e.target.value)}/>
                     </label>
