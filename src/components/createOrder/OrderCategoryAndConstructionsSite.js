@@ -38,22 +38,22 @@ const OrderCategoryAndConstructionsSite = () => {
     const [specification, setSpecification] = useState(null);
     const [orderDescription, setOrderDescription] = useState('');
 
+
     useEffect(() => {
-        const handleBeforeUnload = (e) => {
-            if (requestBody.length > 0) {
-                const confirmationMessage =
-                    "Не сте завършил своята поръчка. Преди да излезете от страницата, " +
-                    "моля да я завършите.";
-                e.preventDefault();
-                e.returnValue = confirmationMessage;
-                return alert(confirmationMessage);
-            }
-        };
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, [requestBody]);
+        if (selectedCategory) {
+            const savedRequestBody = JSON.parse(localStorage.getItem(selectedCategory) || '[]');
+            setRequestBody(savedRequestBody);
+        } else {
+            setRequestBody([]);
+        }
+    }, [selectedCategory]);
+
+    useEffect(() => {
+        if (selectedCategory) {
+            localStorage.setItem(selectedCategory, JSON.stringify(requestBody));
+        }
+    }, [requestBody, selectedCategory]);
+
 
     let template;
     let itemListTemplate
@@ -346,6 +346,7 @@ const OrderCategoryAndConstructionsSite = () => {
             if (response.ok) {
                 alert('Вашата заявка е изпратена успешно');
                 setRequestBody([]);
+                localStorage.removeItem(selectedCategory);
             }
 
         })
