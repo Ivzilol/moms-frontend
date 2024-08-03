@@ -35,6 +35,8 @@ const OrderCategoryAndConstructionsSite = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(null);
+    const [specification, setSpecification] = useState(null);
+    const [orderDescription, setOrderDescription] = useState('');
 
     useEffect(() => {
         const handleBeforeUnload = (e) => {
@@ -308,9 +310,11 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createOrder() {
         const formData = new FormData();
+        formData.append("files", specification);
         const formattedDate = new Date(dateOfDelivery).toISOString();
         const files = requestBody.flatMap(item => item.specification);
         files.forEach(file => formData.append("files", file));
+
         let payload;
         if (selectedCategory === "FASTENERS") {
             payload = createRequestBodyFasteners(formattedDate);
@@ -346,6 +350,10 @@ const OrderCategoryAndConstructionsSite = () => {
 
         })
     }
+
+    const handleFileChange = (e) => {
+        setSpecification(e.target.files[0]);
+    };
 
     const [constructions, setConstructions] = useState([]);
 
@@ -406,6 +414,19 @@ const OrderCategoryAndConstructionsSite = () => {
                         value={dateOfDelivery}
                         onChange={(e) => setDateOfDelivery(e.target.value)}
                     />
+                </div>
+                <div className="dropdown">
+                    <label>
+                        Спецификация:
+                        <input type="file" onChange={handleFileChange}/>
+                    </label>
+                </div>
+                <div className="dropdown">
+                    <label>
+                        Описани:
+                        <textarea value={orderDescription}
+                                  onChange={(e) => setOrderDescription(e.target.value)}/>
+                    </label>
                 </div>
             </div>
             {isEditing && (
