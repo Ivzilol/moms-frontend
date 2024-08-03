@@ -309,6 +309,8 @@ const OrderCategoryAndConstructionsSite = () => {
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
+        const files = requestBody.flatMap(item => item.specification);
+        files.forEach(file => formData.append("files", file));
         let payload;
         if (selectedCategory === "FASTENERS") {
             payload = createRequestBodyFasteners(formattedDate);

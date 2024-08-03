@@ -26,17 +26,25 @@ const OrderDetails = () => {
             {order.galvanisedSheets && (
                 <div>
                     <h4>Галванизирани листове</h4>
-                    <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {
-                    }} onDelete={() => {
-                    }}/>
+                    <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {}} onDelete={() => {}} />
                 </div>
             )}
             {order.fasteners && (
                 <div>
                     <h4>Закопчалки</h4>
-                    <ItemListFasteners orderId={parseInt(id)} items={order.fasteners} onEdit={() => {
-                    }} onDelete={() => {
-                    }}/>
+                    <ItemListFasteners
+                        orderId={parseInt(id)}
+                        items={order.fasteners}
+                        onEdit={() => {}}
+                        onDelete={() => {}}
+                        orderDescription={order.orderDescription}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
                 </div>
             )}
         </div>
