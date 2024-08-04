@@ -113,34 +113,40 @@ const ItemListFasteners = ({
             },
             body: formData
         }).then((response) => {
-
+            if (response.ok) {
+                alert('Успешно променихте статуса на заявката!');
+                localStorage.removeItem(`selectedItems_${orderId}`);
+            }
         })
 
     }
 
     return (
         <div>
-            {/*<Header/>*/}
+
             {adminRole && (
-                <div className="order-info">
-                    <p>Обект: {constructionName}</p>
-                    <p>Описание на поръчката: {orderDescription}</p>
-                    <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
-                    <p>Статус на поръчката:
-                        <select value={currentOrderStatus} onChange={handleStatusChange}>
-                            <option value="CREATED">CREATED</option>
-                            <option value="PENDING">PENDING</option>
-                            <option value="APPROVED">APPROVED</option>
-                            <option value="DELIVERY_IN_PROGRESS">DELIVERY IN PROGRESS</option>
-                            <option value="COMPLETED">COMPLETED</option>
-                            <option value="CANCELLED">CANCELLED</option>
-                            <option value="UPDATED">UPDATED</option>
-                        </select>
-                    </p>
-                    <p>Тип материал: {materialType}</p>
-                    <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">{specificationFileUrl}</a></p>
-                    <p>Номер на поръчката: {orderNumber}</p>
-                </div>
+                <>
+                    <Header/>
+                    <div className="order-info">
+                        <p>Обект: {constructionName}</p>
+                        <p>Описание на поръчката: {orderDescription}</p>
+                        <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
+                        <p>Статус на поръчката:
+                            <select value={currentOrderStatus} onChange={handleStatusChange}>
+                                <option value="CREATED">CREATED</option>
+                                <option value="PENDING">PENDING</option>
+                                <option value="APPROVED">APPROVED</option>
+                                <option value="DELIVERY_IN_PROGRESS">DELIVERY IN PROGRESS</option>
+                                <option value="COMPLETED">COMPLETED</option>
+                                <option value="CANCELLED">CANCELLED</option>
+                                <option value="UPDATED">UPDATED</option>
+                            </select>
+                        </p>
+                        <p>Тип материал: {materialType}</p>
+                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank"
+                                                     rel="noopener noreferrer">{specificationFileUrl}</a></p>
+                    </div>
+                </>
             )}
             <div className="item-list">
                 {items.length === 0 ? (
@@ -174,7 +180,8 @@ const ItemListFasteners = ({
                         </thead>
                         <tbody>
                         {items.map((item, index) => (
-                            <tr key={index} style={{ backgroundColor: selectedItems.includes(index) ? '#d3d3d3' : 'transparent' }}>
+                            <tr key={index}
+                                style={{backgroundColor: selectedItems.includes(index) ? '#d3d3d3' : 'transparent'}}>
                                 <td>{index + 1}</td>
                                 <td>{item.type}</td>
                                 <td>{item.diameter}</td>
