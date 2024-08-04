@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import './ItemListFasteners.css'
 import {useUser} from "../../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
-import ajax from "../../../service/FetchService";
 import baseURL from "../../baseURL/BaseURL";
 
 const ItemListFasteners = ({

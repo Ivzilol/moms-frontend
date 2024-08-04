@@ -22,16 +22,13 @@ const OrderDetails = () => {
 
     return (
         <div className="order-details-container">
-            <h3>Детайли за поръчка #{order.id}</h3>
             {order.galvanisedSheets && (
                 <div>
-                    <h4>Галванизирани листове</h4>
                     <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {}} onDelete={() => {}} />
                 </div>
             )}
             {order.fasteners && (
                 <div>
-                    <h4>Закопчалки</h4>
                     <ItemListFasteners
                         orderId={parseInt(id)}
                         items={order.fasteners}
