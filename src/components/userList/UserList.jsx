@@ -93,15 +93,15 @@ const UserList = ({ users }) => {
                   <td>Otto</td>
                   <td>@mdo</td>
                   <td>юзър</td>
-                  <td className='d-flex'>
+                  <td className={styles.button_wrapper}>
                       <button 
-                        className="btn btn-warning mb-1 ml-2"
+                        className={`btn btn-warning mb-1 ml-2 ${styles.button_customize}`}
                         onClick={() => handleShowDeleteModal({ firstName: 'Jacob' })}
                       >
                         Деактивирай
                       </button>
                       <button type='button' 
-                              className="btn btn-primary mb-1"
+                              className={`btn btn-primary mb-1 ${styles.button_customize}`}
                               onClick={() => handleShowEditModal({ firstName: 'Jacob', lastName: 'Thornton', phoneNumber: '123456789' })}>
                                 Редактирай
                       </button>
