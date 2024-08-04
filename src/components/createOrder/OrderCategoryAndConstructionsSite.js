@@ -175,6 +175,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyFasteners(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -195,6 +196,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyGalvanizedSheet(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -214,6 +216,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyInsulation(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -231,6 +234,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyMetal(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -247,6 +251,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyPanel(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -273,6 +278,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyRebar(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -291,6 +297,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodySet(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },

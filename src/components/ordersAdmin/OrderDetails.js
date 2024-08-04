@@ -5,6 +5,7 @@ import {useUser} from "../../userProvider/UserProvider";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ajax from "../../service/FetchService";
+import Header from "../Header/Header";
 
 const OrderDetails = () => {
     const id = window.location.href.split("/order-details/")[1];
@@ -21,30 +22,34 @@ const OrderDetails = () => {
     if (!order) return <p>Loading...</p>;
 
     return (
-        <div className="order-details-container">
-            {order.galvanisedSheets && (
-                <div>
-                    <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {}} onDelete={() => {}} />
-                </div>
-            )}
-            {order.fasteners && (
-                <div>
-                    <ItemListFasteners
-                        orderId={parseInt(id)}
-                        items={order.fasteners}
-                        onEdit={() => {}}
-                        onDelete={() => {}}
-                        orderDescription={order.orderDescription}
-                        deliveryDate={order.deliveryDate}
-                        orderStatus={order.orderStatus}
-                        materialType={order.materialType}
-                        specificationFileUrl={order.specificationFileUrl}
-                        orderNumber={order.orderNumber}
-                        constructionName={order.constructionSite.name}
-                    />
-                </div>
-            )}
-        </div>
+            <div className="order-details-container">
+                {order.galvanisedSheets && (
+                    <div>
+                        <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {
+                        }} onDelete={() => {
+                        }}/>
+                    </div>
+                )}
+                {order.fasteners && (
+                    <div>
+                        <ItemListFasteners
+                            orderId={parseInt(id)}
+                            items={order.fasteners}
+                            onEdit={() => {
+                            }}
+                            onDelete={() => {
+                            }}
+                            orderDescription={order.orderDescription}
+                            deliveryDate={order.deliveryDate}
+                            orderStatus={order.orderStatus}
+                            materialType={order.materialType}
+                            specificationFileUrl={order.specificationFileUrl}
+                            orderNumber={order.orderNumber}
+                            constructionName={order.constructionSite.name}
+                        />
+                    </div>
+                )}
+            </div>
     );
 };
 

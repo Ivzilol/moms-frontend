@@ -3,6 +3,7 @@ import './ItemListFasteners.css'
 import {useUser} from "../../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
 import baseURL from "../../baseURL/BaseURL";
+import Header from "../../Header/Header";
 
 const ItemListFasteners = ({
                                orderId, items, onEdit, onDelete,
@@ -119,6 +120,7 @@ const ItemListFasteners = ({
 
     return (
         <div>
+            {/*<Header/>*/}
             {adminRole && (
                 <div className="order-info">
                     <p>Обект: {constructionName}</p>
