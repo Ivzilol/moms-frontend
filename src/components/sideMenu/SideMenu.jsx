@@ -45,7 +45,7 @@ const SideMenu = () => {
     return (
         <div className={classes.flex_container}>
             <div className={classes.sideMenuContainer}>
-                <div className={`nav flex-column nav-pills me-3 ${classes.navPills}`} id="v-pills-tab"
+                <div className={`nav flex-column nav-pills ${classes.navPills}`} id="v-pills-tab"
                      role="tablist"
                      aria-orientation="vertical">
                     <button
