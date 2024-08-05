@@ -20,7 +20,7 @@ const  OrdersUser = () => {
     }, []);
 
     const handleOrderClick = (id) => {
-        navigate(`/order-details/${id}`);
+
     };
 
     return (
@@ -30,7 +30,7 @@ const  OrdersUser = () => {
                 <h2>Списък на поръчките</h2>
                 <div className="orders-list">
                     {orders.map((order) => (
-                        <div key={order.id}
+                        <div key={order.number}
                              className="order-summary"
                              onClick={() => handleOrderClick(parseFloat(order.id))}>
                             <p>Обект: {order.constructionSite.name}</p>

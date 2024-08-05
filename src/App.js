@@ -32,6 +32,7 @@ function App() {
 
     const hasValidRole = ['SUPERADMIN', 'ADMIN', 'USER'].some(role => roles.includes(role));
     const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
+    const hasUserSuperadminRole = ['SUPERADMIN', 'USER'].some(role => roles.includes(role));
     return (
 
         <Routes>
@@ -86,6 +87,16 @@ function App() {
                 hasValidRole ?
                     <PrivateRoute>
                         <OrderDetails/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+            <Route path="order-details-user/:number" element={
+                hasUserSuperadminRole ?
+                    <PrivateRoute>
+                        <OrdersUser/>
                     </PrivateRoute>
                     :
                     <PrivateRoute>

@@ -2,15 +2,15 @@ import baseURL from "../baseURL/BaseURL";
 import ItemListGalvanizedSheet from "../createOrder/itemLists/ItemListGalvanizedSheet";
 import ItemListFasteners from "../createOrder/itemLists/ItemListFasteners";
 import {useUser} from "../../userProvider/UserProvider";
-import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ajax from "../../service/FetchService";
-import Header from "../Header/Header";
+import {jwtDecode} from "jwt-decode";
 
 const OrderDetails = () => {
     const id = window.location.href.split("/order-details/")[1];
     const user = useUser();
     const [order, setOrder] = useState([]);
+
 
     useEffect(() => {
         ajax(`${baseURL}admin/order/query/get-order/${parseInt(id)}`, "GET", user.jwt)
@@ -18,6 +18,7 @@ const OrderDetails = () => {
                 setOrder(response);
             })
     }, [user.jwt, id]);
+
 
     if (!order) return <p>Loading...</p>;
 
