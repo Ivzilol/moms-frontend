@@ -14,7 +14,6 @@ const  OrdersUser = () => {
     useEffect(() => {
         ajax(`${baseURL}user/order/query/get-my-orders`, "GET", user.jwt)
             .then((response) => {
-                console.log(response)
                 setOrders(response)
             })
 

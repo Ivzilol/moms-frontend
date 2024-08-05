@@ -123,7 +123,6 @@ const ItemListFasteners = ({
 
     return (
         <div>
-
             {adminRole && (
                 <>
                     <Header/>
@@ -142,6 +141,20 @@ const ItemListFasteners = ({
                                 <option value="UPDATED">UPDATED</option>
                             </select>
                         </p>
+                        <p>Тип материал: {materialType}</p>
+                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank"
+                                                     rel="noopener noreferrer">{specificationFileUrl}</a></p>
+                    </div>
+                </>
+            )}
+            {userRole && (
+                <>
+                    <Header/>
+                    <div className="order-info">
+                        <p>Обект: {constructionName}</p>
+                        <p>Описание на поръчката: {orderDescription}</p>
+                        <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
+                        <p>Статус на поръчката: {orderStatus} </p>
                         <p>Тип материал: {materialType}</p>
                         <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank"
                                                      rel="noopener noreferrer">{specificationFileUrl}</a></p>
