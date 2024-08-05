@@ -83,7 +83,7 @@ function App() {
             }/>
 
             <Route path="/order-details/:orderNumber" element={
-                hasAdminSuperadminRole ?
+                hasValidRole ?
                     <PrivateRoute>
                         <OrderDetails/>
                     </PrivateRoute>
