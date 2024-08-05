@@ -12,6 +12,7 @@ import CreateOrder from "./components/createOrder/CreateOrder";
 import ProcessingOrdersAdmin from "./components/ordersAdmin/ProcessingOrdersAdmin";
 import OrdersUser from "./components/ordersUser/OrdersUser";
 import OrderDetails from "./components/ordersAdmin/OrderDetails";
+import OrderDetailsUser from "./components/ordersUser/OrderDetailsUser";
 
 
 function App() {
@@ -93,10 +94,20 @@ function App() {
                         <HomePage/>
                     </PrivateRoute>
             }/>
-            <Route path="order-details-user/:number" element={
+            <Route path="/order-details-user" element={
                 hasUserSuperadminRole ?
                     <PrivateRoute>
                         <OrdersUser/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+            <Route path="/order-details-user/:number" element={
+                hasUserSuperadminRole ?
+                    <PrivateRoute>
+                        <OrderDetailsUser/>
                     </PrivateRoute>
                     :
                     <PrivateRoute>

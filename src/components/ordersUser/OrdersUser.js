@@ -14,13 +14,14 @@ const  OrdersUser = () => {
     useEffect(() => {
         ajax(`${baseURL}user/order/query/get-my-orders`, "GET", user.jwt)
             .then((response) => {
+                console.log(response)
                 setOrders(response)
             })
 
     }, []);
 
-    const handleOrderClick = (id) => {
-
+    const handleOrderClick = (number) => {
+        navigate(`/order-details-user/${number}`)
     };
 
     return (
@@ -30,9 +31,9 @@ const  OrdersUser = () => {
                 <h2>Списък на поръчките</h2>
                 <div className="orders-list">
                     {orders.map((order) => (
-                        <div key={order.number}
+                        <div key={order.orderNumber}
                              className="order-summary"
-                             onClick={() => handleOrderClick(parseFloat(order.id))}>
+                             onClick={() => handleOrderClick(order.orderNumber)}>
                             <p>Обект: {order.constructionSite.name}</p>
                             <p>Статус: {order.orderStatus}</p>
                             <p>Тип материал: {order.materialType}</p>
