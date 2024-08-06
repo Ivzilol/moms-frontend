@@ -14,19 +14,13 @@ const ProfileCard = () => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      // TODO get the data from localstorage NB!!!
-      const id = useUser.id;
+      const storedUserData = localStorage.getItem('userData');
+      const userData = JSON.parse(storedUserData);
+      const id = userData.id
       if (jwt) {
         try {
-          // const data = await getUserDetails(id);
-          const dataTest = {
-            firstName: "John",
-            lastName: "Doe",
-            email: "john.doe@example.com",
-            phoneNumber: "+1234567890",
-            password: "securePassword123"
-          };
-          setUserProfile(dataTest);
+          const data = await getUserDetails(id);
+          setUserProfile(data);
         } catch (error) {
           console.error('Failed to fetch user profile:', error);
           setUserProfile(null);
