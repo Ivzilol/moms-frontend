@@ -147,7 +147,7 @@ const ItemListFasteners = ({
                     </div>
                 </>
             )}
-            {userRole && (
+            {userRole && orderStatus !== undefined && (
                 <>
                     <Header/>
                     <div className="order-info">
@@ -177,8 +177,8 @@ const ItemListFasteners = ({
                             <th>Клас</th>
                             <th>Количество</th>
                             <th>Описани</th>
-                            {userRole && <th>Редакция</th>}
-                            {userRole && <th>Изтриване</th>}
+                            {userRole && orderStatus === undefined && <th>Редакция</th>}
+                            {userRole && orderStatus === undefined && <th>Изтриване</th>}
                             {adminRole && <th>Бележка от админ</th>}
                             {adminRole && (
                                 <th>
@@ -204,7 +204,7 @@ const ItemListFasteners = ({
                                 <td>{item.clazz}</td>
                                 <td>{item.quantity}</td>
                                 <td>{item.description}</td>
-                                {userRole && (
+                                {userRole && orderStatus === undefined && (
                                     <td>
                                         <i
                                             className="fas fa-edit"
@@ -213,7 +213,7 @@ const ItemListFasteners = ({
                                         ></i>
                                     </td>
                                 )}
-                                {userRole && (
+                                {userRole && orderStatus === undefined && (
                                     <td>
                                         <i
                                             className="fas fa-trash"
