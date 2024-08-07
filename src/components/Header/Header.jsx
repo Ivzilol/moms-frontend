@@ -20,7 +20,7 @@ export default function Header() {
                     <img src={logo} className={classNames(styles['img-fluid'], styles['logo-image'])} alt='Logo' />
                     <div className="d-flex flex-column">
                         <strong className={styles['logo-text']}>Supply</strong>
-                        <small className={styles['logo-slogan']}>Manager</small>
+                        <strong className={styles['logo-slogan']}>Manager</strong>
                     </div>
                 </a>
 
