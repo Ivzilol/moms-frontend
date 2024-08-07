@@ -1,7 +1,10 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import '../CreateAndSendOrder.css'
+import ajax from "../../../service/FetchService";
+import {useUser} from "../../../userProvider/UserProvider";
 
-const FastenersTemplate = ({ onSave }) => {
+const FastenersTemplate = ({ onSave, category }) => {
+    const user = useUser();
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [diameter, setDiameter] = useState('');
@@ -13,6 +16,7 @@ const FastenersTemplate = ({ onSave }) => {
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
+    const [response, setResponse] = useState([]);
 
     const handleFileChange = (e) => {
         setSpecification(e.target.files[0]);
@@ -68,12 +72,63 @@ const FastenersTemplate = ({ onSave }) => {
         setErrors({});
     };
 
+    const getSearchResult = (searchTerm) => {
+        ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
+            .then((response) => {
+                if (response && Array.isArray(response)) {
+                    setResponse(response);
+                } else {
+                    setResponse([]);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching search results:', error);
+                setResponse([]);
+            });
+    };
+
+    useEffect(() => {
+        if (name.length >= 2) {
+            getSearchResult(name);
+        } else {
+            setResponse([]);
+        }
+    }, [name]);
+
+    const handleSelectResult = (result) => {
+        setType(result.type);
+        setDiameter(result.diameter);
+        setLength(result.length);
+        setLengthUnit(result.lengthUnit);
+        setModel(result.model);
+        setClazz(result.clazz);
+        setQuantity(result.quantity);
+        setDescription(result.description);
+        setName('');
+        setResponse([]);
+    };
+
     return (
         <div className="template-form">
             <label>
                 Търси:
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
+                />
             </label>
+            {response.length > 0 && (
+                <ul className="search-results">
+                    {response.map((result, index) => (
+                        <li key={index} onClick={() => handleSelectResult(result)}>
+                            {result.name}
+                        </li>
+                    ))}
+                </ul>
+            )}
             <label>
                 Тип:
                 <input type="text" value={type} onChange={(e) => setType(e.target.value)} />
@@ -128,6 +183,5 @@ const FastenersTemplate = ({ onSave }) => {
         </div>
     );
 };
-
 
 export default FastenersTemplate;

@@ -59,7 +59,7 @@ const OrderCategoryAndConstructionsSite = () => {
     let itemListTemplate
     let templateEdit;
     if (selectedCategory === "FASTENERS") {
-        template = <FastenersTemplate onSave={handleSave}/>;
+        template = <FastenersTemplate onSave={handleSave} category={selectedCategory}/>;
         itemListTemplate = <ItemListFasteners
             items={requestBody}
             onEdit={handleEdit}
