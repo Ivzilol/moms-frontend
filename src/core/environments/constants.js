@@ -13,7 +13,8 @@ export const endpoints = {
     // USERS
     getUserProfile: (id) => `user/user/query/user/${id}`,
     getAllUsers: 'superadmin/user/query/getallusers',
-    updateUserProfile: (id) => `user/user/command/profile/${id}` 
+    updateUserProfile: (id) => `user/user/command/profile/${id}`,
+    updateUserStatus: (id) => `admin/user/command/profile/${id}`
 };
 
 export const ContentType = {

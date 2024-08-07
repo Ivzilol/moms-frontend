@@ -18,6 +18,7 @@
 
 .form_container {
     background-color: rgb(255 255 255 / 44%) !important;
+    height:fit-content;
 }
 
 /* .edit-user-modal .modal-content {

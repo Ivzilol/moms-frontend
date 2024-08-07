@@ -67,6 +67,24 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
           </div>
 
           <div className="mb-3">
+            <label htmlFor="lastName" className={styles.form_label}>Имейл:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className={`form-control ${fieldErrors.email ? 'is-invalid' : ''}`}
+              value={editedUser.email || ''}
+              onChange={handleChange}
+              placeholder="Въведете Имейл"
+            />
+            {fieldErrors.email && (
+              <div className="invalid-feedback">
+                {fieldErrors.email}
+              </div>
+            )}
+          </div>
+
+          <div className="mb-3">
             <label htmlFor="phoneNumber" className={styles.form_label}>Телефонен Номер:</label>
             <input
               type="text"

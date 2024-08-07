@@ -98,7 +98,7 @@ const UserList = () => {
       } else if (roles.includes('ADMIN') && !roles.includes('SUPERADMIN')) {
         return 'Aдмин';
       } else return 'Потребител'
-      return roles.join(', '); // Fallback to the default display if conditions are not met
+      return roles.join(', ');
     };
 
   return (
