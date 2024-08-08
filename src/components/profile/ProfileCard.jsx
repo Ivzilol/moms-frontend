@@ -6,6 +6,8 @@ import { useUser } from '../../userProvider/UserProvider';
 import { host, endpoints } from '../../core/environments/constants';
 import ajax from '../../service/FetchService';
 
+import {jwtDecode } from 'jwt-decode';
+
 const ProfileCard = () => {
 
   const user = useUser();
@@ -70,6 +72,12 @@ const ProfileCard = () => {
 
   const handleConfirmChangePassword = async () => {
     try {
+
+      // TODO once  yo finish remove the user from local storade and decode jwt:
+      // const userinfo = jwtDecode(user.jwt);
+      // console.log('userInfo test ' + JSON.stringify(userinfo))
+
+      
       const id = JSON.parse(localStorage.getItem('userData')).id;
         const response = await fetch(host + endpoints.updateUserPassword(id), {
             method: 'PATCH',
