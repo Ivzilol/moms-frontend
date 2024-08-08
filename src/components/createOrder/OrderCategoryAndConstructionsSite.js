@@ -24,6 +24,7 @@ import SetTemplate from "./template/SetTemplate";
 import ItemListSet from "./itemLists/ItemListSet";
 import EditSet from "./editItemLists/EditSet";
 import Header from "../Header/Header";
+import ajax from "../../service/FetchService";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -34,29 +35,31 @@ const OrderCategoryAndConstructionsSite = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(null);
+    const [specification, setSpecification] = useState(null);
+    const [orderDescription, setOrderDescription] = useState('');
+
 
     useEffect(() => {
-        const handleBeforeUnload = (e) => {
-            if (requestBody.length > 0) {
-                const confirmationMessage =
-                    "Не сте завършил своята поръчка. Преди да излезете от страницата, " +
-                    "моля да я завършите.";
-                e.preventDefault();
-                e.returnValue = confirmationMessage;
-                return alert(confirmationMessage);
-            }
-        };
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, [requestBody]);
+        if (selectedCategory) {
+            const savedRequestBody = JSON.parse(localStorage.getItem(selectedCategory) || '[]');
+            setRequestBody(savedRequestBody);
+        } else {
+            setRequestBody([]);
+        }
+    }, [selectedCategory]);
+
+    useEffect(() => {
+        if (selectedCategory) {
+            localStorage.setItem(selectedCategory, JSON.stringify(requestBody));
+        }
+    }, [requestBody, selectedCategory]);
+
 
     let template;
     let itemListTemplate
     let templateEdit;
     if (selectedCategory === "FASTENERS") {
-        template = <FastenersTemplate onSave={handleSave}/>;
+        template = <FastenersTemplate onSave={handleSave} category={selectedCategory}/>;
         itemListTemplate = <ItemListFasteners
             items={requestBody}
             onEdit={handleEdit}
@@ -172,6 +175,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyFasteners(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -181,9 +185,9 @@ const OrderCategoryAndConstructionsSite = () => {
                 type: item.type,
                 diameter: item.diameter,
                 length: item.length,
-                maxLengthUnit: item.maxLengthUnit,
+                lengthUnit: item.lengthUnit,
                 model: item.model,
-                clazz: item.classType,
+                clazz: item.clazz,
                 quantity: item.quantity,
                 description: item.description,
             }))
@@ -192,6 +196,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyGalvanizedSheet(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -211,6 +216,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyInsulation(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -228,6 +234,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyMetal(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -244,6 +251,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyPanel(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -270,6 +278,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodyRebar(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -288,6 +297,7 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createRequestBodySet(formattedDate) {
         return {
+            orderDescription: orderDescription,
             constructionSite: {
                 name: selectedSite
             },
@@ -307,7 +317,11 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createOrder() {
         const formData = new FormData();
+        formData.append("files", specification);
         const formattedDate = new Date(dateOfDelivery).toISOString();
+        const files = requestBody.flatMap(item => item.specification);
+        files.forEach(file => formData.append("files", file));
+
         let payload;
         if (selectedCategory === "FASTENERS") {
             payload = createRequestBodyFasteners(formattedDate);
@@ -339,10 +353,24 @@ const OrderCategoryAndConstructionsSite = () => {
             if (response.ok) {
                 alert('Вашата заявка е изпратена успешно');
                 setRequestBody([]);
+                localStorage.removeItem(selectedCategory);
             }
 
         })
     }
+
+    const handleFileChange = (e) => {
+        setSpecification(e.target.files[0]);
+    };
+
+    const [constructions, setConstructions] = useState([]);
+
+    useEffect(() => {
+        ajax(`${baseURL}user/order/query/construction/all`, "GET", user.jwt)
+            .then((response) => {
+                setConstructions(response)
+            })
+    }, [])
 
     return (
         <>
@@ -370,17 +398,19 @@ const OrderCategoryAndConstructionsSite = () => {
                     </select>
                 </div>
                 <div className="dropdown">
-                    <label htmlFor="constructionSite">Construction Site:</label>
+                    <label htmlFor="constructionSite">Строителен Обект:</label>
                     <select id="constructionSite"
                             value={selectedSite}
                             onChange={(e) => setSelectedSite(e.target.value)}>
-                        <option value="">Изберете Construction Site</option>
-                        <option value="Цех за преработка на метали">Цех за преработка на метали</option>
-                        <option value="Кауфланд Малинова Долина">Кауфланд Малинова Долина</option>
-                        <option value="Къща Бояна">Къща Бояна</option>
-                        <option value="Жилищна сграда SoHome">Жилищна сграда SoHome</option>
-                        <option value="Склад за храни">Склад за храни</option>
-                        <option value="Цех за панели">Цех за панели</option>
+
+                        <option value="">Изберете Строителен Обект</option>
+                        {constructions.length > 0
+                            ?
+                            constructions.map((site) => (
+                                <option key={site.id}>{site.name}</option>
+                            )) : (
+                                <></>
+                            )}
                     </select>
                 </div>
                 <div className="dropdown">
@@ -392,6 +422,19 @@ const OrderCategoryAndConstructionsSite = () => {
                         value={dateOfDelivery}
                         onChange={(e) => setDateOfDelivery(e.target.value)}
                     />
+                </div>
+                <div className="dropdown">
+                    <label>
+                        Спецификация:
+                        <input type="file" onChange={handleFileChange}/>
+                    </label>
+                </div>
+                <div className="dropdown">
+                    <label>
+                        Описание:
+                        <textarea value={orderDescription}
+                                  onChange={(e) => setOrderDescription(e.target.value)}/>
+                    </label>
                 </div>
             </div>
             {isEditing && (

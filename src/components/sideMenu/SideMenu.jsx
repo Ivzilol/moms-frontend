@@ -3,7 +3,6 @@ import classes from './SideMenu.module.css';
 
 import TopTabsNavUsers from '../topTabsNav/TopTabsNavUsers';
 import ProfileCard from '../profile/ProfileCard';
-import OrderPage from '../../pages/orderPage/OrderPage';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
@@ -41,6 +40,15 @@ const SideMenu = () => {
         navigate('/create-order');
     };
 
+    const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
+
+    const navigateToOrder = () => {
+        if (hasAdminSuperadminRole) {
+            navigate('/orders-admin')
+        } else {
+            navigate('/orders-user')
+        }
+    }
 
     return (
         <div className={classes.flex_container}>
@@ -48,24 +56,31 @@ const SideMenu = () => {
                 <div className={`nav flex-column nav-pills ${classes.navPills}`} id="v-pills-tab"
                      role="tablist"
                      aria-orientation="vertical">
-                    <button
-                        className={`nav-link active ${classes.navLink}`}
-                        id="v-pills-home-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-home"
-                        type="button" role="tab"
-                        aria-controls="v-pills-home"
-                        onClick={handleNavigate}
-                        aria-selected="true">
-                        <FontAwesomeIcon icon={faPlus} className={classes.icon}
-
-                        /> Създай Поръчки
-                    </button>
-                    <button className={`nav-link ${classes.navLink}`} id="v-pills-profile-tab" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-profile" type="button" role="tab"
+                    {roles.includes('USER') && (
+                        <button
+                            className={`nav-link active ${classes.navLink}`}
+                            id="v-pills-home-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-home"
+                            type="button" role="tab"
+                            aria-controls="v-pills-home"
+                            onClick={handleNavigate}
+                            aria-selected="true">
+                            <FontAwesomeIcon icon={faPlus} className={classes.icon}
+                            /> Създай Поръчки
+                        </button>
+                    )}
+                    <button className={`nav-link ${classes.navLink}`}
+                            id="v-pills-profile-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-profile"
+                            type="button"
+                            role="tab"
                             aria-controls="v-pills-profile"
+                            onClick={navigateToOrder}
                             aria-selected="false">
-                        <FontAwesomeIcon icon={faClipboardList} className={classes.icon}/>Поръчки
+                        <FontAwesomeIcon icon={faClipboardList} className={classes.icon}
+                        />
+                        Поръчки
                     </button>
                     <button className={`nav-link ${classes.navLink}`} id="v-pills-messages-tab"
                             data-bs-toggle="pill"
@@ -87,7 +102,7 @@ const SideMenu = () => {
                          aria-labelledby="v-pills-home-tab" tabIndex="0">Home content...
                     </div>
                     <div className="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                         aria-labelledby="v-pills-profile-tab" tabIndex="0"><OrderPage/></div>
+                         aria-labelledby="v-pills-profile-tab" tabIndex="0"></div>
                     <div className="tab-pane fade" id="v-pills-messages" role="tabpanel"
                          aria-labelledby="v-pills-messages-tab" tabIndex="0"><ProfileCard/></div>
                     {roles.includes('SUPERADMIN') && (

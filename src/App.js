@@ -9,6 +9,10 @@ import SideMenu from "./components/sideMenu/SideMenu";
 import LoginPage from "./pages/login/LoginPage";
 import CreateConstructionSite from "./components/createConstructionSite/CreateConstructionSite";
 import CreateOrder from "./components/createOrder/CreateOrder";
+import ProcessingOrdersAdmin from "./components/ordersAdmin/ProcessingOrdersAdmin";
+import OrdersUser from "./components/ordersUser/OrdersUser";
+import OrderDetails from "./components/ordersAdmin/OrderDetails";
+import OrderDetailsUser from "./components/ordersUser/OrderDetailsUser";
 
 
 function App() {
@@ -29,6 +33,7 @@ function App() {
 
     const hasValidRole = ['SUPERADMIN', 'ADMIN', 'USER'].some(role => roles.includes(role));
     const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
+    const hasUserSuperadminRole = ['SUPERADMIN', 'USER'].some(role => roles.includes(role));
     return (
 
         <Routes>
@@ -68,6 +73,48 @@ function App() {
                         </PrivateRoute>
                 }
             />
+            <Route path="/orders-admin" element={
+                hasAdminSuperadminRole ?
+                    <PrivateRoute>
+                        <ProcessingOrdersAdmin/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+
+            <Route path="/order-details/:orderNumber" element={
+                hasValidRole ?
+                    <PrivateRoute>
+                        <OrderDetails/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+            <Route path="/order-details-user" element={
+                hasUserSuperadminRole ?
+                    <PrivateRoute>
+                        <OrdersUser/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+            <Route path="/order-details-user/:number" element={
+                hasUserSuperadminRole ?
+                    <PrivateRoute>
+                        <OrderDetailsUser/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+            <Route path="/orders-user" element={<OrdersUser/>}/>
             <Route path="/login" element={<LoginPage/>}/>
         </Routes>
     );

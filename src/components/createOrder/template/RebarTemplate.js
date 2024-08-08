@@ -97,7 +97,7 @@ const RebarTemplate = ( { onSave }) => {
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
             </label>
             <label>
-                Описани:
+                Описание:
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
             </label>
             <label>

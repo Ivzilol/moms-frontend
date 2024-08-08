@@ -1,18 +1,22 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import '../CreateAndSendOrder.css'
+import ajax from "../../../service/FetchService";
+import {useUser} from "../../../userProvider/UserProvider";
 
-const FastenersTemplate = ({ onSave }) => {
+const FastenersTemplate = ({ onSave, category }) => {
+    const user = useUser();
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [diameter, setDiameter] = useState('');
     const [length, setLength] = useState('');
     const [lengthUnit, setLengthUnit] = useState('');
     const [model, setModel] = useState('');
-    const [classType, setClassType] = useState('');
+    const [clazz, setClazz] = useState('');
     const [quantity, setQuantity] = useState('');
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
+    const [response, setResponse] = useState([]);
 
     const handleFileChange = (e) => {
         setSpecification(e.target.files[0]);
@@ -30,7 +34,7 @@ const FastenersTemplate = ({ onSave }) => {
         }
         if (!lengthUnit) newErrors.lengthUnit = 'Моля изберете м. ед.';
         if (!model) newErrors.model = 'Моля добавете модел';
-        if (!classType) newErrors.classType = 'Моля добавете клас';
+        if (!clazz) newErrors.classType = 'Моля добавете клас';
         if (!quantity) newErrors.quantity = 'Моля добавете количество';
 
         setErrors(newErrors);
@@ -47,7 +51,7 @@ const FastenersTemplate = ({ onSave }) => {
             length,
             lengthUnit,
             model,
-            classType,
+            clazz,
             quantity,
             description,
             specification
@@ -61,19 +65,70 @@ const FastenersTemplate = ({ onSave }) => {
         setLength('');
         setLengthUnit('');
         setModel('');
-        setClassType('');
+        setClazz('');
         setQuantity('');
         setDescription('');
         setSpecification(null);
         setErrors({});
     };
 
+    const getSearchResult = (searchTerm) => {
+        ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
+            .then((response) => {
+                if (response && Array.isArray(response)) {
+                    setResponse(response);
+                } else {
+                    setResponse([]);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching search results:', error);
+                setResponse([]);
+            });
+    };
+
+    useEffect(() => {
+        if (name.length >= 2) {
+            getSearchResult(name);
+        } else {
+            setResponse([]);
+        }
+    }, [name]);
+
+    const handleSelectResult = (result) => {
+        setType(result.type);
+        setDiameter(result.diameter);
+        setLength(result.length);
+        setLengthUnit(result.lengthUnit);
+        setModel(result.model);
+        setClazz(result.clazz);
+        setQuantity(result.quantity);
+        setDescription(result.description);
+        setName('');
+        setResponse([]);
+    };
+
     return (
         <div className="template-form">
             <label>
                 Търси:
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
+                />
             </label>
+            {response.length > 0 && (
+                <ul className="search-results">
+                    {response.map((result, index) => (
+                        <li key={index} onClick={() => handleSelectResult(result)}>
+                            {result.name}
+                        </li>
+                    ))}
+                </ul>
+            )}
             <label>
                 Тип:
                 <input type="text" value={type} onChange={(e) => setType(e.target.value)} />
@@ -106,7 +161,7 @@ const FastenersTemplate = ({ onSave }) => {
             </label>
             <label>
                 Клас:
-                <input type="text" value={classType} onChange={(e) => setClassType(e.target.value)} />
+                <input type="text" value={clazz} onChange={(e) => setClazz(e.target.value)} />
                 {errors.classType && <span className="error">{errors.classType}</span>}
             </label>
             <label>
@@ -115,7 +170,7 @@ const FastenersTemplate = ({ onSave }) => {
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
             </label>
             <label>
-                Описани:
+                Описание:
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
             </label>
             <label>
@@ -128,6 +183,5 @@ const FastenersTemplate = ({ onSave }) => {
         </div>
     );
 };
-
 
 export default FastenersTemplate;

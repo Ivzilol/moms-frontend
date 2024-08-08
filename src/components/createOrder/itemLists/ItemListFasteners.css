@@ -36,3 +36,52 @@
     border: none;
     cursor: pointer;
 }
+
+.item-list input[type="checkbox"] {
+    transform: scale(0.4);
+}
+
+.item-list tr.selected {
+    background-color: red;
+}
+
+.order-info {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-info p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.order-info p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.order-info p a:hover {
+    text-decoration: underline;
+}
+
+.order-info select {
+    margin-left: 10px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    width: 17%;
+}
+
+.order-info select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}
