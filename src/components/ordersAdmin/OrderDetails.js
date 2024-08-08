@@ -16,6 +16,7 @@ const OrderDetails = () => {
         ajax(`${baseURL}admin/order/query/get-order/${parseInt(id)}`, "GET", user.jwt)
             .then((response) => {
                 setOrder(response);
+                console.log(response)
             })
     }, [user.jwt, id]);
 
@@ -41,6 +42,7 @@ const OrderDetails = () => {
                             onDelete={() => {
                             }}
                             orderDescription={order.orderDescription}
+                            orderDate={order.orderDate}
                             deliveryDate={order.deliveryDate}
                             orderStatus={order.orderStatus}
                             materialType={order.materialType}

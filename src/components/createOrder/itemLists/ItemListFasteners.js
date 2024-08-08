@@ -4,10 +4,11 @@ import {useUser} from "../../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
 import baseURL from "../../baseURL/BaseURL";
 import Header from "../../Header/Header";
+import {useNavigate} from "react-router-dom";
 
 const ItemListFasteners = ({
                                orderId, items, onEdit, onDelete,
-                               orderDescription, deliveryDate, orderStatus,
+                               orderDescription, orderDate, deliveryDate, orderStatus,
                                materialType, specificationFileUrl, orderNumber, constructionName
                            }) => {
     const user = useUser([]);
@@ -16,6 +17,7 @@ const ItemListFasteners = ({
     const [currentOrderStatus, setCurrentOrderStatus] = useState(orderStatus);
     const [adminNotes, setAdminNotes] = useState({});
     const [requestBody, setRequestBody] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setRoles(getRolesFromJWT());
@@ -93,6 +95,7 @@ const ItemListFasteners = ({
             id: orderId,
             orderNumber: orderNumber,
             orderDescription: orderDescription,
+            orderDate: orderDate,
             deliveryDate: deliveryDate,
             constructionSite: {
                 name: constructionName
@@ -106,7 +109,7 @@ const ItemListFasteners = ({
             new Blob([JSON.stringify(payload)], {
                 type: "application/json"
             }))
-        fetch(`${baseURL}user/order/command/update-order`, {
+        fetch(`${baseURL}admin/order/command/update-order`, {
             method: "PATCH",
             headers: {
                 "Authorization": `Bearer ${user.jwt}`
@@ -116,6 +119,7 @@ const ItemListFasteners = ({
             if (response.ok) {
                 alert('Успешно променихте статуса на заявката!');
                 localStorage.removeItem(`selectedItems_${orderId}`);
+                navigate('/orders-admin');
             }
         })
 
@@ -179,7 +183,7 @@ const ItemListFasteners = ({
                             <th>Описани</th>
                             {userRole && orderStatus === undefined && <th>Редакция</th>}
                             {userRole && orderStatus === undefined && <th>Изтриване</th>}
-                            {adminRole && <th>Бележка от админ</th>}
+                            <th>Бележка от админ</th>
                             {adminRole && (
                                 <th>
                                     <input
@@ -230,6 +234,9 @@ const ItemListFasteners = ({
                                             onChange={(e) => handleNoteChange(index, e.target.value)}
                                         />
                                     </td>
+                                )}
+                                {userRole && (
+                                    <td>{item.adminNote}</td>
                                 )}
                                 {adminRole && (
                                     <td>
