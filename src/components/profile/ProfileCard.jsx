@@ -68,36 +68,9 @@ const ProfileCard = () => {
     setShowModal(true);
   };
 
-
-  // const handleConfirmChangePassword = async () => {
-  //   const payload = {
-  //     currentPassword: currentPassword,
-  //     newPassword: newPassword,
-  //     confirmPassword: confirmPassword,
-  //   };
-  //   console.log('payload ' +  payload )
-
-  //   try {
-  //     const userData = JSON.parse(localStorage.getItem('userData'));
-  //     const id = userData.id;
-      
-  //     await ajax(`http://localhost:8080/v1/user/user/command/change-password/${id}`, 'PATCH', user.jwt, payload);
-  //     setUserProfile({ ...userProfile, password: newPassword });
-  //     setIsEditingPassword(false);
-  //     setShowModal(false);
-  //     console.log('Password saved:', newPassword);
-  //     alert('Паролата е успешно променена!');
-  //   } catch (error) {
-  //     console.error('Error updating password:', error);
-  //     alert('Възникна грешка при промяната на паролата, моля опитайте отново.');
-  //   }
-  // };
-
   const handleConfirmChangePassword = async () => {
     try {
       const id = JSON.parse(localStorage.getItem('userData')).id;
-        console.log(id)
-        console.log(user.jwt)
         const response = await fetch(host + endpoints.updateUserPassword(id), {
             method: 'PATCH',
             headers: {

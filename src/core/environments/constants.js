@@ -14,7 +14,8 @@ export const endpoints = {
     getUserProfile: (id) => `user/user/query/user/${id}`,
     getAllUsers: 'superadmin/user/query/getallusers',
     // updateUserProfile: (id) => `user/user/command/profile/${id}`,
-    updateUserStatus: (id) => `admin/user/command/profile/${id}`,
+    updateUserStatus: (id) => `superadmin/user/command/profile/status/${id}`,
+    updateUserProfile: (id) => `superadmin/user/command/profile/${id}`,
     updateUserPassword: (id) => `user/user/command/change-password/${id}`
 };
 
