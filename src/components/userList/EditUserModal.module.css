@@ -1,0 +1,63 @@
+/* EditUserModal.css */
+.modal_container {
+    border-color: #ffff;
+}
+.form_label {
+    color: #ffff !important;
+}
+
+.button_container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.btn_success {
+    background-color: #008000, 
+}
+
+.form_container {
+    background-color: rgb(255 255 255 / 44%) !important;
+    height:fit-content;
+}
+
+/* .edit-user-modal .modal-content {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.edit-user-modal .modal-header {
+  border-bottom: 1px solid #e9ecef;
+  padding: 15px;
+}
+
+.edit-user-modal .modal-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.edit-user-modal .modal-body {
+  padding: 20px;
+}
+
+.edit-user-modal .modal-footer {
+  border-top: 1px solid #e9ecef;
+  padding: 15px;
+}
+
+.edit-user-modal .form-label {
+  font-weight: bold;
+}
+
+.edit-user-modal .form-control {
+  border-radius: 5px;
+  border-color: #ced4da;
+}
+
+.edit-user-modal .form-control.is-invalid {
+  border-color: #dc3545;
+}
+
+.edit-user-modal .invalid-feedback {
+  display: block;
+} */

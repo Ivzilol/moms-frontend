@@ -68,10 +68,17 @@ const LoginForm = () => {
             })
             .then(({data, headers}) => {
                 const authHeader = data.token;
-                const token = authHeader.split(' ')
+                const token = authHeader.split(' ');
+                const userData = {
+                        "id": data.id,
+                        "email": data.email,
+                        "roles": data.roles     
+                }
+                
                 if (token[1]) {
                     user.setJwt(token[1]);
                     localStorage.setItem('jwt', token[1]);
+                    localStorage.setItem('userData', JSON.stringify(userData))
                     setIsLoading(false);
                     navigate('/')
                  }
