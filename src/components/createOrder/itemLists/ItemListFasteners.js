@@ -48,8 +48,8 @@ const ItemListFasteners = ({
         localStorage.setItem(`selectedItems_${orderId}`, JSON.stringify(items));
     }
 
-    const userRole = ['USER'].some(role => roles.includes(role));
-    const adminRole = ['ADMIN'].some(role => roles.includes(role));
+    const userRole = roles.length === 1 && roles.includes('USER');
+    const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleSelectAll = () => {
         if (selectedItems.length === items.length) {
@@ -72,12 +72,21 @@ const ItemListFasteners = ({
         setCurrentOrderStatus(newStatus);
     };
 
+    useEffect(() => {
+        const initialAdminNotes = items.reduce((notes, item, index) => {
+            notes[index] = item.adminNote || '';
+            return notes;
+        }, {});
+        setAdminNotes(initialAdminNotes);
+    }, [items]);
+
     const handleNoteChange = (index, note) => {
         setAdminNotes(prevNotes => ({
             ...prevNotes,
             [index]: note
         }));
     };
+
 
     function updateRequestBody() {
         const body = items.map((item, index) => ({
@@ -226,11 +235,20 @@ const ItemListFasteners = ({
                                         ></i>
                                     </td>
                                 )}
-                                {adminRole && (
+                                {adminRole && item.adminNote === '' &&(
                                     <td>
                                         <input
                                             type="text"
                                             value={adminNotes[index] || ''}
+                                            onChange={(e) => handleNoteChange(index, e.target.value)}
+                                        />
+                                    </td>
+                                )}
+                                {adminRole && item.adminNote !== '' && (
+                                    <td>
+                                        <input
+                                            type="text"
+                                            value={adminNotes[index] !== undefined ? adminNotes[index] : item.adminNote}
                                             onChange={(e) => handleNoteChange(index, e.target.value)}
                                         />
                                     </td>

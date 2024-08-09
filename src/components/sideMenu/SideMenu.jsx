@@ -41,6 +41,7 @@ const SideMenu = () => {
     };
 
     const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
+    const userRole = roles.length === 1 && roles.includes('USER');
 
     const navigateToOrder = () => {
         if (hasAdminSuperadminRole) {
@@ -57,7 +58,7 @@ const SideMenu = () => {
                 <div className={`nav flex-column nav-pills me-3 ${classes.navPills}`} id="v-pills-tab"
                      role="tablist"
                      aria-orientation="vertical">
-                    {roles.includes('USER') && (
+                    {userRole && (
                         <button
                             className={`nav-link active ${classes.navLink}`}
                             id="v-pills-home-tab"
