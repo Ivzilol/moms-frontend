@@ -23,7 +23,7 @@ const UserList = () => {
 
       const [users, setUsers] = useState([]);
 
-
+    //  Handle the API requests from the BE (get users, edit status)
       const getUsers = async () => {
         try {
             const allUsers = await ajax(host + endpoints.getAllUsers, 'GET', user.jwt);
@@ -38,6 +38,21 @@ const UserList = () => {
           getUsers(); 
       }, [user.jwt]);
 
+      const  handleChangingStatus = async (e) => {
+        // e.preventDefault();
+        try {
+          const userStatus = { isActive: false };
+          console.log("id of the use" + selectedUserForDelete.id);
+          await ajax(`${host}${endpoints.updateUserStatus}/${selectedUserForDelete.id}`, 'PATCH', user.jwt, userStatus);
+          alert('Деактивацията е успешна');
+          setUsers(users.map(u => u.id === selectedUserForDelete.id ? { ...u, isActive: false } : u));
+          handleHideDeleteModal();
+        } catch (error) {
+          console.error('Error deactivating user:', error);
+          alert('Възникна грешка, моля опитайте отново');
+        }
+      };
+
       // Modals
       
       const handleShowDeleteModal = (user) => {
@@ -48,13 +63,6 @@ const UserList = () => {
       const handleHideDeleteModal = () => {
         setSelectedUserForDelete(null);
         setIsDeleteModalOpen(false);
-      };
-
-      const handleDeleteUser = (e) => {
-        e.preventDefault();
-        // Your delete logic here
-        console.log('User deleted');
-        handleHideDeleteModal();
       };
 
       // edit Modal
@@ -68,9 +76,10 @@ const UserList = () => {
         setIsEditModalOpen(false);
         setSelectedUserForEdit(null);
       };
+
+      // TODO
     
       const handleSaveUser = (editedUser) => {
-        // Example: Validate fields and set fieldErrors if necessary
         const errors = {};
         if (!editedUser.firstName) {
           errors.firstName = 'First Name is required';
@@ -84,7 +93,6 @@ const UserList = () => {
         if (Object.keys(errors).length > 0) {
           setFieldErrors(errors);
         } else {
-          // Perform save operation here
           console.log('User saved', editedUser);
           setFieldErrors({});
           handleHideEditModal();
@@ -96,7 +104,7 @@ const UserList = () => {
       if (roles.includes('SUPERADMIN')) {
           return 'Модератор';
       } else if (roles.includes('ADMIN') && !roles.includes('SUPERADMIN')) {
-        return 'Aдмин';
+        return 'Aдминистратор';
       } else return 'Потребител'
       return roles.join(', ');
     };
@@ -151,7 +159,7 @@ const UserList = () => {
         <DeleteUserModal
           isOpen={isDeleteModalOpen}
           onClose={handleHideDeleteModal}
-          onDelete={handleDeleteUser}
+          onDelete={handleChangingStatus}
           firstName={selectedUserForDelete?.firstName}
         />
 

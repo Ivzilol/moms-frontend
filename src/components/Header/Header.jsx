@@ -1,16 +1,21 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, } from 'react';
 import classNames from 'classnames';
 import styles from './Header.module.css';
 import logo from '../../assets/images/MCK-logo.png';
 import AuthContext from '../../context/AuthContext';
 import {useUser} from "../../userProvider/UserProvider";
+import {useNavigate} from "react-router-dom";
 
 export default function Header() {
 
     const { isAuthenticated, logoutHandler } = useState();
+    const navigate = useNavigate();
     const user = useUser();
+
     function logout() {
+        localStorage.setItem('userData', null);
         user.setJwt(null)
+        navigate('/login');
     }
 
     return (

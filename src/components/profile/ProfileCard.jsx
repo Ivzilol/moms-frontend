@@ -3,11 +3,18 @@ import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './ProfileCard.module.css';
 import { useUser } from '../../userProvider/UserProvider';
+import { host, endpoints } from '../../core/environments/constants';
+import ajax from '../../service/FetchService';
+
+import {jwtDecode } from 'jwt-decode';
 
 const ProfileCard = () => {
+
+  const user = useUser();
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [currentPassword, setCurrentPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const { userProfile, setUserProfile, getUserDetails, jwt, loading } = useUser();
@@ -39,6 +46,14 @@ const ProfileCard = () => {
     setIsEditingPassword(true);
   };
 
+  const handleClosePasswordEdit = () => {
+    setIsEditingPassword(false);
+  };
+
+  const handleCurrentPasswordChange = (e) => {
+    setCurrentPassword(e.target.value);
+  };
+
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
   };
@@ -51,16 +66,48 @@ const ProfileCard = () => {
     if (newPassword !== confirmPassword) {
       alert("Паролите не съвпадат!");
       return;
-    }
+    } 
     setShowModal(true);
   };
 
-  const handleConfirmChangePassword = () => {
-    setUserProfile({ ...userProfile, password: newPassword });
-    setIsEditingPassword(false);
-    setShowModal(false);
-    console.log('Password saved:', newPassword);
-  };
+  const handleConfirmChangePassword = async () => {
+    try {
+
+      // TODO once  yo finish remove the user from local storade and decode jwt:
+      // const userinfo = jwtDecode(user.jwt);
+      // console.log('userInfo test ' + JSON.stringify(userinfo))
+
+      
+      const id = JSON.parse(localStorage.getItem('userData')).id;
+        const response = await fetch(host + endpoints.updateUserPassword(id), {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.jwt}`,
+            },
+            body: JSON.stringify({
+              currentPassword: currentPassword,
+              newPassword: newPassword,
+              confirmPassword: confirmPassword,
+            }),
+        });
+
+        if (response.status === 200) {
+            
+            console.log('Change password successful', response);
+            setIsEditingPassword(false);
+            setShowModal(false);
+            console.log('Password saved:', newPassword);
+            alert('Паролата е успешно променена!');
+        
+        } else {
+            console.error('Change Password failed');
+            alert('Възникна грешка при промяната на паролата, моля опитайте отново.');
+        }
+    } catch (error) {
+        console.error('Error updating passowrd:', error);
+    }
+};
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -99,7 +146,17 @@ const ProfileCard = () => {
       <div className="mb-3">
         {isEditingPassword ? (
           <>
-            <div className='row'>
+            <div className={`row ${styles.edit_passwords}`}>
+              <div className='col-md-6 mb-3'>
+                <label htmlFor="currentPassword" className="form-label">Текуща Парола</label>
+                <input
+                  type="password"
+                  className="form-control mb-2"
+                  id="currentPassword"
+                  value={currentPassword}
+                  onChange={handleCurrentPasswordChange}
+                />
+              </div>
               <div className='col-md-6 mb-3'>
                 <label htmlFor="newPassword" className="form-label">Нова Парола</label>
                 <input
@@ -122,6 +179,7 @@ const ProfileCard = () => {
               </div>
             </div>
             <button className="btn btn-primary" onClick={handleShowModal}>Запази</button>
+            <button className="btn btn-link" onClick={handleClosePasswordEdit}>Затвори</button>
           </>
         ) : (
           <>
