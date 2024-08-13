@@ -169,8 +169,10 @@ const ItemListFasteners = ({
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката: {orderStatus} </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank"
-                                                     rel="noopener noreferrer">{specificationFileUrl}</a></p>
+                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                                 изтегли спецификация
+                            </a>
+                        </p>
                     </div>
                 </>
             )}
@@ -190,6 +192,7 @@ const ItemListFasteners = ({
                             <th>Клас</th>
                             <th>Количество</th>
                             <th>Описани</th>
+                            <th>Спецификация</th>
                             {userRole && orderStatus === undefined && <th>Редакция</th>}
                             {userRole && orderStatus === undefined && <th>Изтриване</th>}
                             <th>Бележка от админ</th>
@@ -217,6 +220,11 @@ const ItemListFasteners = ({
                                 <td>{item.clazz}</td>
                                 <td>{item.quantity}</td>
                                 <td>{item.description}</td>
+                                <td>
+                                    <a href={item.specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                                        изтегли спецификация
+                                    </a>
+                                </td>
                                 {userRole && orderStatus === undefined && (
                                     <td>
                                         <i
