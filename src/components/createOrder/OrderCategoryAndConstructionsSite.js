@@ -317,10 +317,23 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createOrder() {
         const formData = new FormData();
-        formData.append("files", specification);
         const formattedDate = new Date(dateOfDelivery).toISOString();
-        const files = requestBody.flatMap(item => item.specification);
-        files.forEach(file => formData.append("files", file));
+
+        if (specification) {
+            const specificationPrefix = '000__';
+            const newSpecificationFile = new File([specification], specificationPrefix + specification.name, { type: specification.type });
+            formData.append("files", newSpecificationFile);
+        }
+
+        const files = requestBody.flatMap(item => item.specification).filter(file => file);
+
+        files.forEach((file, index) => {
+            if (file && file.name) {
+                const prefix = String(index + 1).padStart(3, '0') + '__';
+                const newFile = new File([file], prefix + file.name, { type: file.type });
+                formData.append("files", newFile);
+            }
+        });
 
         let payload;
         if (selectedCategory === "FASTENERS") {
