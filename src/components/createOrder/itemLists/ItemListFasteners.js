@@ -155,7 +155,8 @@ const ItemListFasteners = ({
                             </select>
                         </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank"
+                                                     rel="noopener noreferrer">
                             изтегли спецификация
                         </a></p>
                     </div>
@@ -170,9 +171,9 @@ const ItemListFasteners = ({
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката: {orderStatus} </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
-                                 изтегли спецификация
-                            </a>
+                        <p>URL на спецификацията: {specificationFileUrl && <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                            изтегли спецификация
+                        </a>}
                         </p>
                     </div>
                 </>
@@ -222,9 +223,9 @@ const ItemListFasteners = ({
                                 <td>{item.quantity}</td>
                                 <td>{item.description}</td>
                                 <td>
-                                    <a href={item.specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                                    {item.specificationFileUrl && <a href={item.specificationFileUrl} target="_blank" rel="noopener noreferrer">
                                         изтегли спецификация
-                                    </a>
+                                    </a>}
                                 </td>
                                 {userRole && orderStatus === undefined && (
                                     <td>
@@ -244,7 +245,7 @@ const ItemListFasteners = ({
                                         ></i>
                                     </td>
                                 )}
-                                {adminRole && item.adminNote === '' &&(
+                                {adminRole && item.adminNote === '' && (
                                     <td>
                                         <input
                                             type="text"

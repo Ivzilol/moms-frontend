@@ -325,9 +325,12 @@ const OrderCategoryAndConstructionsSite = () => {
             formData.append("files", newSpecificationFile);
         }
 
-        const files = requestBody.flatMap(item => item.specification).filter(file => file);
+        const files = requestBody.flatMap((item, itemIndex) =>
+            item.specification ? [{ file: item.specification, index: itemIndex }] : [])
+            .filter(entry => entry.file);
 
-        files.forEach((file, index) => {
+        files.forEach((entry) => {
+            const { file, index } = entry;
             if (file && file.name) {
                 const prefix = String(index + 1).padStart(3, '0') + '__';
                 const newFile = new File([file], prefix + file.name, { type: file.type });
