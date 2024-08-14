@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-const DeleteUserModal = ({ isOpen, onClose, onDelete, firstName }) => {
+const DeleteUserModal = ({ isOpen, onClose, onDelete, firstName}) => {
     const handleDelete = () => {
         onDelete(); 
         onClose();

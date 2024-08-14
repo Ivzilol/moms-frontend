@@ -41,11 +41,15 @@ const UserList = () => {
       const  handleChangingStatus = async (e) => {
         // e.preventDefault();
         try {
-          const userStatus = { isActive: false };
-          console.log("id of the use" + selectedUserForDelete.id);
+          const userStatus = {isActive: !selectedUserForDelete.isActive};
           await ajax(`${host}${endpoints.updateUserStatus}/${selectedUserForDelete.id}`, 'PATCH', user.jwt, userStatus);
-          alert('Деактивацията е успешна');
-          setUsers(users.map(u => u.id === selectedUserForDelete.id ? { ...u, isActive: false } : u));
+            selectedUserForDelete.isActive = userStatus.isActive;
+           
+          if(selectedUserForDelete.isActive === false){ 
+            alert('Aктивацията е успешна');
+          } else alert('Деактивацията е успешна');
+          
+          setUsers(users.map(u => u.id === selectedUserForDelete.id ? { ...u, isActive: selectedUserForDelete.isActive } : u));
           handleHideDeleteModal();
         } catch (error) {
           console.error('Error deactivating user:', error);
@@ -140,7 +144,7 @@ const UserList = () => {
                                             className={`btn btn-warning mb-1 ml-2 ${styles.button_customize}`}
                                             onClick={() => handleShowDeleteModal(user)}
                                         >
-                                            Деактивирай
+                                           {user.isActive === true ? 'Деактивирай' : 'Активирай'} 
                                         </button>
                                         <button 
                                             type='button' 
