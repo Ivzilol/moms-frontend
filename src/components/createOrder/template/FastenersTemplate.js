@@ -76,6 +76,7 @@ const FastenersTemplate = ({ onSave, category }) => {
         ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
             .then((response) => {
                 if (response && Array.isArray(response)) {
+                    console.log(response)
                     setResponse(response);
                 } else {
                     setResponse([]);
@@ -98,8 +99,8 @@ const FastenersTemplate = ({ onSave, category }) => {
     const handleSelectResult = (result) => {
         setType(result.type);
         setDiameter(result.diameter);
-        setLength(result.length);
-        setLengthUnit(result.lengthUnit);
+        setLength(result.length.split(' ')[0]);
+        setLengthUnit(result.length.split(' ')[1]);
         setModel(result.model);
         setClazz(result.clazz);
         setQuantity(result.quantity);
