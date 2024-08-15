@@ -8,7 +8,7 @@ import { host, endpoints } from '../../core/environments/constants'
 import DeleteUserModal from './DeleteUserModal';
 import EditUserModal from './EditUserModal';
 
-const UserList = () => {
+const UserList = ({ active }) => {
 
   const user = useUser();
   const navigate = useNavigate();
@@ -25,9 +25,10 @@ const UserList = () => {
 
     //  Handle the API requests from the BE (get users, edit status)
       const getUsers = async () => {
+
         try {
             const allUsers = await ajax(host + endpoints.getAllUsers, 'GET', user.jwt);
-            console.log(allUsers);
+            // console.log(allUsers);
             setUsers(allUsers);
         } catch (error) {
             console.error("Error fetching user details:", error);
@@ -37,22 +38,46 @@ const UserList = () => {
         useEffect(() => {
           getUsers(); 
       }, [user.jwt]);
-
-      const  handleChangingStatus = async (e) => {
+      
+    
+    const handleChangingStatus = async (e) => {
         // e.preventDefault();
         try {
-          const userStatus = {isActive: !selectedUserForDelete.isActive};
-          await ajax(`${host}${endpoints.updateUserStatus}/${selectedUserForDelete.id}`, 'PATCH', user.jwt, userStatus);
-            selectedUserForDelete.isActive = userStatus.isActive;
-           
-          if(selectedUserForDelete.isActive === false){ 
-            alert('Aктивацията е успешна');
-          } else alert('Деактивацията е успешна');
-          
-          setUsers(users.map(u => u.id === selectedUserForDelete.id ? { ...u, isActive: selectedUserForDelete.isActive } : u));
-          handleHideDeleteModal();
+          const updatedStatus = !selectedUserForDelete.isActive;
+          const userStatus = { isActive: updatedStatus };
+          const id = selectedUserForDelete.id;
+      
+          const response = await fetch(
+            host + endpoints.updateUserStatus(id), 
+            {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.jwt}`
+              },
+              body: JSON.stringify(userStatus)
+            }
+          );
+      
+          if (response.status === 200) {  
+            setUsers(prevUsers =>
+              prevUsers.map(u =>
+                u.id === id ? { ...u, isActive: updatedStatus } : u
+              )
+            );
+      
+            if (updatedStatus) {
+              alert('Активацията е успешна');
+            } else {
+              alert('Деактивацията е успешна');
+            }
+      
+            handleHideDeleteModal();
+          } else {
+            alert('Възникна грешка при актуализирането на потребителския статус.');
+          }
         } catch (error) {
-          console.error('Error deactivating user:', error);
+          console.error('Error updating user status:', error);
           alert('Възникна грешка, моля опитайте отново');
         }
       };
@@ -113,10 +138,12 @@ const UserList = () => {
       return roles.join(', ');
     };
 
+    const filteredUsers = active !== undefined ? users.filter(user => user.isActive === active) : users;
+
   return (
     <div>
-      {users.length === 0 ? (
-                    <p>Няма налични потребители.</p>
+      {filteredUsers.length === 0 ? (
+                    <p>{active === true ? 'Няма налични активни потребители.' : active === false ? 'Няма налични неактивни потребители.' : 'Няма налични потребители.'}</p>
                 ) : (
                     <table className="table table-striped table-hover">
                         <thead>
@@ -131,7 +158,7 @@ const UserList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((user, index) => (
+                            {filteredUsers.map((user, index) => (
                                 <tr key={user.id}>
                                     <th scope="row">{index + 1}</th>
                                     <td>{user.firstName}</td>
