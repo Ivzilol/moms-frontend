@@ -10,7 +10,8 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
 
   useEffect(() => {
     if (user) {
-      setEditedUser({ ...user });
+      setEditedUser(user);
+      console.log(editedUser + " user to edit")
     }
   }, [user]);
 
@@ -20,11 +21,10 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
     setEditedUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(editedUser);
-    onClose(); // Close modal after saving
+    onClose(); 
   };
 
   return (
@@ -101,9 +101,26 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
               </div>
             )}
           </div>
+          <div className="mb-3">
+            <label htmlFor="role" className={styles.form_label}>Ниво на достъп:</label>
+            <input
+              type="text"
+              id="role"
+              name="role"
+              className={`form-control ${fieldErrors.phoneNumber ? 'is-invalid' : ''}`}
+              value={editedUser.role || 'USER'}
+              onChange={handleChange}
+              placeholder="Въведете телефонен номер"
+            />
+            {fieldErrors.phoneNumber && (
+              <div className="invalid-feedback">
+                {fieldErrors.role}
+              </div>
+            )}
+          </div>
 
           <div className={styles.button_container}>
-            <Button type="button" variant="success" className={styles.button_success}>
+            <Button type="submit" variant="success" className={styles.button_success}>
               Запази 
             </Button>
             <Button type="button" variant="secondary" onClick={onClose} >

@@ -101,6 +101,7 @@ const UserList = ({ active }) => {
 
       const handleShowEditModal = (user) => {
         setSelectedUserForEdit(user);
+        console.log(selectedUserForEdit)
         setIsEditModalOpen(true);
       };
     
@@ -111,25 +112,69 @@ const UserList = ({ active }) => {
 
       // TODO
     
-      const handleSaveUser = (editedUser) => {
+      const handleEditUser = async (editedUser) => {
         const errors = {};
+    
+        // Validate input fields
         if (!editedUser.firstName) {
-          errors.firstName = 'First Name is required';
+            errors.firstName = 'First Name is required';
         }
         if (!editedUser.lastName) {
-          errors.lastName = 'Last Name is required';
+            errors.lastName = 'Last Name is required';
         }
         if (!editedUser.phoneNumber) {
-          errors.phoneNumber = 'Phone Number is required';
+            errors.phoneNumber = 'Phone Number is required';
         }
+    
         if (Object.keys(errors).length > 0) {
-          setFieldErrors(errors);
-        } else {
-          console.log('User saved', editedUser);
-          setFieldErrors({});
-          handleHideEditModal();
+            setFieldErrors(errors);
+            return;
         }
-      };
+    
+        try {
+            const id = selectedUserForEdit.id;
+
+            console.log('user ID ' + id + " " + host + endpoints.updateUserProfile(id))
+
+    
+            const response = await fetch(host + endpoints.updateUserProfile(id), {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.jwt}`
+                },
+                body: JSON.stringify({
+                    email: editedUser.email,
+                    firstName: editedUser.firstName,
+                    lastName: editedUser.lastName,
+                    phoneNumber: editedUser.phoneNumber,
+                    role: editedUser.role || 'USER'
+                }),
+            });
+    
+            if (response.status !== 200 ) {
+                throw new Error('Failed to update user profile');
+            }
+    
+            // Update the user data in the local state
+            setUsers(prevUsers =>
+                prevUsers.map(u =>
+                    u.id === id ? { ...u, ...editedUser } : u
+                )
+            );
+
+            console.log(getUsers())
+    
+            // On successful update
+            console.log('User saved', editedUser);
+            setFieldErrors({});
+            handleHideEditModal();
+        } catch (error) {
+            console.error('Error updating user profile:', error);
+        }
+    };
+    
+    
 
           // Function to get the role display name
     const getRoleDisplayName = (roles) => {
@@ -198,15 +243,23 @@ const UserList = ({ active }) => {
           action={deleteAction}
         />
 
-        {selectedUserForEdit && (
+        {/* {selectedUserForEdit && (
           <EditUserModal
             isOpen={isEditModalOpen}
             onClose={handleHideEditModal}
             user={selectedUserForEdit}
-            onSave={handleSaveUser}
+            onSave={handleEditUser}
             fieldErrors={fieldErrors}
           />
-        )}
+        )} */}
+
+          <EditUserModal
+            isOpen={isEditModalOpen}
+            onClose={handleHideEditModal}
+            user={selectedUserForEdit}
+            onSave={handleEditUser}
+            fieldErrors={fieldErrors}
+          />
 
     </div>
   )
