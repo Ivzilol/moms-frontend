@@ -20,6 +20,7 @@ const UserList = ({ active }) => {
       const [isEditModalOpen, setIsEditModalOpen] = useState(false);
       const [selectedUserForEdit, setSelectedUserForEdit] = useState(null);
       const [fieldErrors, setFieldErrors] = useState({});
+      const [deleteAction, setDeleteAction] = useState('deactivate');
 
       const [users, setUsers] = useState([]);
 
@@ -44,6 +45,7 @@ const UserList = ({ active }) => {
         // e.preventDefault();
         try {
           const updatedStatus = !selectedUserForDelete.isActive;
+          setDeleteAction(updatedStatus === false ? 'deactivate' : 'activate')
           const userStatus = { isActive: updatedStatus };
           const id = selectedUserForDelete.id;
       
@@ -84,8 +86,9 @@ const UserList = ({ active }) => {
 
       // Modals
       
-      const handleShowDeleteModal = (user) => {
+      const handleShowDeleteModal = (user, action) => {
         setSelectedUserForDelete(user);
+        setDeleteAction(action)
         setIsDeleteModalOpen(true);
       };
   
@@ -169,7 +172,7 @@ const UserList = ({ active }) => {
                                     <td className={styles.button_wrapper}>
                                         <button 
                                             className={`btn btn-warning mb-1 ml-2 ${styles.button_customize}`}
-                                            onClick={() => handleShowDeleteModal(user)}
+                                            onClick={() => handleShowDeleteModal(user, user.isActive ? 'deactivate' : 'activate')}
                                         >
                                            {user.isActive === true ? 'Деактивирай' : 'Активирай'} 
                                         </button>
@@ -192,6 +195,7 @@ const UserList = ({ active }) => {
           onClose={handleHideDeleteModal}
           onDelete={handleChangingStatus}
           firstName={selectedUserForDelete?.firstName}
+          action={deleteAction}
         />
 
         {selectedUserForEdit && (
