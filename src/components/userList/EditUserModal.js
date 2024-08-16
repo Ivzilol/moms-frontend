@@ -6,16 +6,16 @@ import Button from 'react-bootstrap/Button';
 import styles from './EditUserModal.module.css'
 
 const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
-  const [editedUser, setEditedUser] = useState({});
+  const [editedUser, setEditedUser] = useState({...user});
 
   useEffect(() => {
     if (user) {
-      setEditedUser(user);
+      setEditedUser({...user});
+      console.log ( user)
       console.log(editedUser + " user to edit")
     }
   }, [user]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedUser((prev) => ({ ...prev, [name]: value }));
@@ -33,6 +33,15 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
   };
 
   const hasErrors = Object.keys(fieldErrors).length > 0;
+
+  const roles = ['USER', 'ADMIN', 'SUPERADMIN'];
+  const roleDisplayNames = {
+    'USER': 'Потребител',
+    'ADMIN': 'Администратор',
+    'SUPERADMIN': 'Модератор',
+  };
+  const currentRole = user && user.roles && user.roles.length > 0 ? user.roles[0] : '';
+  const availableRoles = roles.filter((role) => role !== currentRole);
 
   return (
     <Modal show={isOpen} onHide={onClose} centered className={styles.modal_container}>
@@ -91,40 +100,36 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
             )}
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="phoneNumber" className={styles.form_label}>Телефонен Номер:</label>
-            <input
-              type="text"
-              id="phoneNumber"
-              name="phoneNumber"
-              className={`form-control ${fieldErrors.phoneNumber ? 'is-invalid' : ''}`}
-              value={editedUser.phoneNumber || ''}
-              onChange={handleChange}
-              placeholder="Въведете телефонен номер"
-            />
-            {fieldErrors.phoneNumber && (
-              <div className="invalid-feedback">
-                {fieldErrors.phoneNumber}
-              </div>
-            )}
-          </div>
+
           <div className="mb-3">
             <label htmlFor="role" className={styles.form_label}>Ниво на достъп:</label>
-            <input
-              type="text"
+            <select
               id="role"
-              name="role"
-              className={`form-control ${fieldErrors.phoneNumber ? 'is-invalid' : ''}`}
-              value={editedUser.role || 'USER'}
-              onChange={handleChange}
-              placeholder="Въведете телефонен номер"
-            />
-            {fieldErrors.phoneNumber && (
+              name="roles"
+              className={`form-control ${fieldErrors.roles ? 'is-invalid' : ''}`}
+              value={currentRole}
+              onChange={(e) => {
+                setEditedUser((prev) => ({
+                  ...prev,
+                  roles: [e.target.value],
+                }));
+              }}
+            >
+              <option value={currentRole} disabled>
+                {roleDisplayNames[currentRole]}
+              </option>
+              {availableRoles.map((role) => (
+                <option key={role} value={role}>
+                  {roleDisplayNames[role]}
+                </option>
+              ))}
+            </select>
+            {fieldErrors.roles && (
               <div className="invalid-feedback">
-                {fieldErrors.role}
+                {fieldErrors.roles}
               </div>
             )}
-          </div>
+        </div>
 
           <div className={styles.button_container}>
             <Button type="submit" variant="success" className={styles.btn_success_modal} >
