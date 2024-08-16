@@ -138,6 +138,7 @@ const LoginForm = () => {
                             >
                                 Вход
                             </button>
+                            <a href="/forgotten-password">Забравена парола</a>
                         </form>
                     </div>
                 </div>
