@@ -37,7 +37,6 @@ const UserCreateNewPassword = () => {
                 navigate('/login');
             } else {
                 handleSubmit();
-                console.log("proba 2")
                 setInvalidPassword("Невалидна парола");
                 setInvalidPasswordDialog(true);
             }
@@ -45,7 +44,6 @@ const UserCreateNewPassword = () => {
     }
 
     const handleSubmit = () => {
-        console.log("proba")
         setToken("");
         setPassword("");
         setConfirmPassword("")
