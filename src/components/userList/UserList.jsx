@@ -134,9 +134,6 @@ const UserList = ({ active }) => {
         try {
             const id = selectedUserForEdit.id;
 
-            console.log('user ID ' + id + " " + host + endpoints.updateUserProfile(id))
-
-    
             const response = await fetch(host + endpoints.updateUserProfile(id), {
                 method: 'PATCH',
                 headers: {
@@ -162,11 +159,7 @@ const UserList = ({ active }) => {
                     u.id === id ? { ...u, ...editedUser } : u
                 )
             );
-
-            console.log(getUsers())
-    
-            // On successful update
-            console.log('User saved', editedUser);
+            alert("Редакцията е успешна");
             setFieldErrors({});
             handleHideEditModal();
         } catch (error) {

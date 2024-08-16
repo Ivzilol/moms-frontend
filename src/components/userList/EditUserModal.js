@@ -23,9 +23,16 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // if (Object.keys(fieldErrors).length === 0) {
+    //   onSave(editedUser);
+    //   onClose(); 
+    // }
     onSave(editedUser);
-    onClose(); 
+    onClose();
+    
   };
+
+  const hasErrors = Object.keys(fieldErrors).length > 0;
 
   return (
     <Modal show={isOpen} onHide={onClose} centered className={styles.modal_container}>
@@ -120,10 +127,10 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
           </div>
 
           <div className={styles.button_container}>
-            <Button type="submit" variant="success" className={styles.button_success}>
+            <Button type="submit" variant="success" className={styles.btn_success_modal} >
               Запази 
             </Button>
-            <Button type="button" variant="secondary" onClick={onClose} >
+            <Button type="button" variant="secondary" onClick={onClose} className={styles.btn_close}>
               Затвори
             </Button>
           </div>

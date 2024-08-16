@@ -12,8 +12,14 @@
     flex-direction: row;
 }
 
-.btn_success {
-    background-color: #008000, 
+button[type="submit"].btn_success_modal {
+    background-color: #008000;
+    border-radius: 8px !important;
+    margin-top: 40px;
+}
+
+.btn_close{
+  margin-top: 40px !important
 }
 
 .form_container {
