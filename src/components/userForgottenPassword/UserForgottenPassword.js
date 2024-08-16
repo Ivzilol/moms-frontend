@@ -57,10 +57,10 @@ const UserForgottenPassword = () => {
                     onFocus={closeDialog}
                 />
                 {dialogVisible &&
-                    <h5>{error}</h5>
+                    <h6 className="forgotten-password-error">{error}</h6>
                 }
-                {emptyEmailDialog &&
-                    <h5>{emptyErrorEmail}</h5>
+                {emptyEmailDialog  &&
+                    <h5 className="forgotten-password-error">{emptyErrorEmail}</h5>
                 }
                 <button
                     type="submit"
