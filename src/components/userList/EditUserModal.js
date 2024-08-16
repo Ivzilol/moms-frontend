@@ -21,14 +21,10 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
 
   const handleRoleChange = (e) => {
     const selectedRole = e.target.value;
-    console.log(editedUser)
-    console.log(selectedRole)
     setEditedUser((prev) => ({ ...prev, role: selectedRole}));
-    console.log(editedUser)
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     onSave(editedUser);
     onClose();
     
@@ -118,15 +114,14 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
             <label htmlFor="role" className={styles.form_label}>Ниво на достъп:</label>
             <select
               id="role"
-              name="roles"
+              name="role"
               className={`form-control ${styles.form_control__choice} ${fieldErrors.roles ? 'is-invalid' : ''}`}
-              value={currentRole}
               onChange={handleRoleChange}
             >
-              {/* <option value={currentRole}>
+              <option value={currentRole}>
                 {roleDisplayNames[currentRole]}
-              </option> */}
-              {roles.map((role) => (
+              </option>
+              {availableRoles.map((role) => (
                 <option key={role} value={role}>
                   {roleDisplayNames[role]}
                 </option>

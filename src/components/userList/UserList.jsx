@@ -29,7 +29,6 @@ const UserList = ({ active }) => {
 
         try {
             const allUsers = await ajax(host + endpoints.getAllUsers, 'GET', user.jwt);
-            // console.log(allUsers);
             setUsers(allUsers);
         } catch (error) {
             console.error("Error fetching user details:", error);
@@ -41,8 +40,7 @@ const UserList = ({ active }) => {
       }, [user.jwt]);
       
     
-    const handleChangingStatus = async (e) => {
-        // e.preventDefault();
+    const handleChangingStatus = async () => {
         try {
           const updatedStatus = !selectedUserForDelete.isActive;
           setDeleteAction(updatedStatus === false ? 'deactivate' : 'activate')
@@ -65,8 +63,10 @@ const UserList = ({ active }) => {
             setUsers(prevUsers =>
               prevUsers.map(u =>
                 u.id === id ? { ...u, isActive: updatedStatus } : u
-              )
-            );
+            )
+          );
+
+            await getUsers();
       
             if (updatedStatus) {
               alert('Активацията е успешна');
@@ -109,8 +109,6 @@ const UserList = ({ active }) => {
         setIsEditModalOpen(false);
         setSelectedUserForEdit(null);
       };
-
-      // TODO
     
       const handleEditUser = async (editedUser) => {
         const errors = {};
@@ -159,6 +157,7 @@ const UserList = ({ active }) => {
                     u.id === id ? { ...u, ...editedUser } : u
                 )
             );
+            await getUsers();
             alert("Редакцията е успешна");
             setFieldErrors({});
             handleHideEditModal();
