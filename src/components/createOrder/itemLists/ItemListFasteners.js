@@ -6,6 +6,14 @@ import baseURL from "../../baseURL/BaseURL";
 import Header from "../../Header/Header";
 import {useNavigate} from "react-router-dom";
 
+
+const parseAdminNote = (note) => {
+    if (!note) return { dateTime: '', creator: '', message: '' };
+
+    return note;
+};
+
+
 const ItemListFasteners = ({
                                orderId, items, onEdit, onDelete,
                                orderDescription, orderDate, deliveryDate, orderStatus,
@@ -17,6 +25,9 @@ const ItemListFasteners = ({
     const [currentOrderStatus, setCurrentOrderStatus] = useState(orderStatus);
     const [adminNotes, setAdminNotes] = useState({});
     const [requestBody, setRequestBody] = useState([]);
+    const [showNoteModal, setShowNoteModal] = useState(false);
+    const [currentNote, setCurrentNote] = useState({});
+    const [newNote, setNewNote] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -87,11 +98,38 @@ const ItemListFasteners = ({
         }));
     };
 
+    const handleNoteChangeSecondNote = (index, note) => {
+        console.log(note);
+        setAdminNotes(prevNotes => ({
+            ...prevNotes,
+            [index]: note
+        }))
+        closeNoteModal();
+    }
+
+    const handleNoteBlur = (index) => {
+        setAdminNotes(prevNotes => ({
+            ...prevNotes,
+            [index]: `##${prevNotes[index]}`
+        }));
+    };
+
+    const handleViewNote = (index) => {
+        const noteDetails = parseAdminNote(items[index].adminNote);
+        setCurrentNote(noteDetails);
+        setShowNoteModal(true);
+    };
+
+    const closeNoteModal = () => {
+        setShowNoteModal(false);
+        setCurrentNote({});
+    };
+
 
     function updateRequestBody() {
         const body = items.map((item, index) => ({
             ...item,
-            adminNote: adminNotes[index] || ''
+            adminNote: adminNotes[index] ? `##${adminNotes[index]}` : ''
         }));
         setRequestBody(body);
     }
@@ -118,21 +156,39 @@ const ItemListFasteners = ({
             new Blob([JSON.stringify(payload)], {
                 type: "application/json"
             }))
-        fetch(`${baseURL}admin/order/command/update-order`, {
-            method: "PATCH",
-            headers: {
-                "Authorization": `Bearer ${user.jwt}`
-            },
-            body: formData
-        }).then((response) => {
-            if (response.ok) {
-                alert('Успешно променихте статуса на заявката!');
-                localStorage.removeItem(`selectedItems_${orderId}`);
-                navigate('/orders-admin');
-            }
-        })
-
+        if (adminRole) {
+            fetch(`${baseURL}admin/order/command/update-order`, {
+                method: "PATCH",
+                headers: {
+                    "Authorization": `Bearer ${user.jwt}`
+                },
+                body: formData
+            }).then((response) => {
+                if (response.ok) {
+                    alert('Успешно променихте статуса на заявката!');
+                    localStorage.removeItem(`selectedItems_${orderId}`);
+                    navigate('/orders-admin');
+                }
+            })
+        }
+        if (userRole) {
+            fetch(`${baseURL}user/order/command/answer-add`, {
+                method: "PATCH",
+                headers: {
+                    "Authorization": `Bearer ${user.jwt}`
+                },
+                body: formData
+            }).then((response) => {
+                if (response.ok) {
+                    alert('Успешно променихте статуса на заявката!');
+                    localStorage.removeItem(`selectedItems_${orderId}`);
+                    navigate('/orders-admin');
+                }
+            })
+        }
     }
+
+
 
     return (
         <div>
@@ -194,10 +250,14 @@ const ItemListFasteners = ({
                             <th>Клас</th>
                             <th>Количество</th>
                             <th>Описани</th>
-                            <th>Спецификация</th>
+                            {orderNumber !== undefined &&
+                                <th>Спецификация</th>
+                            }
                             {userRole && orderStatus === undefined && <th>Редакция</th>}
                             {userRole && orderStatus === undefined && <th>Изтриване</th>}
-                            <th>Бележка от админ</th>
+                            {orderNumber !== undefined &&
+                                <th>Бележка от админ</th>
+                            }
                             {adminRole && (
                                 <th>
                                     <input
@@ -222,11 +282,13 @@ const ItemListFasteners = ({
                                 <td>{item.clazz}</td>
                                 <td>{item.quantity}</td>
                                 <td>{item.description}</td>
-                                <td>
-                                    {item.specificationFileUrl && <a href={item.specificationFileUrl} target="_blank" rel="noopener noreferrer">
-                                        изтегли спецификация
-                                    </a>}
-                                </td>
+                                {orderNumber !== undefined &&
+                                    <td>
+                                        {item.specificationFileUrl && <a href={item.specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                                            изтегли спецификация
+                                        </a>}
+                                    </td>
+                                }
                                 {userRole && orderStatus === undefined && (
                                     <td>
                                         <i
@@ -245,26 +307,74 @@ const ItemListFasteners = ({
                                         ></i>
                                     </td>
                                 )}
-                                {adminRole && item.adminNote === '' && (
+                                {adminRole && item.adminNote === null && (
                                     <td>
                                         <input
                                             type="text"
                                             value={adminNotes[index] || ''}
                                             onChange={(e) => handleNoteChange(index, e.target.value)}
+                                            onBlur={() => handleNoteBlur(index)}
                                         />
                                     </td>
                                 )}
-                                {adminRole && item.adminNote !== '' && (
+                                {adminRole && item.adminNote !== null && (
                                     <td>
-                                        <input
-                                            type="text"
-                                            value={adminNotes[index] !== undefined ? adminNotes[index] : item.adminNote}
-                                            onChange={(e) => handleNoteChange(index, e.target.value)}
-                                        />
+                                        <button className="note-button" onClick={() => handleViewNote(index)}>Виж бележка</button>
+                                        {showNoteModal && (
+                                            <div className="note-modal">
+                                                <div className="note-content">
+                                                    <button className="close-button" onClick={closeNoteModal}>X</button>
+                                                    <h3>Бележка от админ</h3>
+                                                    <div dangerouslySetInnerHTML={{__html: currentNote}}></div>
+                                                    <input
+                                                        type="text"
+                                                        value={newNote}
+                                                        onChange={(e) => setNewNote(e.target.value)}
+                                                    />
+                                                    <button
+                                                        id="save-button"
+                                                        type="submit"
+                                                        onClick={() => handleNoteChangeSecondNote(index,currentNote + "##" + newNote)}
+                                                    >Save</button>
+                                                    {/*<input*/}
+                                                    {/*    type="text"*/}
+                                                    {/*    value={adminNotes[index] !== undefined ? adminNotes[index] : ''}*/}
+                                                    {/*    onChange={(e) => handleNoteChange(index, e.target.value)}*/}
+                                                    {/*/>*/}
+                                                </div>
+                                            </div>
+                                        )}
                                     </td>
                                 )}
-                                {userRole && (
-                                    <td>{item.adminNote}</td>
+                                {userRole && item.adminNote !== null && orderNumber !== undefined &&(
+                                    <td>
+                                        <button className="note-button"
+                                            onClick={() => handleViewNote(index)}>Виж бележка</button>
+                                        {showNoteModal && (
+                                            <div className="note-modal">
+                                                <div className="note-content">
+                                                    <button className="close-button" onClick={closeNoteModal}>X</button>
+                                                    <h3>Бележка от админ</h3>
+                                                    <div dangerouslySetInnerHTML={{__html: currentNote}}></div>
+                                                    <input
+                                                        type="text"
+                                                        value={newNote}
+                                                        onChange={(e) => setNewNote(e.target.value)}
+                                                    />
+                                                    <button
+                                                        id="save-button"
+                                                        type="submit"
+                                                        onClick={() => handleNoteChangeSecondNote(index,currentNote + "##" + newNote)}
+                                                    >Save</button>
+                                                    {/*<input*/}
+                                                    {/*    type="text"*/}
+                                                    {/*    value={adminNotes[index] !== undefined ? adminNotes[index] : ''}*/}
+                                                    {/*    onChange={(e) => handleNoteChange(index, e.target.value)}*/}
+                                                    {/*/>*/}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </td>
                                 )}
                                 {adminRole && (
                                     <td>
@@ -280,13 +390,13 @@ const ItemListFasteners = ({
                         </tbody>
                     </table>
                 )}
-                {adminRole && (
+                {orderNumber !== undefined &&
                     <button
                         id="save-button"
                         type="submit"
                         onClick={() => updateOrder()}
                     >Save</button>
-                )}
+                }
             </div>
         </div>
     );

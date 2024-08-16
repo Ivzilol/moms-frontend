@@ -370,6 +370,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 alert('Вашата заявка е изпратена успешно');
                 setRequestBody([]);
                 localStorage.removeItem(selectedCategory);
+                setOrderDescription('');
             }
 
         })

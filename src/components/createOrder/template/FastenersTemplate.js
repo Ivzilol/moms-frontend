@@ -58,7 +58,6 @@ const FastenersTemplate = ({ onSave, category }) => {
         };
         onSave(data);
 
-        // Clear the form
         setName('');
         setType('');
         setDiameter('');
@@ -76,7 +75,6 @@ const FastenersTemplate = ({ onSave, category }) => {
         ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
             .then((response) => {
                 if (response && Array.isArray(response)) {
-                    console.log(response)
                     setResponse(response);
                 } else {
                     setResponse([]);

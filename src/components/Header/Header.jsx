@@ -4,13 +4,16 @@ import styles from './Header.module.css';
 import logo from '../../assets/images/MCK-logo.png';
 import AuthContext from '../../context/AuthContext';
 import {useUser} from "../../userProvider/UserProvider";
+import {useNavigate} from "react-router-dom";
 
 export default function Header() {
 
     const { isAuthenticated, logoutHandler } = useState();
+    const navigate = useNavigate();
     const user = useUser();
     function logout() {
         user.setJwt(null)
+        navigate('/login')
     }
 
     return (

@@ -16,7 +16,6 @@ const OrderDetails = () => {
         ajax(`${baseURL}admin/order/query/get-order/${parseInt(id)}`, "GET", user.jwt)
             .then((response) => {
                 setOrder(response);
-                console.log(response)
             })
     }, [user.jwt, id]);
 
