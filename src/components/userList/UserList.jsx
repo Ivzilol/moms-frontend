@@ -145,7 +145,7 @@ const UserList = ({ active }) => {
                     firstName: editedUser.firstName,
                     lastName: editedUser.lastName,
                     phoneNumber: editedUser.phoneNumber,
-                    role: editedUser.role || 'USER'
+                    role: editedUser.role
                 }),
             });
     

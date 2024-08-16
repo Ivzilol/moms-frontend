@@ -11,8 +11,6 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
   useEffect(() => {
     if (user) {
       setEditedUser({...user});
-      console.log ( user)
-      console.log(editedUser + " user to edit")
     }
   }, [user]);
 
@@ -21,12 +19,16 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
     setEditedUser((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleRoleChange = (e) => {
+    const selectedRole = e.target.value;
+    console.log(editedUser)
+    console.log(selectedRole)
+    setEditedUser((prev) => ({ ...prev, role: selectedRole}));
+    console.log(editedUser)
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (Object.keys(fieldErrors).length === 0) {
-    //   onSave(editedUser);
-    //   onClose(); 
-    // }
     onSave(editedUser);
     onClose();
     
@@ -40,7 +42,18 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
     'ADMIN': 'Администратор',
     'SUPERADMIN': 'Модератор',
   };
-  const currentRole = user && user.roles && user.roles.length > 0 ? user.roles[0] : '';
+  // const currentRole = user && user.roles && user.roles.length > 0 ? user.roles[0] : '';
+  const determineCurrentRole = (rolesArray) => {
+    if (rolesArray.includes('SUPERADMIN')) {
+      return 'SUPERADMIN';
+    } else if (rolesArray.includes('ADMIN') && !rolesArray.includes('SUPERADMIN')) {
+      return 'ADMIN';
+    } else {
+      return 'USER';
+    }
+  };
+
+  const currentRole = user && user.roles ? determineCurrentRole(user.roles) : '';
   const availableRoles = roles.filter((role) => role !== currentRole);
 
   return (
@@ -106,19 +119,14 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
             <select
               id="role"
               name="roles"
-              className={`form-control ${fieldErrors.roles ? 'is-invalid' : ''}`}
+              className={`form-control ${styles.form_control__choice} ${fieldErrors.roles ? 'is-invalid' : ''}`}
               value={currentRole}
-              onChange={(e) => {
-                setEditedUser((prev) => ({
-                  ...prev,
-                  roles: [e.target.value],
-                }));
-              }}
+              onChange={handleRoleChange}
             >
-              <option value={currentRole} disabled>
+              {/* <option value={currentRole}>
                 {roleDisplayNames[currentRole]}
-              </option>
-              {availableRoles.map((role) => (
+              </option> */}
+              {roles.map((role) => (
                 <option key={role} value={role}>
                   {roleDisplayNames[role]}
                 </option>

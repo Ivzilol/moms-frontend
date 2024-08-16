@@ -27,6 +27,36 @@ button[type="submit"].btn_success_modal {
     height:fit-content;
 }
 
+/* Select field in the EditUserModal*/
+.form_control__choice {
+  background-color: #ffffff; 
+  color: #000000; 
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 8px; 
+}
+
+.form_control__choice:focus {
+  border-color: #80bdff; 
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+}
+
+.form_control__choice option {
+  background-color: #ffffff; 
+  color: #000000; 
+}
+
+.form_control__choice option:hover {
+  background-color: #f1f1f1; 
+}
+
+.form_control__choice option:checked {
+  background-color: #e9ecef; 
+  color: #495057; 
+}
+/* --------- */
+
 /* .edit-user-modal .modal-content {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
