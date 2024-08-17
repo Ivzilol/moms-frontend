@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-const EditUnspecified = ({ item, onSave, onClose }) => {
-
+const EditService = ({ item, onSave, onClose }) => {
     const [editedItem, setEditedItem] = useState(item);
 
     useEffect(() => {
@@ -40,4 +39,4 @@ const EditUnspecified = ({ item, onSave, onClose }) => {
     );
 }
 
-export default EditUnspecified;
+export default EditService;

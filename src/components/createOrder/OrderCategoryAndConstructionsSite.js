@@ -28,6 +28,9 @@ import ajax from "../../service/FetchService";
 import UnspecifiedTemplate from "./template/UnspecifiedTemplate";
 import ItemListUnspecified from "./itemLists/ItemListUnspecified";
 import EditUnspecified from "./editItemLists/EditUnspecified";
+import ServiceTemplate from "./template/ServiceTemplate";
+import ItemListService from "./itemLists/ItemListService";
+import EditService from "./editItemLists/EditService";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -158,7 +161,17 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'SERVICE') {
-
+        template = <ServiceTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListService
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditService
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'TRANSPORT') {
 
     }
@@ -336,7 +349,22 @@ const OrderCategoryAndConstructionsSite = () => {
             },
             materialType: selectedCategory,
             deliveryDate: formattedDate,
-            [selectedCategory.toLowerCase()]: requestBody.map(item => ({
+            unspecified: requestBody.map(item => ({
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
+    function createRequestBodyService(formattedDate) {
+        return {
+            orderDescription: orderDescription,
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            services: requestBody.map(item => ({
                 quantity: item.quantity,
                 description: item.description,
             }))
@@ -383,6 +411,8 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodySet(formattedDate);
         } else if (selectedCategory === 'UNSPECIFIED') {
             payload = createRequestBodyUnspecified(formattedDate);
+        } else if (selectedCategory === 'SERVICE') {
+            payload = createRequestBodyService(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
