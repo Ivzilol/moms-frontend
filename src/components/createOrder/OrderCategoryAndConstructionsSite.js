@@ -33,6 +33,7 @@ import ItemListService from "./itemLists/ItemListService";
 import EditService from "./editItemLists/EditService";
 import TransportTemplate from "./template/TransportTemplate";
 import ItemListTransport from "./itemLists/ItemListTransport";
+import EditTransport from "./editItemLists/EditTransport";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -180,6 +181,11 @@ const OrderCategoryAndConstructionsSite = () => {
             items={requestBody}
             onEdit={handleEdit}
             onDelete={handleDelete}
+        />
+        templateEdit = <EditTransport
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
         />
     }
 
@@ -378,6 +384,26 @@ const OrderCategoryAndConstructionsSite = () => {
         };
     }
 
+    function createRequestBodyTransport(formattedDate) {
+        return {
+            orderDescription: orderDescription,
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            transports: requestBody.map(item => ({
+                maxLength: item.maxLength,
+                maxLengthUnit: item.maxLengthUnit,
+                weight: item.weight,
+                weightUnit: item.weightUnit,
+                truck: item.truck,
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
@@ -420,6 +446,8 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodyUnspecified(formattedDate);
         } else if (selectedCategory === 'SERVICE') {
             payload = createRequestBodyService(formattedDate);
+        } else if (selectedCategory === 'TRANSPORT') {
+            payload = createRequestBodyTransport(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
