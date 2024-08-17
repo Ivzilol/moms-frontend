@@ -25,6 +25,9 @@ import ItemListSet from "./itemLists/ItemListSet";
 import EditSet from "./editItemLists/EditSet";
 import Header from "../Header/Header";
 import ajax from "../../service/FetchService";
+import UnspecifiedTemplate from "./template/UnspecifiedTemplate";
+import ItemListUnspecified from "./itemLists/ItemListUnspecified";
+import EditUnspecified from "./editItemLists/EditUnspecified";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -143,7 +146,17 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'UNSPECIFIED') {
-
+        template = <UnspecifiedTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListUnspecified
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditUnspecified
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'SERVICE') {
 
     } else if (selectedCategory === 'TRANSPORT') {
@@ -315,6 +328,21 @@ const OrderCategoryAndConstructionsSite = () => {
         };
     }
 
+    function createRequestBodyUnspecified(formattedDate) {
+        return {
+            orderDescription: orderDescription,
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            [selectedCategory.toLowerCase()]: requestBody.map(item => ({
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
     function createOrder() {
         const formData = new FormData();
         const formattedDate = new Date(dateOfDelivery).toISOString();
@@ -353,6 +381,8 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodyRebar(formattedDate);
         } else if (selectedCategory === 'SET') {
             payload = createRequestBodySet(formattedDate);
+        } else if (selectedCategory === 'UNSPECIFIED') {
+            payload = createRequestBodyUnspecified(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
