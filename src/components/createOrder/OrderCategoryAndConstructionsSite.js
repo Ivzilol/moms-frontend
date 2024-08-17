@@ -31,6 +31,8 @@ import EditUnspecified from "./editItemLists/EditUnspecified";
 import ServiceTemplate from "./template/ServiceTemplate";
 import ItemListService from "./itemLists/ItemListService";
 import EditService from "./editItemLists/EditService";
+import TransportTemplate from "./template/TransportTemplate";
+import ItemListTransport from "./itemLists/ItemListTransport";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -173,7 +175,12 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'TRANSPORT') {
-
+        template = <TransportTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListTransport
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
     }
 
 
