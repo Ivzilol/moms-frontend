@@ -15,6 +15,7 @@ const OrderDetails = () => {
     useEffect(() => {
         ajax(`${baseURL}admin/order/query/get-order/${parseInt(id)}`, "GET", user.jwt)
             .then((response) => {
+                console.log(response)
                 setOrder(response);
             })
     }, [user.jwt, id]);
@@ -23,35 +24,48 @@ const OrderDetails = () => {
     if (!order) return <p>Loading...</p>;
 
     return (
-            <div className="order-details-container">
-                {order.galvanisedSheets && (
-                    <div>
-                        <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {
-                        }} onDelete={() => {
-                        }}/>
-                    </div>
-                )}
-                {order.fasteners && (
-                    <div>
-                        <ItemListFasteners
-                            orderId={parseInt(id)}
-                            items={order.fasteners}
-                            onEdit={() => {
-                            }}
-                            onDelete={() => {
-                            }}
-                            orderDescription={order.orderDescription}
-                            orderDate={order.orderDate}
-                            deliveryDate={order.deliveryDate}
-                            orderStatus={order.orderStatus}
-                            materialType={order.materialType}
-                            specificationFileUrl={order.specificationFileUrl}
-                            orderNumber={order.orderNumber}
-                            constructionName={order.constructionSite.name}
-                        />
-                    </div>
-                )}
-            </div>
+        <div className="order-details-container">
+            {order.fasteners && (
+                <div>
+                    <ItemListFasteners
+                        orderId={parseInt(id)}
+                        items={order.fasteners}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.galvanisedSheets && (
+                <div>
+                    <ItemListGalvanizedSheet
+                        orderId={parseInt(id)}
+                        items={order.galvanisedSheets}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+        </div>
     );
 };
 

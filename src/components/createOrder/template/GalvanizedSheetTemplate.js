@@ -11,6 +11,8 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
     const [quantity, setQuantity] = useState('');
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
+    const [numberOfSheets, setNumberOfSheets] = useState('')
+    const [quantityUnit, setQuantityUnit] = useState('');
     const [errors, setErrors] = useState({});
 
     const handleFileChange = (e) => {
@@ -25,9 +27,9 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
         } else if (maxLength <= 0) {
             newErrors.length = 'м. дължина не може да е отрицателно число или 0';
         }
-        if (!area) {
+        if (!numberOfSheets) {
             newErrors.area = 'Моля добавете площ';
-        } else if (area <= 0) {
+        } else if (numberOfSheets <= 0) {
             newErrors.area = 'Площ не може да е отрицателно число или 0';
         }
         if (!maxLengthUnit) newErrors.lengthUnit = 'Моля изберете м. ед.';
@@ -42,11 +44,12 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
         const data = {
             name,
             type,
-            length: maxLength,
+            maxLength,
             maxLengthUnit,
-            area,
+            numberOfSheets,
             areaUnit,
             quantity,
+            quantityUnit,
             description,
             specification
         };
@@ -55,9 +58,10 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
         setType('');
         setMaxLength('');
         setMaxLengthUnit('');
-        setArea('');
+        setNumberOfSheets('');
         setAreaUnit('');
         setQuantity('');
+        setQuantityUnit('')
         setDescription('');
         setSpecification(null);
         setErrors({});
@@ -77,7 +81,7 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
             <label>
                 Дължина:
                 <input type="text" value={maxLength} onChange={(e) => setMaxLength(e.target.value)} />
-                {errors.length && <span className="error">{errors.length}</span>}
+                {/*{errors.length && <span className="error">{errors.length}</span>}*/}
             </label>
             <label>
                 м. ед. :
@@ -87,26 +91,26 @@ const GalvanizedSheetTemplate = ({ onSave }) => {
                     <option value="CM">СМ</option>
                     <option value="M">М</option>
                 </select>
-                {errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}
+                {/*{errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}*/}
             </label>
             <label>
-                Площ:
-                <input type="text" value={area} onChange={(e) => setArea(e.target.value)} />
-                {errors.area && <span className="error">{errors.area}</span>}
-            </label>
-            <label>
-                м. ед. :
-                <select name="areaUnit" value={areaUnit} onChange={(e) => setAreaUnit(e.target.value)}>
-                    <option value="">м. ед.</option>
-                    <option value="CM2">cm2</option>
-                    <option value="M2">m2</option>
-                </select>
-                {errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}
+                Брой листа:
+                <input type="text" value={numberOfSheets} onChange={(e) => setNumberOfSheets(e.target.value)} />
+                {/*{errors.area && <span className="error">{errors.area}</span>}*/}
             </label>
             <label>
                 Количество:
                 <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
+            </label>
+            <label>
+                м. ед. :
+                <select name="areaUnit" value={quantityUnit} onChange={(e) => setQuantityUnit(e.target.value)}>
+                    <option value="">м. ед.</option>
+                    <option value="CM2">cm2</option>
+                    <option value="M2">m2</option>
+                </select>
+                {/*{errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}*/}
             </label>
             <label>
                 Описание:

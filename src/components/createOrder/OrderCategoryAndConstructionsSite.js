@@ -243,11 +243,11 @@ const OrderCategoryAndConstructionsSite = () => {
             deliveryDate: formattedDate,
             galvanisedSheets: requestBody.map(item => ({
                 type: item.type,
-                maxLength: item.length,
-                lengthUnit: item.lengthUnit,
-                area: item.area,
-                areaUnit: item.areaUnit,
+                maxLength: item.maxLength,
+                maxLengthUnit: item.maxLengthUnit,
+                numberOfSheets: item.numberOfSheets,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description,
             }))
         };

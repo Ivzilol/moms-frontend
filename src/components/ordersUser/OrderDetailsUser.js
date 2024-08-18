@@ -15,6 +15,7 @@ const OrderDetailsUser = () => {
     useEffect(() => {
         ajax(`${baseURL}user/order/query/get-order-by-orderNumber/${number}`, "GET", user.jwt)
             .then((response) => {
+                console.log(response)
                 setOrder(response);
             })
 
@@ -22,19 +23,30 @@ const OrderDetailsUser = () => {
 
     if (!order) return <p>Loading...</p>;
 
-    return(
+    return (
         <div className="order-details-container">
-            {order.galvanisedSheets && (
-                <div>
-                    <ItemListGalvanizedSheet items={order.galvanisedSheets} onEdit={() => {
-                    }} onDelete={() => {
-                    }}/>
-                </div>
-            )}
             {order.fasteners && (
                 <div>
                     <ItemListFasteners
                         items={order.fasteners}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.galvanisedSheets && (
+                <div>
+                    <ItemListGalvanizedSheet
+                        items={order.galvanisedSheets}
                         onEdit={() => {
                         }}
                         onDelete={() => {
