@@ -35,8 +35,8 @@ const EditMetal = ({ item, onSave, onClose }) => {
                     </select>
                 </label>
                 <label>
-                    Количество:
-                    <input type="number" name="quantity" value={editedItem.quantity} onChange={handleChange} />
+                    Вид:
+                    <input type="text" name="kind" value={editedItem.kind} onChange={handleChange} />
                 </label>
                 <label>
                     Описание:

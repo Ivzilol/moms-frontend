@@ -4,7 +4,7 @@ const MetalTemplate = ({ onSave }) => {
     const [name, setName] = useState('');
     const [totalWeight, setTotalWeight] = useState('');
     const [totalWeightUnit, setTotalWeightUnit] = useState('');
-    const [quantity, setQuantity] = useState('');
+    const [kind, setKind] = useState('');
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
@@ -17,7 +17,6 @@ const MetalTemplate = ({ onSave }) => {
         const newErrors = {};
         if (!totalWeight) newErrors.diameter = 'Моля добавете обща тежест';
         if (!totalWeightUnit) newErrors.totalWeightUnit = 'Моля изберете м. ед.';
-        if (!quantity) newErrors.quantity = 'Моля добавете количество';
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -30,7 +29,7 @@ const MetalTemplate = ({ onSave }) => {
             name,
             totalWeight,
             totalWeightUnit,
-            quantity,
+            kind,
             description,
             specification
         };
@@ -38,7 +37,7 @@ const MetalTemplate = ({ onSave }) => {
         setName('');
         setTotalWeight('');
         setTotalWeightUnit('');
-        setQuantity('');
+        setKind('')
         setDescription('');
         setSpecification(null);
         setErrors({});
@@ -66,9 +65,9 @@ const MetalTemplate = ({ onSave }) => {
                 {errors.totalWeightUnit && <span className="error">{errors.totalWeightUnit}</span>}
             </label>
             <label>
-                Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-                {errors.quantity && <span className="error">{errors.quantity}</span>}
+                Вид:
+                <input type="text" value={kind} onChange={(e) => setKind(e.target.value)} />
+                {errors.kind && <span className="error">{errors.kind}</span>}
             </label>
             <label>
                 Описание:

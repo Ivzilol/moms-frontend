@@ -283,6 +283,7 @@ const OrderCategoryAndConstructionsSite = () => {
             metals: requestBody.map(item => ({
                 totalWeight: item.totalWeight,
                 totalWeightUnit: item.totalWeightUnit,
+                kind:item.kind,
                 quantity: item.quantity,
                 description: item.description,
             }))
