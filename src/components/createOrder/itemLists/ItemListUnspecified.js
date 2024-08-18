@@ -149,7 +149,7 @@ const ItemListUnspecified = ({
             orderStatus: currentOrderStatus,
             materialType: materialType,
             specificationFileUrl: specificationFileUrl,
-            fasteners: requestBody
+            unspecified: requestBody
         };
         formData.append('order',
             new Blob([JSON.stringify(payload)], {

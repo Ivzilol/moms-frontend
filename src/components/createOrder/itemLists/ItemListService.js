@@ -147,7 +147,7 @@ const ItemListService = ({
             orderStatus: currentOrderStatus,
             materialType: materialType,
             specificationFileUrl: specificationFileUrl,
-            fasteners: requestBody
+            services: requestBody
         };
         formData.append('order',
             new Blob([JSON.stringify(payload)], {

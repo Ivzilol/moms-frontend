@@ -10,6 +10,8 @@ import ItemListMetal from "../createOrder/itemLists/ItemListMetal";
 import ItemListPanel from "../createOrder/itemLists/ItemListPanel";
 import ItemListRebar from "../createOrder/itemLists/ItemListRebar";
 import ItemListSet from "../createOrder/itemLists/ItemListSet";
+import ItemListUnspecified from "../createOrder/itemLists/ItemListUnspecified";
+import ItemListService from "../createOrder/itemLists/ItemListService";
 
 const OrderDetailsUser = () => {
 
@@ -142,6 +144,42 @@ const OrderDetailsUser = () => {
                 <div>
                     <ItemListSet
                         items={order.sets}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.unspecified && (
+                <div>
+                    <ItemListUnspecified
+                        items={order.unspecified}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.services && (
+                <div>
+                    <ItemListService
+                        items={order.services}
                         onEdit={() => {
                         }}
                         onDelete={() => {
