@@ -6,26 +6,51 @@ import Button from 'react-bootstrap/Button';
 import styles from './EditUserModal.module.css'
 
 const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
-  const [editedUser, setEditedUser] = useState({});
+  const [editedUser, setEditedUser] = useState({...user});
 
   useEffect(() => {
     if (user) {
-      setEditedUser({ ...user });
+      setEditedUser({...user});
     }
   }, [user]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(editedUser);
-    onClose(); // Close modal after saving
+  const handleRoleChange = (e) => {
+    const selectedRole = e.target.value;
+    setEditedUser((prev) => ({ ...prev, role: selectedRole}));
   };
+
+  const handleSubmit = () => {
+    onSave(editedUser);
+    onClose();
+    
+  };
+
+  const hasErrors = Object.keys(fieldErrors).length > 0;
+
+  const roles = ['USER', 'ADMIN', 'SUPERADMIN'];
+  const roleDisplayNames = {
+    'USER': 'Потребител',
+    'ADMIN': 'Администратор',
+    'SUPERADMIN': 'Модератор',
+  };
+  // const currentRole = user && user.roles && user.roles.length > 0 ? user.roles[0] : '';
+  const determineCurrentRole = (rolesArray) => {
+    if (rolesArray.includes('SUPERADMIN')) {
+      return 'SUPERADMIN';
+    } else if (rolesArray.includes('ADMIN') && !rolesArray.includes('SUPERADMIN')) {
+      return 'ADMIN';
+    } else {
+      return 'USER';
+    }
+  };
+
+  const currentRole = user && user.roles ? determineCurrentRole(user.roles) : '';
+  const availableRoles = roles.filter((role) => role !== currentRole);
 
   return (
     <Modal show={isOpen} onHide={onClose} centered className={styles.modal_container}>
@@ -84,29 +109,36 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
             )}
           </div>
 
+
           <div className="mb-3">
-            <label htmlFor="phoneNumber" className={styles.form_label}>Телефонен Номер:</label>
-            <input
-              type="text"
-              id="phoneNumber"
-              name="phoneNumber"
-              className={`form-control ${fieldErrors.phoneNumber ? 'is-invalid' : ''}`}
-              value={editedUser.phoneNumber || ''}
-              onChange={handleChange}
-              placeholder="Въведете телефонен номер"
-            />
-            {fieldErrors.phoneNumber && (
+            <label htmlFor="role" className={styles.form_label}>Ниво на достъп:</label>
+            <select
+              id="role"
+              name="role"
+              className={`form-control ${styles.form_control__choice} ${fieldErrors.roles ? 'is-invalid' : ''}`}
+              onChange={handleRoleChange}
+            >
+              <option value={currentRole}>
+                {roleDisplayNames[currentRole]}
+              </option>
+              {availableRoles.map((role) => (
+                <option key={role} value={role}>
+                  {roleDisplayNames[role]}
+                </option>
+              ))}
+            </select>
+            {fieldErrors.roles && (
               <div className="invalid-feedback">
-                {fieldErrors.phoneNumber}
+                {fieldErrors.roles}
               </div>
             )}
-          </div>
+        </div>
 
           <div className={styles.button_container}>
-            <Button type="button" variant="success" className={styles.button_success}>
+            <Button type="submit" variant="success" className={styles.btn_success_modal} >
               Запази 
             </Button>
-            <Button type="button" variant="secondary" onClick={onClose} >
+            <Button type="button" variant="secondary" onClick={onClose} className={styles.btn_close}>
               Затвори
             </Button>
           </div>

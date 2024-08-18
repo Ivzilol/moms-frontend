@@ -8,7 +8,7 @@ import { host, endpoints } from '../../core/environments/constants'
 import DeleteUserModal from './DeleteUserModal';
 import EditUserModal from './EditUserModal';
 
-const UserList = () => {
+const UserList = ({ active }) => {
 
   const user = useUser();
   const navigate = useNavigate();
@@ -20,14 +20,15 @@ const UserList = () => {
       const [isEditModalOpen, setIsEditModalOpen] = useState(false);
       const [selectedUserForEdit, setSelectedUserForEdit] = useState(null);
       const [fieldErrors, setFieldErrors] = useState({});
+      const [deleteAction, setDeleteAction] = useState('deactivate');
 
       const [users, setUsers] = useState([]);
 
     //  Handle the API requests from the BE (get users, edit status)
       const getUsers = async () => {
+
         try {
             const allUsers = await ajax(host + endpoints.getAllUsers, 'GET', user.jwt);
-            console.log(allUsers);
             setUsers(allUsers);
         } catch (error) {
             console.error("Error fetching user details:", error);
@@ -37,26 +38,57 @@ const UserList = () => {
         useEffect(() => {
           getUsers(); 
       }, [user.jwt]);
-
-      const  handleChangingStatus = async (e) => {
-        // e.preventDefault();
+      
+    
+    const handleChangingStatus = async () => {
         try {
-          const userStatus = { isActive: false };
-          console.log("id of the use" + selectedUserForDelete.id);
-          await ajax(`${host}${endpoints.updateUserStatus}/${selectedUserForDelete.id}`, 'PATCH', user.jwt, userStatus);
-          alert('Деактивацията е успешна');
-          setUsers(users.map(u => u.id === selectedUserForDelete.id ? { ...u, isActive: false } : u));
-          handleHideDeleteModal();
+          const updatedStatus = !selectedUserForDelete.isActive;
+          setDeleteAction(updatedStatus === false ? 'deactivate' : 'activate')
+          const userStatus = { isActive: updatedStatus };
+          const id = selectedUserForDelete.id;
+      
+          const response = await fetch(
+            host + endpoints.updateUserStatus(id), 
+            {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.jwt}`
+              },
+              body: JSON.stringify(userStatus)
+            }
+          );
+      
+          if (response.status === 200) {  
+            setUsers(prevUsers =>
+              prevUsers.map(u =>
+                u.id === id ? { ...u, isActive: updatedStatus } : u
+            )
+          );
+
+            await getUsers();
+      
+            if (updatedStatus) {
+              alert('Активацията е успешна');
+            } else {
+              alert('Деактивацията е успешна');
+            }
+      
+            handleHideDeleteModal();
+          } else {
+            alert('Възникна грешка при актуализирането на потребителския статус.');
+          }
         } catch (error) {
-          console.error('Error deactivating user:', error);
+          console.error('Error updating user status:', error);
           alert('Възникна грешка, моля опитайте отново');
         }
       };
 
       // Modals
       
-      const handleShowDeleteModal = (user) => {
+      const handleShowDeleteModal = (user, action) => {
         setSelectedUserForDelete(user);
+        setDeleteAction(action)
         setIsDeleteModalOpen(true);
       };
   
@@ -69,6 +101,7 @@ const UserList = () => {
 
       const handleShowEditModal = (user) => {
         setSelectedUserForEdit(user);
+        console.log(selectedUserForEdit)
         setIsEditModalOpen(true);
       };
     
@@ -76,28 +109,64 @@ const UserList = () => {
         setIsEditModalOpen(false);
         setSelectedUserForEdit(null);
       };
-
-      // TODO
     
-      const handleSaveUser = (editedUser) => {
+      const handleEditUser = async (editedUser) => {
         const errors = {};
+    
+        // Validate input fields
         if (!editedUser.firstName) {
-          errors.firstName = 'First Name is required';
+            errors.firstName = 'First Name is required';
         }
         if (!editedUser.lastName) {
-          errors.lastName = 'Last Name is required';
+            errors.lastName = 'Last Name is required';
         }
         if (!editedUser.phoneNumber) {
-          errors.phoneNumber = 'Phone Number is required';
+            errors.phoneNumber = 'Phone Number is required';
         }
+    
         if (Object.keys(errors).length > 0) {
-          setFieldErrors(errors);
-        } else {
-          console.log('User saved', editedUser);
-          setFieldErrors({});
-          handleHideEditModal();
+            setFieldErrors(errors);
+            return;
         }
-      };
+    
+        try {
+            const id = selectedUserForEdit.id;
+
+            const response = await fetch(host + endpoints.updateUserProfile(id), {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.jwt}`
+                },
+                body: JSON.stringify({
+                    email: editedUser.email,
+                    firstName: editedUser.firstName,
+                    lastName: editedUser.lastName,
+                    phoneNumber: editedUser.phoneNumber,
+                    role: editedUser.role
+                }),
+            });
+    
+            if (response.status !== 200 ) {
+                throw new Error('Failed to update user profile');
+            }
+    
+            // Update the user data in the local state
+            setUsers(prevUsers =>
+                prevUsers.map(u =>
+                    u.id === id ? { ...u, ...editedUser } : u
+                )
+            );
+            await getUsers();
+            alert("Редакцията е успешна");
+            setFieldErrors({});
+            handleHideEditModal();
+        } catch (error) {
+            console.error('Error updating user profile:', error);
+        }
+    };
+    
+    
 
           // Function to get the role display name
     const getRoleDisplayName = (roles) => {
@@ -109,10 +178,12 @@ const UserList = () => {
       return roles.join(', ');
     };
 
+    const filteredUsers = active !== undefined ? users.filter(user => user.isActive === active) : users;
+
   return (
     <div>
-      {users.length === 0 ? (
-                    <p>Няма налични потребители.</p>
+      {filteredUsers.length === 0 ? (
+                    <p>{active === true ? 'Няма налични активни потребители.' : active === false ? 'Няма налични неактивни потребители.' : 'Няма налични потребители.'}</p>
                 ) : (
                     <table className="table table-striped table-hover">
                         <thead>
@@ -127,7 +198,7 @@ const UserList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((user, index) => (
+                            {filteredUsers.map((user, index) => (
                                 <tr key={user.id}>
                                     <th scope="row">{index + 1}</th>
                                     <td>{user.firstName}</td>
@@ -138,9 +209,9 @@ const UserList = () => {
                                     <td className={styles.button_wrapper}>
                                         <button 
                                             className={`btn btn-warning mb-1 ml-2 ${styles.button_customize}`}
-                                            onClick={() => handleShowDeleteModal(user)}
+                                            onClick={() => handleShowDeleteModal(user, user.isActive ? 'deactivate' : 'activate')}
                                         >
-                                            Деактивирай
+                                           {user.isActive === true ? 'Деактивирай' : 'Активирай'} 
                                         </button>
                                         <button 
                                             type='button' 
@@ -161,17 +232,26 @@ const UserList = () => {
           onClose={handleHideDeleteModal}
           onDelete={handleChangingStatus}
           firstName={selectedUserForDelete?.firstName}
+          action={deleteAction}
         />
 
-        {selectedUserForEdit && (
+        {/* {selectedUserForEdit && (
           <EditUserModal
             isOpen={isEditModalOpen}
             onClose={handleHideEditModal}
             user={selectedUserForEdit}
-            onSave={handleSaveUser}
+            onSave={handleEditUser}
             fieldErrors={fieldErrors}
           />
-        )}
+        )} */}
+
+          <EditUserModal
+            isOpen={isEditModalOpen}
+            onClose={handleHideEditModal}
+            user={selectedUserForEdit}
+            onSave={handleEditUser}
+            fieldErrors={fieldErrors}
+          />
 
     </div>
   )
