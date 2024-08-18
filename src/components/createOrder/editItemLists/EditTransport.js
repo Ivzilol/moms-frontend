@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import './EditFasteners.css';
+import React, {useEffect, useState} from "react";
 
-const EditFasteners = ({ item, onSave, onClose }) => {
+const EditTransport = ({ item, onSave, onClose }) => {
     const [editedItem, setEditedItem] = useState(item);
 
     useEffect(() => {
@@ -24,32 +23,32 @@ const EditFasteners = ({ item, onSave, onClose }) => {
             <div className="modal-content">
                 <h2>Редактиране на елемент</h2>
                 <label>
-                    Тип:
-                    <input type="text" name="type" value={editedItem.type} onChange={handleChange} />
-                </label>
-                <label>
-                    Диаметър:
-                    <input type="text" name="diameter" value={editedItem.diameter} onChange={handleChange} />
-                </label>
-                <label>
                     Дължина:
-                    <input type="text" name="length" value={editedItem.length} onChange={handleChange} />
+                    <input type="text" name="maxLength" value={editedItem.maxLength} onChange={handleChange} />
                 </label>
                 <label>
                     м. ед.:
-                    <select name="lengthUnit" value={editedItem.lengthUnit} onChange={handleChange}>
+                    <select name="maxLengthUnit" value={editedItem.lengthUnit} onChange={handleChange}>
                         <option value="MM">MM</option>
                         <option value="CM">CM</option>
                         <option value="M">M</option>
                     </select>
                 </label>
                 <label>
-                    Модел:
-                    <input type="text" name="standard" value={editedItem.standard} onChange={handleChange} />
+                    Тегло:
+                    <input type="text" name="weight" value={editedItem.weight} onChange={handleChange} />
                 </label>
                 <label>
-                    Клас:
-                    <input type="text" name="clazz" value={editedItem.clazz} onChange={handleChange} />
+                    м. ед. :
+                    <select name="weightUnit" value={editedItem.weightUnit} onChange={handleChange}>
+                        <option value="G">g</option>
+                        <option value="KG">kg</option>
+                        <option value="T">t</option>
+                    </select>
+                </label>
+                <label>
+                    Камион:
+                    <input type="text" name="truck" value={editedItem.truck} onChange={handleChange} />
                 </label>
                 <label>
                     Количество:
@@ -66,6 +65,6 @@ const EditFasteners = ({ item, onSave, onClose }) => {
             </div>
         </div>
     );
-};
+}
 
-export default EditFasteners;
+export default EditTransport;

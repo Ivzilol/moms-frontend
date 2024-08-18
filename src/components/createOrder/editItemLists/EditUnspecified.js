@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 
-const EditRebar = ({ item, onSave, onClose }) => {
+const EditUnspecified = ({ item, onSave, onClose }) => {
+
     const [editedItem, setEditedItem] = useState(item);
 
     useEffect(() => {
@@ -23,29 +24,8 @@ const EditRebar = ({ item, onSave, onClose }) => {
             <div className="modal-content">
                 <h2>Редактиране на елемент</h2>
                 <label>
-                    M. Дължина:
-                    <input type="text" name="maxLength" value={editedItem.maxLength} onChange={handleChange} />
-                </label>
-                <label>
-                    м. ед.:
-                    <select name="maxLengthUnit" value={editedItem.lengthUnit} onChange={handleChange}>
-                        <option value="MM">MM</option>
-                        <option value="CM">CM</option>
-                        <option value="M">M</option>
-                    </select>
-                </label>
-                <label>
                     Количество:
                     <input type="number" name="quantity" value={editedItem.quantity} onChange={handleChange} />
-                </label>
-                <label>
-                    м. ед. :
-                    <select name="quantityUnit" value={editedItem.quantityUnit} onChange={handleChange}>
-                        <option value="">м. ед.</option>
-                        <option value="G">g</option>
-                        <option value="KG">kg</option>
-                        <option value="T">t</option>
-                    </select>
                 </label>
                 <label>
                     Описание:
@@ -60,4 +40,4 @@ const EditRebar = ({ item, onSave, onClose }) => {
     );
 }
 
-export default EditRebar;
+export default EditUnspecified;

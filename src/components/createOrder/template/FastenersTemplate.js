@@ -10,7 +10,7 @@ const FastenersTemplate = ({ onSave, category }) => {
     const [diameter, setDiameter] = useState('');
     const [length, setLength] = useState('');
     const [lengthUnit, setLengthUnit] = useState('');
-    const [model, setModel] = useState('');
+    const [standard, setStandard] = useState('');
     const [clazz, setClazz] = useState('');
     const [quantity, setQuantity] = useState('');
     const [description, setDescription] = useState('');
@@ -33,7 +33,7 @@ const FastenersTemplate = ({ onSave, category }) => {
             newErrors.length = 'Дължината не може да е отрицателно число или 0';
         }
         if (!lengthUnit) newErrors.lengthUnit = 'Моля изберете м. ед.';
-        if (!model) newErrors.model = 'Моля добавете модел';
+        if (!standard) newErrors.standard = 'Моля добавете модел';
         if (!clazz) newErrors.classType = 'Моля добавете клас';
         if (!quantity) newErrors.quantity = 'Моля добавете количество';
 
@@ -50,7 +50,7 @@ const FastenersTemplate = ({ onSave, category }) => {
             diameter,
             length,
             lengthUnit,
-            model,
+            standard,
             clazz,
             quantity,
             description,
@@ -58,13 +58,12 @@ const FastenersTemplate = ({ onSave, category }) => {
         };
         onSave(data);
 
-        // Clear the form
         setName('');
         setType('');
         setDiameter('');
         setLength('');
         setLengthUnit('');
-        setModel('');
+        setStandard('');
         setClazz('');
         setQuantity('');
         setDescription('');
@@ -98,9 +97,9 @@ const FastenersTemplate = ({ onSave, category }) => {
     const handleSelectResult = (result) => {
         setType(result.type);
         setDiameter(result.diameter);
-        setLength(result.length);
-        setLengthUnit(result.lengthUnit);
-        setModel(result.model);
+        setLength(result.length.split(' ')[0]);
+        setLengthUnit(result.length.split(' ')[1]);
+        setStandard(result.standard);
         setClazz(result.clazz);
         setQuantity(result.quantity);
         setDescription(result.description);
@@ -132,17 +131,17 @@ const FastenersTemplate = ({ onSave, category }) => {
             <label>
                 Тип:
                 <input type="text" value={type} onChange={(e) => setType(e.target.value)} />
-                {errors.type && <span className="error">{errors.type}</span>}
+                {/*{errors.type && <span className="error">{errors.type}</span>}*/}
             </label>
             <label>
                 Диаметър:
                 <input type="text" value={diameter} onChange={(e) => setDiameter(e.target.value)} />
-                {errors.diameter && <span className="error">{errors.diameter}</span>}
+                {/*{errors.diameter && <span className="error">{errors.diameter}</span>}*/}
             </label>
             <label>
                 Дължина:
                 <input type="text" value={length} onChange={(e) => setLength(e.target.value)} />
-                {errors.length && <span className="error">{errors.length}</span>}
+                {/*{errors.length && <span className="error">{errors.length}</span>}*/}
             </label>
             <label>
                 м. ед. :
@@ -152,22 +151,22 @@ const FastenersTemplate = ({ onSave, category }) => {
                     <option value="CM">СМ</option>
                     <option value="M">М</option>
                 </select>
-                {errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}
+                {/*{errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}*/}
             </label>
             <label>
-                Модел:
-                <input type="text" value={model} onChange={(e) => setModel(e.target.value)} />
-                {errors.model && <span className="error">{errors.model}</span>}
+                Стандарт:
+                <input type="text" value={standard} onChange={(e) => setStandard(e.target.value)} />
+                {/*{errors.model && <span className="error">{errors.model}</span>}*/}
             </label>
             <label>
                 Клас:
                 <input type="text" value={clazz} onChange={(e) => setClazz(e.target.value)} />
-                {errors.classType && <span className="error">{errors.classType}</span>}
+                {/*{errors.classType && <span className="error">{errors.classType}</span>}*/}
             </label>
             <label>
                 Количество:
                 <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-                {errors.quantity && <span className="error">{errors.quantity}</span>}
+                {/*{errors.quantity && <span className="error">{errors.quantity}</span>}*/}
             </label>
             <label>
                 Описание:

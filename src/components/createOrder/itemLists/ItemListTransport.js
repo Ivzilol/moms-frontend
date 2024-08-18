@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import './ItemListFasteners.css'
 import {useUser} from "../../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
@@ -12,12 +11,11 @@ const parseAdminNote = (note) => {
     return note;
 };
 
-const ItemListInsulation = ({
-                                orderId, items, onEdit, onDelete,
-                                orderDescription, orderDate, deliveryDate, orderStatus,
-                                materialType, specificationFileUrl, orderNumber, constructionName
-                            }) => {
-
+const ItemListTransport = ({
+                               orderId, items, onEdit, onDelete,
+                               orderDescription, orderDate, deliveryDate, orderStatus,
+                               materialType, specificationFileUrl, orderNumber, constructionName
+                           }) => {
     const user = useUser([]);
     const [roles, setRoles] = useState(getRolesFromJWT());
     const [selectedItems, setSelectedItems] = useState(getSelectedItemsFromStorage(orderId));
@@ -149,7 +147,7 @@ const ItemListInsulation = ({
             orderStatus: currentOrderStatus,
             materialType: materialType,
             specificationFileUrl: specificationFileUrl,
-            insulation: requestBody
+            transports: requestBody
         };
         formData.append('order',
             new Blob([JSON.stringify(payload)], {
@@ -403,4 +401,4 @@ const ItemListInsulation = ({
     );
 }
 
-export default ItemListInsulation;
+export default ItemListTransport;

@@ -13,6 +13,8 @@ import ProcessingOrdersAdmin from "./components/ordersAdmin/ProcessingOrdersAdmi
 import OrdersUser from "./components/ordersUser/OrdersUser";
 import OrderDetails from "./components/ordersAdmin/OrderDetails";
 import OrderDetailsUser from "./components/ordersUser/OrderDetailsUser";
+import UserForgottenPassword from "./components/userForgottenPassword/UserForgottenPassword";
+import UserCreateNewPassword from "./components/userForgottenPassword/UserCreateNewPassword";
 
 
 function App() {
@@ -116,6 +118,8 @@ function App() {
             }/>
             <Route path="/orders-user" element={<OrdersUser/>}/>
             <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/forgotten-password" element={<UserForgottenPassword/>}/>
+            <Route path="/create-new-password" element={<UserCreateNewPassword/>}/>
         </Routes>
     );
 }

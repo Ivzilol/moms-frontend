@@ -25,6 +25,15 @@ import ItemListSet from "./itemLists/ItemListSet";
 import EditSet from "./editItemLists/EditSet";
 import Header from "../Header/Header";
 import ajax from "../../service/FetchService";
+import UnspecifiedTemplate from "./template/UnspecifiedTemplate";
+import ItemListUnspecified from "./itemLists/ItemListUnspecified";
+import EditUnspecified from "./editItemLists/EditUnspecified";
+import ServiceTemplate from "./template/ServiceTemplate";
+import ItemListService from "./itemLists/ItemListService";
+import EditService from "./editItemLists/EditService";
+import TransportTemplate from "./template/TransportTemplate";
+import ItemListTransport from "./itemLists/ItemListTransport";
+import EditTransport from "./editItemLists/EditTransport";
 
 const OrderCategoryAndConstructionsSite = () => {
     const user = useUser();
@@ -143,11 +152,41 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'UNSPECIFIED') {
-
+        template = <UnspecifiedTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListUnspecified
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditUnspecified
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'SERVICE') {
-
+        template = <ServiceTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListService
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditService
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     } else if (selectedCategory === 'TRANSPORT') {
-
+        template = <TransportTemplate onSave={handleSave}/>
+        itemListTemplate = <ItemListTransport
+            items={requestBody}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+        templateEdit = <EditTransport
+            item={currentItem}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditing(false)}
+        />
     }
 
 
@@ -186,7 +225,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 diameter: item.diameter,
                 length: item.length,
                 lengthUnit: item.lengthUnit,
-                model: item.model,
+                standard: item.standard,
                 clazz: item.clazz,
                 quantity: item.quantity,
                 description: item.description,
@@ -204,11 +243,11 @@ const OrderCategoryAndConstructionsSite = () => {
             deliveryDate: formattedDate,
             galvanisedSheets: requestBody.map(item => ({
                 type: item.type,
-                maxLength: item.length,
-                lengthUnit: item.lengthUnit,
-                area: item.area,
-                areaUnit: item.areaUnit,
+                maxLength: item.maxLength,
+                maxLengthUnit: item.maxLengthUnit,
+                numberOfSheets: item.numberOfSheets,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description,
             }))
         };
@@ -227,6 +266,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 thickness: item.thickness,
                 thicknessUnit: item.lengthUnit,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description,
             }))
         };
@@ -243,6 +283,7 @@ const OrderCategoryAndConstructionsSite = () => {
             metals: requestBody.map(item => ({
                 totalWeight: item.totalWeight,
                 totalWeightUnit: item.totalWeightUnit,
+                kind:item.kind,
                 quantity: item.quantity,
                 description: item.description,
             }))
@@ -271,6 +312,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 backSheetThickness: item.backSheetThickness,
                 backSheetThicknessUnit: item.backSheetThicknessUnit,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description
             }))
         };
@@ -287,9 +329,8 @@ const OrderCategoryAndConstructionsSite = () => {
             rebars: requestBody.map(item => ({
                 maxLength: item.maxLength,
                 maxLengthUnit: item.maxLengthUnit,
-                weight: item.weight,
-                weightUnit: item.weightUnit,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description,
             }))
         };
@@ -304,11 +345,60 @@ const OrderCategoryAndConstructionsSite = () => {
             materialType: selectedCategory,
             deliveryDate: formattedDate,
             sets: requestBody.map(item => ({
-                galvanisedSheetThickness: item.galvanisedSheetThickness,
-                galvanisedSheetThicknessUnit: item.galvanisedSheetThicknessUnit,
                 color: item.color,
                 maxLength: item.maxLength,
                 maxLengthUnit: item.maxLengthUnit,
+                quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
+                description: item.description,
+            }))
+        };
+    }
+
+    function createRequestBodyUnspecified(formattedDate) {
+        return {
+            orderDescription: orderDescription,
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            unspecified: requestBody.map(item => ({
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
+    function createRequestBodyService(formattedDate) {
+        return {
+            orderDescription: orderDescription,
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            services: requestBody.map(item => ({
+                quantity: item.quantity,
+                description: item.description,
+            }))
+        };
+    }
+
+    function createRequestBodyTransport(formattedDate) {
+        return {
+            orderDescription: orderDescription,
+            constructionSite: {
+                name: selectedSite
+            },
+            materialType: selectedCategory,
+            deliveryDate: formattedDate,
+            transports: requestBody.map(item => ({
+                maxLength: item.maxLength,
+                maxLengthUnit: item.maxLengthUnit,
+                weight: item.weight,
+                weightUnit: item.weightUnit,
+                truck: item.truck,
                 quantity: item.quantity,
                 description: item.description,
             }))
@@ -317,10 +407,26 @@ const OrderCategoryAndConstructionsSite = () => {
 
     function createOrder() {
         const formData = new FormData();
-        formData.append("files", specification);
         const formattedDate = new Date(dateOfDelivery).toISOString();
-        const files = requestBody.flatMap(item => item.specification);
-        files.forEach(file => formData.append("files", file));
+
+        if (specification) {
+            const specificationPrefix = '000__';
+            const newSpecificationFile = new File([specification], specificationPrefix + specification.name, { type: specification.type });
+            formData.append("files", newSpecificationFile);
+        }
+
+        const files = requestBody.flatMap((item, itemIndex) =>
+            item.specification ? [{ file: item.specification, index: itemIndex }] : [])
+            .filter(entry => entry.file);
+
+        files.forEach((entry) => {
+            const { file, index } = entry;
+            if (file && file.name) {
+                const prefix = String(index + 1).padStart(3, '0') + '__';
+                const newFile = new File([file], prefix + file.name, { type: file.type });
+                formData.append("files", newFile);
+            }
+        });
 
         let payload;
         if (selectedCategory === "FASTENERS") {
@@ -337,6 +443,12 @@ const OrderCategoryAndConstructionsSite = () => {
             payload = createRequestBodyRebar(formattedDate);
         } else if (selectedCategory === 'SET') {
             payload = createRequestBodySet(formattedDate);
+        } else if (selectedCategory === 'UNSPECIFIED') {
+            payload = createRequestBodyUnspecified(formattedDate);
+        } else if (selectedCategory === 'SERVICE') {
+            payload = createRequestBodyService(formattedDate);
+        } else if (selectedCategory === 'TRANSPORT') {
+            payload = createRequestBodyTransport(formattedDate);
         }
         formData.append("order",
             new Blob([JSON.stringify(payload)], {
@@ -354,6 +466,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 alert('Вашата заявка е изпратена успешно');
                 setRequestBody([]);
                 localStorage.removeItem(selectedCategory);
+                setOrderDescription('');
             }
 
         })

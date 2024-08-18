@@ -1,45 +1,31 @@
-import React, {useState} from "react";
+import {useState} from "react";
 
-const RebarTemplate = ( { onSave }) => {
+const TransportTemplate = ({ onSave }) => {
+
     const [name, setName] = useState('');
     const [maxLength, setMaxLength] = useState('');
     const [maxLengthUnit, setMaxLengthUnit] = useState('');
     const [weight, setWeight] = useState('')
     const [weightUnit, setWeightUnit] = useState('');
+    const [truck, setTruck] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [quantityUnit, setQuantityUnit] = useState('');
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
-    const [errors, setErrors] = useState({});
 
     const handleFileChange = (e) => {
         setSpecification(e.target.files[0]);
     };
 
-    const validate = () => {
-        const newErrors = {};
-        if (!maxLength) {
-            newErrors.length = 'Моля добавете дължина';
-        } else if (maxLength <= 0) {
-            newErrors.length = 'м. дължина не може да е отрицателно число или 0';
-        }
-        if (!quantity) newErrors.quantity = 'Моля добавете количество';
-        if (!quantityUnit) newErrors.quantityUnit = 'Моля добавете м.ед.';
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
 
     const handleSave = () => {
-        if (!validate()) return;
-
         const data = {
             name,
             maxLength,
             maxLengthUnit,
             weight,
             weightUnit,
+            truck,
             quantity,
-            quantityUnit,
             description,
             specification
         };
@@ -49,11 +35,10 @@ const RebarTemplate = ( { onSave }) => {
         setMaxLengthUnit('');
         setWeight('');
         setWeightUnit('');
+        setTruck('');
         setQuantity('');
-        setQuantityUnit('');
         setDescription('');
         setSpecification(null);
-        setErrors({});
     };
 
     return (
@@ -63,7 +48,7 @@ const RebarTemplate = ( { onSave }) => {
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>
-                M. Дължина:
+                Дължина:
                 <input type="text" value={maxLength} onChange={(e) => setMaxLength(e.target.value)} />
             </label>
             <label>
@@ -74,22 +59,27 @@ const RebarTemplate = ( { onSave }) => {
                     <option value="CM">СМ</option>
                     <option value="M">М</option>
                 </select>
-                {errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}
             </label>
             <label>
-                Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-                {errors.quantity && <span className="error">{errors.quantity}</span>}
+                Тегло:
+                <input type="text" value={weight} onChange={(e) => setWeight(e.target.value)} />
             </label>
             <label>
                 м. ед. :
-                <select name="quantityUnit" value={quantityUnit} onChange={(e) => setQuantityUnit(e.target.value)}>
+                <select name="weightUnit" value={weightUnit} onChange={(e) => setWeightUnit(e.target.value)}>
                     <option value="">м. ед.</option>
                     <option value="G">g</option>
                     <option value="KG">kg</option>
                     <option value="T">t</option>
                 </select>
-                {errors.quantityUnit && <span className="error">{errors.quantityUnit}</span>}
+            </label>
+            <label>
+                Камион:
+                <input type="text" value={truck} onChange={(e) => setTruck(e.target.value)} />
+            </label>
+            <label>
+                Количество:
+                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
             </label>
             <label>
                 Описание:
@@ -106,4 +96,4 @@ const RebarTemplate = ( { onSave }) => {
     );
 }
 
-export default RebarTemplate;
+export default TransportTemplate;

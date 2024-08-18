@@ -1,22 +1,22 @@
-import React, {useEffect, useState} from "react";
-import './ItemListFasteners.css'
 import {useUser} from "../../../userProvider/UserProvider";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 import baseURL from "../../baseURL/BaseURL";
 import Header from "../../Header/Header";
 
+
 const parseAdminNote = (note) => {
     if (!note) return {dateTime: '', creator: '', message: ''};
 
     return note;
-};
+}
 
-const ItemListInsulation = ({
-                                orderId, items, onEdit, onDelete,
-                                orderDescription, orderDate, deliveryDate, orderStatus,
-                                materialType, specificationFileUrl, orderNumber, constructionName
-                            }) => {
+const ItemListUnspecified = ({
+                                 orderId, items, onEdit, onDelete,
+                                 orderDescription, orderDate, deliveryDate, orderStatus,
+                                 materialType, specificationFileUrl, orderNumber, constructionName
+                             }) => {
 
     const user = useUser([]);
     const [roles, setRoles] = useState(getRolesFromJWT());
@@ -149,7 +149,7 @@ const ItemListInsulation = ({
             orderStatus: currentOrderStatus,
             materialType: materialType,
             specificationFileUrl: specificationFileUrl,
-            insulation: requestBody
+            unspecified: requestBody
         };
         formData.append('order',
             new Blob([JSON.stringify(payload)], {
@@ -186,6 +186,8 @@ const ItemListInsulation = ({
             })
         }
     }
+
+
 
     return (
         <div>
@@ -233,17 +235,12 @@ const ItemListInsulation = ({
             )}
             <div className="item-list">
                 {items.length === 0 ? (
-                    <p>Няма добавени елементи.</p>
+                    <p>Няма добавени материали.</p>
                 ) : (
                     <table>
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Дължина</th>
-                            <th>м. ед.</th>
-                            <th>Тегло</th>
-                            <th>м. ед.</th>
-                            <th>Камион</th>
                             <th>Количество</th>
                             <th>Описани</th>
                             {orderNumber !== undefined &&
@@ -267,22 +264,16 @@ const ItemListInsulation = ({
                         </thead>
                         <tbody>
                         {items.map((item, index) => (
-                            <tr key={index}>
+                            <tr key={index}
+                                style={{backgroundColor: selectedItems.includes(index) ? '#d3d3d3' : 'transparent'}}>
                                 <td>{index + 1}</td>
-                                <td>{item.maxLength}</td>
-                                <td>{item.maxLengthUnit}</td>
-                                <td>{item.weight}</td>
-                                <td>{item.weightUnit}</td>
-                                <td>{item.truck}</td>
                                 <td>{item.quantity}</td>
                                 <td>{item.description}</td>
                                 {orderNumber !== undefined &&
                                     <td>
-                                        {item.specificationFileUrl &&
-                                            <a href={item.specificationFileUrl} target="_blank"
-                                               rel="noopener noreferrer">
-                                                изтегли спецификация
-                                            </a>}
+                                        {item.specificationFileUrl && <a href={item.specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                                            изтегли спецификация
+                                        </a>}
                                     </td>
                                 }
                                 {userRole && orderStatus === undefined && (
@@ -315,9 +306,7 @@ const ItemListInsulation = ({
                                 )}
                                 {adminRole && item.adminNote !== null && (
                                     <td>
-                                        <button className="note-button" onClick={() => handleViewNote(index)}>Виж
-                                            бележка
-                                        </button>
+                                        <button className="note-button" onClick={() => handleViewNote(index)}>Виж бележка</button>
                                         {showNoteModal && (
                                             <div className="note-modal">
                                                 <div className="note-content">
@@ -332,9 +321,8 @@ const ItemListInsulation = ({
                                                     <button
                                                         id="save-button"
                                                         type="submit"
-                                                        onClick={() => handleNoteChangeSecondNote(index, currentNote + "##" + newNote)}
-                                                    >Save
-                                                    </button>
+                                                        onClick={() => handleNoteChangeSecondNote(index,currentNote + "##" + newNote)}
+                                                    >Save</button>
                                                     {/*<input*/}
                                                     {/*    type="text"*/}
                                                     {/*    value={adminNotes[index] !== undefined ? adminNotes[index] : ''}*/}
@@ -345,11 +333,10 @@ const ItemListInsulation = ({
                                         )}
                                     </td>
                                 )}
-                                {userRole && item.adminNote !== null && orderNumber !== undefined && (
+                                {userRole && item.adminNote !== null && orderNumber !== undefined &&(
                                     <td>
                                         <button className="note-button"
-                                                onClick={() => handleViewNote(index)}>Виж бележка
-                                        </button>
+                                                onClick={() => handleViewNote(index)}>Виж бележка</button>
                                         {showNoteModal && (
                                             <div className="note-modal">
                                                 <div className="note-content">
@@ -364,9 +351,8 @@ const ItemListInsulation = ({
                                                     <button
                                                         id="save-button"
                                                         type="submit"
-                                                        onClick={() => handleNoteChangeSecondNote(index, currentNote + "##" + newNote)}
-                                                    >Save
-                                                    </button>
+                                                        onClick={() => handleNoteChangeSecondNote(index,currentNote + "##" + newNote)}
+                                                    >Save</button>
                                                     {/*<input*/}
                                                     {/*    type="text"*/}
                                                     {/*    value={adminNotes[index] !== undefined ? adminNotes[index] : ''}*/}
@@ -403,4 +389,4 @@ const ItemListInsulation = ({
     );
 }
 
-export default ItemListInsulation;
+export default ItemListUnspecified;
