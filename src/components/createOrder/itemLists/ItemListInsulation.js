@@ -239,11 +239,12 @@ const ItemListInsulation = ({
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Тип</th>
-                            <th>Дебелина</th>
+                            <th>Дължина</th>
                             <th>м. ед.</th>
+                            <th>Тегло</th>
+                            <th>м. ед.</th>
+                            <th>Камион</th>
                             <th>Количество</th>
-                            <th>м. ед.</th>
                             <th>Описани</th>
                             {orderNumber !== undefined &&
                                 <th>Спецификация</th>
@@ -268,11 +269,12 @@ const ItemListInsulation = ({
                         {items.map((item, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{item.type}</td>
-                                <td>{item.thickness}</td>
-                                <td>{item.thicknessUnit}</td>
+                                <td>{item.maxLength}</td>
+                                <td>{item.maxLengthUnit}</td>
+                                <td>{item.weight}</td>
+                                <td>{item.weightUnit}</td>
+                                <td>{item.truck}</td>
                                 <td>{item.quantity}</td>
-                                <td>{item.quantityUnit}</td>
                                 <td>{item.description}</td>
                                 {orderNumber !== undefined &&
                                     <td>

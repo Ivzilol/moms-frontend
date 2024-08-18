@@ -12,6 +12,7 @@ import ItemListRebar from "../createOrder/itemLists/ItemListRebar";
 import ItemListSet from "../createOrder/itemLists/ItemListSet";
 import ItemListUnspecified from "../createOrder/itemLists/ItemListUnspecified";
 import ItemListService from "../createOrder/itemLists/ItemListService";
+import ItemListTransport from "../createOrder/itemLists/ItemListTransport";
 
 const OrderDetails = () => {
     const id = window.location.href.split("/order-details/")[1];
@@ -197,6 +198,26 @@ const OrderDetails = () => {
                     <ItemListService
                         orderId={parseInt(id)}
                         items={order.services}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.transports && (
+                <div>
+                    <ItemListTransport
+                        orderId={parseInt(id)}
+                        items={order.transports}
                         onEdit={() => {
                         }}
                         onDelete={() => {

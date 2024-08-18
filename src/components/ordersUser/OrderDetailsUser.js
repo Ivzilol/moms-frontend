@@ -12,6 +12,7 @@ import ItemListRebar from "../createOrder/itemLists/ItemListRebar";
 import ItemListSet from "../createOrder/itemLists/ItemListSet";
 import ItemListUnspecified from "../createOrder/itemLists/ItemListUnspecified";
 import ItemListService from "../createOrder/itemLists/ItemListService";
+import ItemListTransport from "../createOrder/itemLists/ItemListTransport";
 
 const OrderDetailsUser = () => {
 
@@ -180,6 +181,24 @@ const OrderDetailsUser = () => {
                 <div>
                     <ItemListService
                         items={order.services}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.transports && (
+                <div>
+                    <ItemListTransport
+                        items={order.transports}
                         onEdit={() => {
                         }}
                         onDelete={() => {
