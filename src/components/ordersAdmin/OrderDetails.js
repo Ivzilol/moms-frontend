@@ -9,6 +9,7 @@ import ItemListInsulation from "../createOrder/itemLists/ItemListInsulation";
 import ItemListMetal from "../createOrder/itemLists/ItemListMetal";
 import ItemListPanel from "../createOrder/itemLists/ItemListPanel";
 import ItemListRebar from "../createOrder/itemLists/ItemListRebar";
+import ItemListSet from "../createOrder/itemLists/ItemListSet";
 
 const OrderDetails = () => {
     const id = window.location.href.split("/order-details/")[1];
@@ -134,6 +135,26 @@ const OrderDetails = () => {
                     <ItemListRebar
                         orderId={parseInt(id)}
                         items={order.rebars}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.sets && (
+                <div>
+                    <ItemListSet
+                        orderId={parseInt(id)}
+                        items={order.sets}
                         onEdit={() => {
                         }}
                         onDelete={() => {

@@ -23,36 +23,34 @@ const EditSet = ({ item, onSave, onClose }) => {
             <div className="modal-content">
                 <h2>Редактиране на елемент</h2>
                 <label>
-                    Поцинкована ламарина дължина::
-                    <input type="text" name="galvanisedSheetThickness" value={editedItem.galvanisedSheetThickness} onChange={handleChange} />
-                </label>
-                <label>
-                    м. ед.:
-                    <select name="galvanisedSheetThicknessUnit" value={editedItem.galvanisedSheetThicknessUnit} onChange={handleChange}>
-                        <option value="MM">MM</option>
-                        <option value="CM">CM</option>
-                        <option value="M">M</option>
-                    </select>
-                </label>
-                <label>
                     Цвят:
                     <input type="text" name="color" value={editedItem.color} onChange={handleChange} />
                 </label>
                 <label>
-                    Максимална дължина:
+                    М. дължина:
                     <input type="text" name="maxLength" value={editedItem.maxLength} onChange={handleChange} />
                 </label>
                 <label>
                     м. ед. :
                     <select name="maxLengthUnit" value={editedItem.maxLengthUnit} onChange={handleChange}>
-                        <option value="G">g</option>
-                        <option value="KG">kg</option>
-                        <option value="T">t</option>
+                        <option value="">м. ед.</option>
+                        <option value="MM">ММ</option>
+                        <option value="CM">СМ</option>
+                        <option value="M">М</option>
                     </select>
                 </label>
                 <label>
                     Количество:
                     <input type="number" name="quantity" value={editedItem.quantity} onChange={handleChange} />
+                </label>
+                <label>
+                    м. ед. :
+                    <select name="quantityUnit" value={editedItem.quantityUnit} onChange={handleChange}>
+                        <option value="">м. ед.</option>
+                        <option value="G">g</option>
+                        <option value="KG">kg</option>
+                        <option value="T">t</option>
+                    </select>
                 </label>
                 <label>
                     Описание:

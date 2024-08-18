@@ -345,12 +345,11 @@ const OrderCategoryAndConstructionsSite = () => {
             materialType: selectedCategory,
             deliveryDate: formattedDate,
             sets: requestBody.map(item => ({
-                galvanisedSheetThickness: item.galvanisedSheetThickness,
-                galvanisedSheetThicknessUnit: item.galvanisedSheetThicknessUnit,
                 color: item.color,
                 maxLength: item.maxLength,
                 maxLengthUnit: item.maxLengthUnit,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description,
             }))
         };
