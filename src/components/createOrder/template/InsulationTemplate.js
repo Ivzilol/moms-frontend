@@ -6,6 +6,7 @@ const InsulationTemplate = ({ onSave }) => {
     const [thickness, setThickness] = useState('');
     const [lengthUnit, setLengthUnit] = useState('');
     const [quantity, setQuantity] = useState('');
+    const [quantityUnit, setQuantityUnit] = useState('');
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
@@ -34,6 +35,7 @@ const InsulationTemplate = ({ onSave }) => {
             thickness,
             lengthUnit,
             quantity,
+            quantityUnit,
             description,
             specification
         };
@@ -43,6 +45,7 @@ const InsulationTemplate = ({ onSave }) => {
         setThickness('');
         setLengthUnit('');
         setQuantity('');
+        setQuantityUnit('');
         setDescription('');
         setSpecification(null);
         setErrors({});
@@ -62,7 +65,7 @@ const InsulationTemplate = ({ onSave }) => {
             <label>
                 Дебелина:
                 <input type="text" value={thickness} onChange={(e) => setThickness(e.target.value)} />
-                {errors.diameter && <span className="error">{errors.diameter}</span>}
+                {/*{errors.diameter && <span className="error">{errors.diameter}</span>}*/}
             </label>
             <label>
                 м. ед. :
@@ -72,12 +75,21 @@ const InsulationTemplate = ({ onSave }) => {
                     <option value="CM">СМ</option>
                     <option value="M">М</option>
                 </select>
-                {errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}
+                {/*{errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}*/}
             </label>
             <label>
                 Количество:
                 <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
+            </label>
+            <label>
+                м. ед. :
+                <select name="areaUnit" value={quantityUnit} onChange={(e) => setQuantityUnit(e.target.value)}>
+                    <option value="">м. ед.</option>
+                    <option value="CM2">cm2</option>
+                    <option value="M2">m2</option>
+                </select>
+                {/*{errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}*/}
             </label>
             <label>
                 Описание:

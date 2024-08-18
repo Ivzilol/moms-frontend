@@ -266,6 +266,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 thickness: item.thickness,
                 thicknessUnit: item.lengthUnit,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description,
             }))
         };

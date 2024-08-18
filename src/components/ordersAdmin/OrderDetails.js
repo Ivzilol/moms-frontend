@@ -5,6 +5,7 @@ import {useUser} from "../../userProvider/UserProvider";
 import {useEffect, useState} from "react";
 import ajax from "../../service/FetchService";
 import {jwtDecode} from "jwt-decode";
+import ItemListInsulation from "../createOrder/itemLists/ItemListInsulation";
 
 const OrderDetails = () => {
     const id = window.location.href.split("/order-details/")[1];
@@ -50,6 +51,26 @@ const OrderDetails = () => {
                     <ItemListGalvanizedSheet
                         orderId={parseInt(id)}
                         items={order.galvanisedSheets}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.insulation && (
+                <div>
+                    <ItemListInsulation
+                        orderId={parseInt(id)}
+                        items={order.insulation}
                         onEdit={() => {
                         }}
                         onDelete={() => {

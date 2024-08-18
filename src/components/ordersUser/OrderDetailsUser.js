@@ -5,6 +5,7 @@ import ajax from "../../service/FetchService";
 import baseURL from "../baseURL/BaseURL";
 import ItemListGalvanizedSheet from "../createOrder/itemLists/ItemListGalvanizedSheet";
 import ItemListFasteners from "../createOrder/itemLists/ItemListFasteners";
+import ItemListInsulation from "../createOrder/itemLists/ItemListInsulation";
 
 const OrderDetailsUser = () => {
 
@@ -47,6 +48,24 @@ const OrderDetailsUser = () => {
                 <div>
                     <ItemListGalvanizedSheet
                         items={order.galvanisedSheets}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.insulation && (
+                <div>
+                    <ItemListInsulation
+                        items={order.insulation}
                         onEdit={() => {
                         }}
                         onDelete={() => {
