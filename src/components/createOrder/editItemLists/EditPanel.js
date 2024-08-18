@@ -95,6 +95,14 @@ const EditPanel = ({ item, onSave, onClose }) => {
                     <input type="number" name="quantity" value={editedItem.quantity} onChange={handleChange} />
                 </label>
                 <label>
+                    м. ед. :
+                    <select name="quantityUnit" value={editedItem.quantityUnit} onChange={handleChange}>
+                        <option value="">м. ед.</option>
+                        <option value="CM2">cm2</option>
+                        <option value="M2">m2</option>
+                    </select>
+                </label>
+                <label>
                     Описание:
                     <textarea name="description" value={editedItem.description} onChange={handleChange}></textarea>
                 </label>

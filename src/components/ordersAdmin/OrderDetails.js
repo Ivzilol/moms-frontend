@@ -7,6 +7,7 @@ import ajax from "../../service/FetchService";
 import {jwtDecode} from "jwt-decode";
 import ItemListInsulation from "../createOrder/itemLists/ItemListInsulation";
 import ItemListMetal from "../createOrder/itemLists/ItemListMetal";
+import ItemListPanel from "../createOrder/itemLists/ItemListPanel";
 
 const OrderDetails = () => {
     const id = window.location.href.split("/order-details/")[1];
@@ -92,6 +93,26 @@ const OrderDetails = () => {
                     <ItemListMetal
                         orderId={parseInt(id)}
                         items={order.metals}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.panels && (
+                <div>
+                    <ItemListPanel
+                        orderId={parseInt(id)}
+                        items={order.panels}
                         onEdit={() => {
                         }}
                         onDelete={() => {

@@ -312,6 +312,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 backSheetThickness: item.backSheetThickness,
                 backSheetThicknessUnit: item.backSheetThicknessUnit,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description
             }))
         };

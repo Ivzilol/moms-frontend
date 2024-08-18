@@ -16,6 +16,7 @@ const PanelsTemplate = ({ onSave }) => {
     const [backSheetThickness, setBackSheetThickness] = useState('');
     const [backSheetThicknessUnit, setBackSheetThicknessUnit] = useState('');
     const [quantity, setQuantity] = useState('');
+    const [quantityUnit, setQuantityUnit] = useState('');
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
@@ -49,6 +50,7 @@ const PanelsTemplate = ({ onSave }) => {
         if (!backSheetThickness) newErrors.backSheetThickness = "Добавете ширина заден лист";
         if (!backSheetThicknessUnit) newErrors.backSheetThicknessUnit = 'Моля добавете мерна единица'
         if (!quantity) newErrors.quantity = 'Моля добавете количество';
+        if (!quantityUnit) newErrors.quantityUnit = 'Моля добавете мерна единица'
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -72,6 +74,7 @@ const PanelsTemplate = ({ onSave }) => {
             backSheetThickness,
             backSheetThicknessUnit,
             quantity,
+            quantityUnit,
             description,
             specification
         };
@@ -91,6 +94,7 @@ const PanelsTemplate = ({ onSave }) => {
         setBackSheetThickness('');
         setBackSheetThicknessUnit('');
         setQuantity('');
+        setQuantityUnit('');
         setDescription('');
         setSpecification(null);
         setErrors({});
@@ -115,7 +119,6 @@ const PanelsTemplate = ({ onSave }) => {
             <label>
                 Дължина:
                 <input type="text" value={length} onChange={(e) => setLength(e.target.value)} />
-                {errors.length && <span className="error">{errors.length}</span>}
             </label>
             <label>
                 м. ед. :
@@ -125,12 +128,10 @@ const PanelsTemplate = ({ onSave }) => {
                     <option value="CM">СМ</option>
                     <option value="M">М</option>
                 </select>
-                {errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}
             </label>
             <label>
                 Ширина:
                 <input type="text" value={width} onChange={(e) => setWidth(e.target.value)} />
-                {errors.width && <span className="error">{errors.width}</span>}
             </label>
             <label>
                 м. ед. :
@@ -140,12 +141,10 @@ const PanelsTemplate = ({ onSave }) => {
                     <option value="CM">СМ</option>
                     <option value="M">М</option>
                 </select>
-                {errors.widthUnit && <span className="error">{errors.widthUnit}</span>}
             </label>
             <label>
                 Обща дебелина:
                 <input type="text" value={totalThickness} onChange={(e) => setTotalThickness(e.target.value)} />
-                {errors.totalThickness && <span className="error">{errors.totalThickness}</span>}
             </label>
             <label>
                 м. ед. :
@@ -155,7 +154,6 @@ const PanelsTemplate = ({ onSave }) => {
                     <option value="CM">СМ</option>
                     <option value="M">М</option>
                 </select>
-                {errors.totalThicknessUnit && <span className="error">{errors.totalThicknessUnit}</span>}
             </label>
             <label>
                 Дебелина преден лист:
@@ -191,6 +189,15 @@ const PanelsTemplate = ({ onSave }) => {
                 Количество:
                 <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
+            </label>
+            <label>
+                м. ед. :
+                <select name="quantityUnit" value={quantityUnit} onChange={(e) => setQuantityUnit(e.target.value)}>
+                    <option value="">м. ед.</option>
+                    <option value="CM2">cm2</option>
+                    <option value="M2">m2</option>
+                </select>
+                {errors.quantityUnit && <span className="error">{errors.quantityUnit}</span>}
             </label>
             <label>
                 Описание:

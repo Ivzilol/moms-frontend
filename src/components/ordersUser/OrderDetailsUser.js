@@ -7,6 +7,7 @@ import ItemListGalvanizedSheet from "../createOrder/itemLists/ItemListGalvanized
 import ItemListFasteners from "../createOrder/itemLists/ItemListFasteners";
 import ItemListInsulation from "../createOrder/itemLists/ItemListInsulation";
 import ItemListMetal from "../createOrder/itemLists/ItemListMetal";
+import ItemListPanel from "../createOrder/itemLists/ItemListPanel";
 
 const OrderDetailsUser = () => {
 
@@ -85,6 +86,24 @@ const OrderDetailsUser = () => {
                 <div>
                     <ItemListMetal
                         items={order.metals}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.panels && (
+                <div>
+                    <ItemListPanel
+                        items={order.panels}
                         onEdit={() => {
                         }}
                         onDelete={() => {
