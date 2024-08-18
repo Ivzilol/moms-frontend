@@ -24,10 +24,6 @@ const EditFasteners = ({ item, onSave, onClose }) => {
             <div className="modal-content">
                 <h2>Редактиране на елемент</h2>
                 <label>
-                    Име:
-                    <input type="text" name="name" value={editedItem.name} onChange={handleChange} />
-                </label>
-                <label>
                     Тип:
                     <input type="text" name="type" value={editedItem.type} onChange={handleChange} />
                 </label>
@@ -49,11 +45,11 @@ const EditFasteners = ({ item, onSave, onClose }) => {
                 </label>
                 <label>
                     Модел:
-                    <input type="text" name="model" value={editedItem.model} onChange={handleChange} />
+                    <input type="text" name="standard" value={editedItem.standard} onChange={handleChange} />
                 </label>
                 <label>
                     Клас:
-                    <input type="text" name="classType" value={editedItem.classType} onChange={handleChange} />
+                    <input type="text" name="clazz" value={editedItem.clazz} onChange={handleChange} />
                 </label>
                 <label>
                     Количество:

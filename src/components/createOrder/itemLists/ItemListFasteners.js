@@ -246,7 +246,7 @@ const ItemListFasteners = ({
                             <th>Диаметър</th>
                             <th>Дължина</th>
                             <th>м. ед.</th>
-                            <th>Модел</th>
+                            <th>Стандарт</th>
                             <th>Клас</th>
                             <th>Количество</th>
                             <th>Описани</th>
@@ -278,7 +278,7 @@ const ItemListFasteners = ({
                                 <td>{item.diameter}</td>
                                 <td>{item.length}</td>
                                 <td>{item.lengthUnit}</td>
-                                <td>{item.model}</td>
+                                <td>{item.standard}</td>
                                 <td>{item.clazz}</td>
                                 <td>{item.quantity}</td>
                                 <td>{item.description}</td>

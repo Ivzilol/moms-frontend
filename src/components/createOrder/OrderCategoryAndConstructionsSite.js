@@ -225,7 +225,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 diameter: item.diameter,
                 length: item.length,
                 lengthUnit: item.lengthUnit,
-                model: item.model,
+                standard: item.standard,
                 clazz: item.clazz,
                 quantity: item.quantity,
                 description: item.description,
