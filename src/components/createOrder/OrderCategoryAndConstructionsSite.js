@@ -329,9 +329,8 @@ const OrderCategoryAndConstructionsSite = () => {
             rebars: requestBody.map(item => ({
                 maxLength: item.maxLength,
                 maxLengthUnit: item.maxLengthUnit,
-                weight: item.weight,
-                weightUnit: item.weightUnit,
                 quantity: item.quantity,
+                quantityUnit: item.quantityUnit,
                 description: item.description,
             }))
         };

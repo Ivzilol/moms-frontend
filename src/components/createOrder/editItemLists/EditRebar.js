@@ -23,7 +23,7 @@ const EditRebar = ({ item, onSave, onClose }) => {
             <div className="modal-content">
                 <h2>Редактиране на елемент</h2>
                 <label>
-                    Дължина:
+                    M. Дължина:
                     <input type="text" name="maxLength" value={editedItem.maxLength} onChange={handleChange} />
                 </label>
                 <label>
@@ -35,20 +35,17 @@ const EditRebar = ({ item, onSave, onClose }) => {
                     </select>
                 </label>
                 <label>
-                    Тегло:
-                    <input type="text" name="weight" value={editedItem.weight} onChange={handleChange} />
+                    Количество:
+                    <input type="number" name="quantity" value={editedItem.quantity} onChange={handleChange} />
                 </label>
                 <label>
                     м. ед. :
-                    <select name="weightUnit" value={editedItem.weightUnit} onChange={handleChange}>
+                    <select name="quantityUnit" value={editedItem.quantityUnit} onChange={handleChange}>
+                        <option value="">м. ед.</option>
                         <option value="G">g</option>
                         <option value="KG">kg</option>
                         <option value="T">t</option>
                     </select>
-                </label>
-                <label>
-                    Количество:
-                    <input type="number" name="quantity" value={editedItem.quantity} onChange={handleChange} />
                 </label>
                 <label>
                     Описание:

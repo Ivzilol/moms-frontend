@@ -8,6 +8,7 @@ import {jwtDecode} from "jwt-decode";
 import ItemListInsulation from "../createOrder/itemLists/ItemListInsulation";
 import ItemListMetal from "../createOrder/itemLists/ItemListMetal";
 import ItemListPanel from "../createOrder/itemLists/ItemListPanel";
+import ItemListRebar from "../createOrder/itemLists/ItemListRebar";
 
 const OrderDetails = () => {
     const id = window.location.href.split("/order-details/")[1];
@@ -113,6 +114,26 @@ const OrderDetails = () => {
                     <ItemListPanel
                         orderId={parseInt(id)}
                         items={order.panels}
+                        onEdit={() => {
+                        }}
+                        onDelete={() => {
+                        }}
+                        orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
+                        deliveryDate={order.deliveryDate}
+                        orderStatus={order.orderStatus}
+                        materialType={order.materialType}
+                        specificationFileUrl={order.specificationFileUrl}
+                        orderNumber={order.orderNumber}
+                        constructionName={order.constructionSite.name}
+                    />
+                </div>
+            )}
+            {order.rebars && (
+                <div>
+                    <ItemListRebar
+                        orderId={parseInt(id)}
+                        items={order.rebars}
                         onEdit={() => {
                         }}
                         onDelete={() => {

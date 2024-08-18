@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 
 const RebarTemplate = ( { onSave }) => {
     const [name, setName] = useState('');
@@ -7,6 +7,7 @@ const RebarTemplate = ( { onSave }) => {
     const [weight, setWeight] = useState('')
     const [weightUnit, setWeightUnit] = useState('');
     const [quantity, setQuantity] = useState('');
+    const [quantityUnit, setQuantityUnit] = useState('');
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
@@ -22,10 +23,8 @@ const RebarTemplate = ( { onSave }) => {
         } else if (maxLength <= 0) {
             newErrors.length = 'м. дължина не може да е отрицателно число или 0';
         }
-        if (!weight) newErrors.weight = 'Моля добавете тегло'
-        if (!weightUnit) newErrors.weightUnit = 'Моля изберете м. ед.'
-        if (!maxLengthUnit) newErrors.lengthUnit = 'Моля изберете м. ед.';
         if (!quantity) newErrors.quantity = 'Моля добавете количество';
+        if (!quantityUnit) newErrors.quantityUnit = 'Моля добавете м.ед.';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -40,6 +39,7 @@ const RebarTemplate = ( { onSave }) => {
             weight,
             weightUnit,
             quantity,
+            quantityUnit,
             description,
             specification
         };
@@ -50,6 +50,7 @@ const RebarTemplate = ( { onSave }) => {
         setWeight('');
         setWeightUnit('');
         setQuantity('');
+        setQuantityUnit('');
         setDescription('');
         setSpecification(null);
         setErrors({});
@@ -62,9 +63,8 @@ const RebarTemplate = ( { onSave }) => {
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>
-                Дължина:
+                M. Дължина:
                 <input type="text" value={maxLength} onChange={(e) => setMaxLength(e.target.value)} />
-                {errors.length && <span className="error">{errors.length}</span>}
             </label>
             <label>
                 м. ед. :
@@ -77,24 +77,19 @@ const RebarTemplate = ( { onSave }) => {
                 {errors.lengthUnit && <span className="error">{errors.lengthUnit}</span>}
             </label>
             <label>
-                Тегло:
-                <input type="text" value={weight} onChange={(e) => setWeight(e.target.value)} />
-                {errors.weight && <span className="error">{errors.weight}</span>}
+                Количество:
+                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                {errors.quantity && <span className="error">{errors.quantity}</span>}
             </label>
             <label>
                 м. ед. :
-                <select name="weightUnit" value={weightUnit} onChange={(e) => setWeightUnit(e.target.value)}>
+                <select name="quantityUnit" value={quantityUnit} onChange={(e) => setQuantityUnit(e.target.value)}>
                     <option value="">м. ед.</option>
                     <option value="G">g</option>
                     <option value="KG">kg</option>
                     <option value="T">t</option>
                 </select>
-                {errors.weightUnit && <span className="error">{errors.weightUnit}</span>}
-            </label>
-            <label>
-                Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-                {errors.quantity && <span className="error">{errors.quantity}</span>}
+                {errors.quantityUnit && <span className="error">{errors.quantityUnit}</span>}
             </label>
             <label>
                 Описание:
