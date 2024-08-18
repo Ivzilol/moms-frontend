@@ -1,0 +1,17 @@
+td , th {
+    align-content: center !important;
+}
+
+.button_wrapper {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.button_customize {
+    margin: auto;
+}
+
+
+
+

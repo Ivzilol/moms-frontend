@@ -58,7 +58,7 @@ const TopTabsNav = () => {
           href="#"
           onClick={() => handleTabClick('v-pills-messages')}
         >
-          Съспенднати
+          Неактивни
         </a>
       </nav>
       <div className={`tab-content ${styles.tabContent}`} id="v-pills-tabContent">
@@ -80,15 +80,15 @@ const TopTabsNav = () => {
                   />
               </div>
           )}
-          <p><UserList/></p>
+          <p><UserList active={undefined}/></p>
         </div>
         <div className={`tab-pane fade ${activeTab === 'v-pills-profile' ? 'show active' : ''}`} id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
           <h3>Активни</h3>
-          <p><UserList/></p>
+          <p><UserList active={true} /></p>
         </div>
         <div className={`tab-pane fade ${activeTab === 'v-pills-messages' ? 'show active' : ''}`} id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-          <h3>Съспенднати</h3>
-          <p><UserList/></p>
+          <h3>Неактивни</h3>
+          <p><UserList active={false}/></p>
         </div>
       </div>
     </div>

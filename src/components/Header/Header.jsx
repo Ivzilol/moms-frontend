@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, } from 'react';
 import classNames from 'classnames';
 import styles from './Header.module.css';
 import logo from '../../assets/images/MCK-logo.png';
@@ -11,9 +11,11 @@ export default function Header() {
     const { isAuthenticated, logoutHandler } = useState();
     const navigate = useNavigate();
     const user = useUser();
+
     function logout() {
+        localStorage.setItem('userData', null);
         user.setJwt(null)
-        navigate('/login')
+        navigate('/login');
     }
 
     return (
@@ -23,7 +25,7 @@ export default function Header() {
                     <img src={logo} className={classNames(styles['img-fluid'], styles['logo-image'])} alt='Logo' />
                     <div className="d-flex flex-column">
                         <strong className={styles['logo-text']}>Supply</strong>
-                        <small className={styles['logo-slogan']}>Manager</small>
+                        <strong className={styles['logo-slogan']}>Manager</strong>
                     </div>
                 </a>
 

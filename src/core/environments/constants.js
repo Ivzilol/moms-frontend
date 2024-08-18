@@ -12,6 +12,11 @@ export const endpoints = {
 
     // USERS
     getUserProfile: (id) => `user/user/query/user/${id}`,
+    getAllUsers: 'superadmin/user/query/getallusers',
+    // updateUserProfile: (id) => `user/user/command/profile/${id}`,
+    updateUserStatus: (id) => `superadmin/user/command/profile/status/${id}`,
+    updateUserProfile: (id) => `superadmin/user/command/profile/${id}`,
+    updateUserPassword: (id) => `user/user/command/change-password/${id}`
 };
 
 export const ContentType = {
