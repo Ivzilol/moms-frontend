@@ -17,7 +17,7 @@ const OrdersUser = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        ajax(`${baseURL}user/order/query/get-my-orders`, "GET", user.jwt)
+        ajax(`${baseURL}user/order/query/get-all`, "GET", user.jwt)
             .then((response) => {
                 setOrders(response);
                 setFilteredOrders(response);
