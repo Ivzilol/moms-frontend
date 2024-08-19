@@ -23,7 +23,6 @@ const OrderDetails = () => {
     useEffect(() => {
         ajax(`${baseURL}admin/order/query/get-order/${parseInt(id)}`, "GET", user.jwt)
             .then((response) => {
-                console.log(response)
                 setOrder(response);
             })
     }, [user.jwt, id]);
