@@ -1,21 +1,39 @@
-import React, {useContext, useState, } from 'react';
+import React, {useContext, useEffect, useState,} from 'react';
 import classNames from 'classnames';
 import styles from './Header.module.css';
 import logo from '../../assets/images/MCK-logo.png';
-import AuthContext from '../../context/AuthContext';
 import {useUser} from "../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 
 export default function Header() {
 
-    const { isAuthenticated, logoutHandler } = useState();
     const navigate = useNavigate();
     const user = useUser();
+    const [roles, setRoles] = useState(getRolesFromJWT());
+
+    useEffect(() => {
+        setRoles(getRolesFromJWT())
+    }, [user.jwt])
+
+    function getRolesFromJWT() {
+        if (user.jwt) {
+            const decodeJwt = jwtDecode(user.jwt)
+            return decodeJwt.roles.split(",")
+        }
+        return [];
+    }
+
+    const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     function logout() {
         localStorage.setItem('userData', null);
         user.setJwt(null)
         navigate('/login');
+    }
+
+    function navigateToCreateSite() {
+        navigate('/create-construction-site');
     }
 
     return (
@@ -35,26 +53,18 @@ export default function Header() {
 
                 <div className={classNames('collapse', 'navbar-collapse')} id='navbarNav'>
                     <ul className={classNames('navbar-nav', 'ms-auto', 'd-flex', 'align-items-center')}>
-                        {/* <li className='nav-item me-4'>
-                            <a className='nav-link active' href='index.html'>Item1</a>
-                        </li>
-                        <li className='nav-item me-4'>
-                            <a className='nav-link' href='about.html'>Item2</a>
-                        </li>
-                        <li className='nav-item dropdown me-4'>
-                            <a className='nav-link dropdown-toggle' href='#' id='navbarLightDropdownMenuLink' role='button' data-bs-toggle='dropdown' aria-expanded='false'>Pages</a>
-                            <ul className='dropdown-menu dropdown-menu-light' aria-labelledby='navbarLightDropdownMenuLink'>
-                                <li><a className='dropdown-item' href='job-listings.html'>Item3</a></li>
-                                <li><a className='dropdown-item' href='job-details.html'>Item4</a></li>
-                            </ul>
-                        </li>
-                        <li className='nav-item me-4'>
-                            <a className='nav-link' href='contact.html'>Item6</a>
-                        </li>
-                        <li className='nav-item ms-lg-auto me-4'>
-                            <a className='nav-link' href='#'>Item7</a>
-                        </li> */}
-                        <li className='nav-item'>
+                        {adminRole &&
+                            <li className={classNames('nav-item', 'me-3')}>
+                                <a
+                                    className={classNames('nav-link', 'btn')}
+                                    href='#'
+                                    onClick={navigateToCreateSite}
+                                >
+                                    Създай Обект
+                                </a>
+                            </li>
+                        }
+                        <li className={classNames('nav-item', 'ms-3')}>
                             <a
                                 className={classNames('nav-link', 'btn')}
                                 href='#'
