@@ -1,10 +1,11 @@
 import {useUser} from "../../userProvider/UserProvider";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ajax from "../../service/FetchService";
 import BaseURL from "../baseURL/BaseURL";
 import {useNavigate} from "react-router-dom";
 import styles from './CreateConstructionSite.module.css';
 import Header from "../Header/Header";
+import {jwtDecode} from "jwt-decode";
 
 const CreateConstructionSite = () => {
 
@@ -12,6 +13,9 @@ const CreateConstructionSite = () => {
     const [name, setName] = useState("");
     const [constructionNumber, setConstructionNumber] = useState("");
     const navigate = useNavigate();
+
+
+
 
     function createConstructionSite() {
         const requestBody = {
