@@ -36,6 +36,10 @@ export default function Header() {
         navigate('/create-construction-site');
     }
 
+    function navigateToCreateInventory() {
+        navigate('/create-inventory');
+    }
+
     return (
         <nav className={classNames(styles.navbar, 'navbar-expand-lg')}>
             <div className="container d-flex justify-content-between align-items-center">
@@ -53,6 +57,17 @@ export default function Header() {
 
                 <div className={classNames('collapse', 'navbar-collapse')} id='navbarNav'>
                     <ul className={classNames('navbar-nav', 'ms-auto', 'd-flex', 'align-items-center')}>
+                        {adminRole &&
+                            <li className={classNames('nav-item', 'me-3')}>
+                                <a
+                                    className={classNames('nav-link', 'btn')}
+                                    href='#'
+                                    onClick={navigateToCreateInventory}
+                                >
+                                    Създай Инвентар
+                                </a>
+                            </li>
+                        }
                         {adminRole &&
                             <li className={classNames('nav-item', 'me-3')}>
                                 <a

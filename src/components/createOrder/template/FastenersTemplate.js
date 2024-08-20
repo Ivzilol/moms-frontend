@@ -2,8 +2,10 @@ import {useEffect, useState} from "react";
 import '../CreateAndSendOrder.css'
 import ajax from "../../../service/FetchService";
 import {useUser} from "../../../userProvider/UserProvider";
+import {jwtDecode} from "jwt-decode";
+import baseURL from "../../baseURL/BaseURL";
 
-const FastenersTemplate = ({ onSave, category }) => {
+const FastenersTemplate = ({onSave, category}) => {
     const user = useUser();
     const [name, setName] = useState('');
     const [type, setType] = useState('');
@@ -17,6 +19,23 @@ const FastenersTemplate = ({ onSave, category }) => {
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
     const [response, setResponse] = useState([]);
+    const [roles, setRoles] = useState(getRolesFromJWT());
+
+    useEffect(() => {
+        setRoles(getRolesFromJWT())
+    }, [user.jwt])
+
+    function getRolesFromJWT() {
+        if (user.jwt) {
+            const decodeJwt = jwtDecode(user.jwt)
+            return decodeJwt.roles.split(",")
+        }
+        return [];
+    }
+
+
+    const userRole = roles.length === 1 && roles.includes('USER');
+    const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleFileChange = (e) => {
         setSpecification(e.target.files[0]);
@@ -107,6 +126,44 @@ const FastenersTemplate = ({ onSave, category }) => {
         setResponse([]);
     };
 
+
+    function createInventory() {
+        const requestBody = {
+            materialType: category,
+            type: type,
+            diameter: diameter,
+            length: length,
+            lengthUnit: lengthUnit,
+            standard: standard,
+            clazz: clazz,
+            description: description
+        }
+        fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
+            method: "post",
+            headers: {
+                "Authorization": `Bearer ${user.jwt}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    clearInputs()
+                    alert("Успешно създадохте материал")
+                }
+            })
+
+    }
+
+    function clearInputs() {
+        setType('')
+        setDiameter('');
+        setLength('');
+        setLengthUnit('');
+        setStandard('');
+        setClazz('');
+    }
+
     return (
         <div className="template-form">
             <label>
@@ -130,17 +187,17 @@ const FastenersTemplate = ({ onSave, category }) => {
             )}
             <label>
                 Тип:
-                <input type="text" value={type} onChange={(e) => setType(e.target.value)} />
+                <input type="text" value={type} onChange={(e) => setType(e.target.value)}/>
                 {/*{errors.type && <span className="error">{errors.type}</span>}*/}
             </label>
             <label>
                 Диаметър:
-                <input type="text" value={diameter} onChange={(e) => setDiameter(e.target.value)} />
+                <input type="text" value={diameter} onChange={(e) => setDiameter(e.target.value)}/>
                 {/*{errors.diameter && <span className="error">{errors.diameter}</span>}*/}
             </label>
             <label>
                 Дължина:
-                <input type="text" value={length} onChange={(e) => setLength(e.target.value)} />
+                <input type="text" value={length} onChange={(e) => setLength(e.target.value)}/>
                 {/*{errors.length && <span className="error">{errors.length}</span>}*/}
             </label>
             <label>
@@ -155,30 +212,41 @@ const FastenersTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Стандарт:
-                <input type="text" value={standard} onChange={(e) => setStandard(e.target.value)} />
+                <input type="text" value={standard} onChange={(e) => setStandard(e.target.value)}/>
                 {/*{errors.model && <span className="error">{errors.model}</span>}*/}
             </label>
             <label>
                 Клас:
-                <input type="text" value={clazz} onChange={(e) => setClazz(e.target.value)} />
+                <input type="text" value={clazz} onChange={(e) => setClazz(e.target.value)}/>
                 {/*{errors.classType && <span className="error">{errors.classType}</span>}*/}
             </label>
-            <label>
-                Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-                {/*{errors.quantity && <span className="error">{errors.quantity}</span>}*/}
-            </label>
+            {userRole &&
+                <label>
+                    Количество:
+                    <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
+                    {/*{errors.quantity && <span className="error">{errors.quantity}</span>}*/}
+                </label>
+            }
             <label>
                 Описание:
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+                <textarea value={description} onChange={(e) => setDescription(e.target.value)}/>
             </label>
             <label>
                 Спецификация:
-                <input type="file" onChange={handleFileChange} />
+                <input type="file" onChange={handleFileChange}/>
             </label>
-            <label>
-                <button onClick={handleSave}>Запази</button>
-            </label>
+            {userRole &&
+                <label>
+                    <button onClick={handleSave}>Запази</button>
+                </label>
+            }
+            {adminRole &&
+                <label>
+                    <button
+                        type="submit"
+                        onClick={() => createInventory()}>Създай</button>
+                </label>
+            }
         </div>
     );
 };

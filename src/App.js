@@ -15,6 +15,7 @@ import OrderDetails from "./components/ordersAdmin/OrderDetails";
 import OrderDetailsUser from "./components/ordersUser/OrderDetailsUser";
 import UserForgottenPassword from "./components/userForgottenPassword/UserForgottenPassword";
 import UserCreateNewPassword from "./components/userForgottenPassword/UserCreateNewPassword";
+import CreateInventory from "./components/inventory/CreateInventory";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
     const hasValidRole = ['SUPERADMIN', 'ADMIN', 'USER'].some(role => roles.includes(role));
     const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
     const hasUserSuperadminRole = ['SUPERADMIN', 'USER'].some(role => roles.includes(role));
+    const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
     return (
 
         <Routes>
@@ -110,6 +112,16 @@ function App() {
                 hasUserSuperadminRole ?
                     <PrivateRoute>
                         <OrderDetailsUser/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+            <Route path="/create-inventory" element={
+                adminRole ?
+                    <PrivateRoute>
+                        <CreateInventory/>
                     </PrivateRoute>
                     :
                     <PrivateRoute>
