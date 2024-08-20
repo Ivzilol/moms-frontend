@@ -171,9 +171,9 @@ const UserList = ({ active }) => {
           // Function to get the role display name
     const getRoleDisplayName = (roles) => {
       if (roles.includes('SUPERADMIN')) {
-          return 'Модератор';
+          return 'Администратор';
       } else if (roles.includes('ADMIN') && !roles.includes('SUPERADMIN')) {
-        return 'Aдминистратор';
+        return 'Модератор';
       } else return 'Потребител'
       return roles.join(', ');
     };

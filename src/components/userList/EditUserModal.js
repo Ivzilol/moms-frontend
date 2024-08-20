@@ -35,8 +35,8 @@ const EditUserModal = ({ isOpen, onClose, user, onSave, fieldErrors }) => {
   const roles = ['USER', 'ADMIN', 'SUPERADMIN'];
   const roleDisplayNames = {
     'USER': 'Потребител',
-    'ADMIN': 'Администратор',
-    'SUPERADMIN': 'Модератор',
+    'ADMIN': 'Модератор',
+    'SUPERADMIN': 'Администратор',
   };
   // const currentRole = user && user.roles && user.roles.length > 0 ? user.roles[0] : '';
   const determineCurrentRole = (rolesArray) => {
