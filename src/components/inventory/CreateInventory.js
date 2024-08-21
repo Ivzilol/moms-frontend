@@ -3,6 +3,7 @@ import {useState} from "react";
 import FastenersTemplate from "../createOrder/template/FastenersTemplate";
 import Header from "../Header/Header";
 import GalvanizedSheetTemplate from "../createOrder/template/GalvanizedSheetTemplate";
+import InsulationTemplate from "../createOrder/template/InsulationTemplate";
 
 const CreateInventory = () => {
 
@@ -16,6 +17,9 @@ const CreateInventory = () => {
             break;
         case 'GALVANIZED_SHEET':
             template = <GalvanizedSheetTemplate category={selectedCategory}/>
+            break;
+        case 'INSULATION':
+            template = <InsulationTemplate category={selectedCategory}/>
             break;
     }
 
