@@ -4,6 +4,7 @@ import FastenersTemplate from "../createOrder/template/FastenersTemplate";
 import Header from "../Header/Header";
 import GalvanizedSheetTemplate from "../createOrder/template/GalvanizedSheetTemplate";
 import InsulationTemplate from "../createOrder/template/InsulationTemplate";
+import MetalTemplate from "../createOrder/template/MetalTemplate";
 
 const CreateInventory = () => {
 
@@ -20,6 +21,9 @@ const CreateInventory = () => {
             break;
         case 'INSULATION':
             template = <InsulationTemplate category={selectedCategory}/>
+            break;
+        case 'METAL':
+            template = <MetalTemplate category={selectedCategory}/>
             break;
     }
 
