@@ -94,7 +94,6 @@ const FastenersTemplate = ({onSave, category}) => {
             .then((response) => {
                 if (response && Array.isArray(response)) {
                     setResponse(response);
-                    console.log(response)
                 } else {
                     setResponse([]);
                 }

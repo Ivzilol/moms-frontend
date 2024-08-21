@@ -80,7 +80,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === "INSULATION") {
-        template = <InsulationTemplate onSave={handleSave}/>;
+        template = <InsulationTemplate onSave={handleSave} category={selectedCategory}/>;
         itemListTemplate = <ItemListInsulation
             items={requestBody}
             onEdit={handleEdit}
@@ -92,7 +92,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'GALVANIZED_SHEET') {
-        template = <GalvanizedSheetTemplate onSave={handleSave}/>
+        template = <GalvanizedSheetTemplate onSave={handleSave} category={selectedCategory}/>
         itemListTemplate = <ItemListGalvanizedSheet
             items={requestBody}
             onEdit={handleEdit}
@@ -104,7 +104,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'METAL') {
-        template = <MetalTemplate onSave={handleSave}/>
+        template = <MetalTemplate onSave={handleSave} category={selectedCategory}/>
         itemListTemplate = <ItemListMetal
             items={requestBody}
             onEdit={handleEdit}
@@ -116,7 +116,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'PANELS') {
-        template = <PanelsTemplate onSave={handleSave}/>
+        template = <PanelsTemplate onSave={handleSave} category={selectedCategory}/>
         itemListTemplate = <ItemListPanel
             items={requestBody}
             onEdit={handleEdit}
@@ -128,7 +128,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'REBAR') {
-        template = <RebarTemplate onSave={handleSave}/>
+        template = <RebarTemplate onSave={handleSave} category={selectedCategory}/>
         itemListTemplate = <ItemListRebar
             items={requestBody}
             onEdit={handleEdit}
@@ -140,7 +140,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'SET') {
-        template = <SetTemplate onSave={handleSave}/>
+        template = <SetTemplate onSave={handleSave} category={selectedCategory}/>
         itemListTemplate = <ItemListSet
             items={requestBody}
             onEdit={handleEdit}
@@ -152,7 +152,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'UNSPECIFIED') {
-        template = <UnspecifiedTemplate onSave={handleSave}/>
+        template = <UnspecifiedTemplate onSave={handleSave} category={selectedCategory}/>
         itemListTemplate = <ItemListUnspecified
             items={requestBody}
             onEdit={handleEdit}
@@ -164,7 +164,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'SERVICE') {
-        template = <ServiceTemplate onSave={handleSave}/>
+        template = <ServiceTemplate onSave={handleSave} category={selectedCategory}/>
         itemListTemplate = <ItemListService
             items={requestBody}
             onEdit={handleEdit}
@@ -176,7 +176,7 @@ const OrderCategoryAndConstructionsSite = () => {
             onClose={() => setIsEditing(false)}
         />
     } else if (selectedCategory === 'TRANSPORT') {
-        template = <TransportTemplate onSave={handleSave}/>
+        template = <TransportTemplate onSave={handleSave} category={selectedCategory}/>
         itemListTemplate = <ItemListTransport
             items={requestBody}
             onEdit={handleEdit}
