@@ -1,6 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {useUser} from "../../../userProvider/UserProvider";
+import {jwtDecode} from "jwt-decode";
 
-const RebarTemplate = ( { onSave }) => {
+const RebarTemplate = ( { onSave, category }) => {
+    const user = useUser();
     const [name, setName] = useState('');
     const [maxLength, setMaxLength] = useState('');
     const [maxLengthUnit, setMaxLengthUnit] = useState('');
@@ -11,6 +14,22 @@ const RebarTemplate = ( { onSave }) => {
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
+    const [roles, setRoles] = useState(getRolesFromJWT());
+
+    useEffect(() => {
+        setRoles(getRolesFromJWT())
+    }, [user.jwt])
+
+    function getRolesFromJWT() {
+        if (user.jwt) {
+            const decodeJwt = jwtDecode(user.jwt)
+            return decodeJwt.roles.split(",")
+        }
+        return [];
+    }
+
+    const userRole = roles.length === 1 && roles.includes('USER');
+    const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleFileChange = (e) => {
         setSpecification(e.target.files[0]);
@@ -56,6 +75,42 @@ const RebarTemplate = ( { onSave }) => {
         setErrors({});
     };
 
+    function createInventory() {
+        if (!validate()) return;
+        const requestBody = {
+            materialType: category,
+            maxLength: maxLength,
+            maxLengthUnit: maxLengthUnit,
+            quantity: quantity,
+            quantityUnit: quantityUnit,
+            description: description
+
+        }
+        fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
+            method: "post",
+            headers: {
+                "Authorization": `Bearer ${user.jwt}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    clearInputs()
+                    alert("Успешно създадохте материал")
+                }
+            })
+
+    }
+
+    function clearInputs() {
+        setMaxLength('');
+        setMaxLengthUnit('');
+        setQuantity('');
+        setQuantityUnit('');
+        setDescription('');
+    }
+
     return (
         <div className="template-form">
             <label>
@@ -99,9 +154,18 @@ const RebarTemplate = ( { onSave }) => {
                 Спецификация:
                 <input type="file" onChange={handleFileChange} />
             </label>
-            <label>
-                <button onClick={handleSave}>Запази</button>
-            </label>
+            {userRole &&
+                <label>
+                    <button onClick={handleSave}>Запази</button>
+                </label>
+            }
+            {adminRole &&
+                <label>
+                    <button
+                        type="submit"
+                        onClick={() => createInventory()}>Създай</button>
+                </label>
+            }
         </div>
     );
 }

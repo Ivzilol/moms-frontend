@@ -1,6 +1,9 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import './PanelsTemplate.css'
-const PanelsTemplate = ({ onSave }) => {
+import {useUser} from "../../../userProvider/UserProvider";
+import {jwtDecode} from "jwt-decode";
+const PanelsTemplate = ({ onSave, category }) => {
+    const user = useUser();
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [color, setColor] = useState('');
@@ -20,6 +23,22 @@ const PanelsTemplate = ({ onSave }) => {
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
+    const [roles, setRoles] = useState(getRolesFromJWT());
+
+    useEffect(() => {
+        setRoles(getRolesFromJWT())
+    }, [user.jwt])
+
+    function getRolesFromJWT() {
+        if (user.jwt) {
+            const decodeJwt = jwtDecode(user.jwt)
+            return decodeJwt.roles.split(",")
+        }
+        return [];
+    }
+
+    const userRole = roles.length === 1 && roles.includes('USER');
+    const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleFileChange = (e) => {
         setSpecification(e.target.files[0]);
@@ -100,6 +119,60 @@ const PanelsTemplate = ({ onSave }) => {
         setErrors({});
     };
 
+    function createInventory() {
+        if (!validate()) return;
+        const requestBody = {
+            materialType: category,
+            type: type,
+            color: color,
+            length: length,
+            lengthUnit: lengthUnit,
+            width: width,
+            widthUnit: widthUnit,
+            totalThickness: totalThickness,
+            totalThicknessUnit: totalThicknessUnit,
+            frontSheetThickness: frontSheetThickness,
+            frontSheetThicknessUnit: frontSheetThicknessUnit,
+            backSheetThickness: backSheetThickness,
+            backSheetThicknessUnit: backSheetThicknessUnit,
+            quantity: quantity,
+            quantityUnit: quantityUnit
+
+        }
+        fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
+            method: "post",
+            headers: {
+                "Authorization": `Bearer ${user.jwt}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    clearInputs()
+                    alert("Успешно създадохте материал")
+                }
+            })
+
+    }
+
+    function clearInputs() {
+        setType('');
+        setColor('');
+        setLength('');
+        setLengthUnit('');
+        setWidth('');
+        setWidthUnit('');
+        setTotalThickness('');
+        setTotalThicknessUnit('');
+        setFrontSheetThickness('');
+        setTotalThicknessUnit('');
+        setBackSheetThickness('');
+        setBackSheetThicknessUnit('');
+        setQuantity('');
+        setQuantityUnit('');
+    }
+
     return (
         <div className="template-form">
             <label>
@@ -143,7 +216,7 @@ const PanelsTemplate = ({ onSave }) => {
                 </select>
             </label>
             <label>
-                Обща дебелина:
+                Обща д.:
                 <input type="text" value={totalThickness} onChange={(e) => setTotalThickness(e.target.value)} />
             </label>
             <label>
@@ -156,7 +229,7 @@ const PanelsTemplate = ({ onSave }) => {
                 </select>
             </label>
             <label>
-                Дебелина преден лист:
+                Д. пр. лист:
                 <input type="text" value={frontSheetThickness} onChange={(e) => setFrontSheetThickness(e.target.value)} />
                 {errors.frontSheetThickness && <span className="error">{errors.frontSheetThickness}</span>}
             </label>
@@ -171,7 +244,7 @@ const PanelsTemplate = ({ onSave }) => {
                 {errors.frontSheetThicknessUnit && <span className="error">{errors.frontSheetThicknessUnit}</span>}
             </label>
             <label>
-                Дебелина заден лист:
+                Д. з. лист:
                 <input type="text" value={backSheetThickness} onChange={(e) => setBackSheetThickness(e.target.value)} />
                 {errors.backSheetThickness && <span className="error">{errors.backSheetThickness}</span>}
             </label>
@@ -207,9 +280,18 @@ const PanelsTemplate = ({ onSave }) => {
                 Спецификация:
                 <input type="file" onChange={handleFileChange} />
             </label>
-            <label>
-                <button onClick={handleSave}>Запази</button>
-            </label>
+            {userRole &&
+                <label>
+                    <button onClick={handleSave}>Запази</button>
+                </label>
+            }
+            {adminRole &&
+                <label>
+                    <button
+                        type="submit"
+                        onClick={() => createInventory()}>Създай</button>
+                </label>
+            }
         </div>
     );
 }
