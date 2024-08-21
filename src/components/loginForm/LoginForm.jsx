@@ -9,6 +9,7 @@ import logo from '../../assets/images/MCK-logo.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import {useUser} from "../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
+import Spinner from '../spinner/Spinner';
 
 
 const initialValues = {
@@ -89,7 +90,7 @@ const LoginForm = () => {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div><Spinner/></div>;
     }
 
     const handleCustomSubmit = (e) => {

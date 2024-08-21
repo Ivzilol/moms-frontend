@@ -13,6 +13,7 @@ import ItemListSet from "../createOrder/itemLists/ItemListSet";
 import ItemListUnspecified from "../createOrder/itemLists/ItemListUnspecified";
 import ItemListService from "../createOrder/itemLists/ItemListService";
 import ItemListTransport from "../createOrder/itemLists/ItemListTransport";
+import Spinner from "../spinner/Spinner";
 
 const OrderDetailsUser = () => {
 
@@ -29,7 +30,7 @@ const OrderDetailsUser = () => {
 
     }, [])
 
-    if (!order) return <p>Loading...</p>;
+    if (!order) return <p><Spinner/></p>;
 
     return (
         <div className="order-details-container">

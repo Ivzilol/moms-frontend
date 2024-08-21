@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './ProfileCard.module.css';
 import { useUser } from '../../userProvider/UserProvider';
 import { host, endpoints } from '../../core/environments/constants';
+import Spinner from '../../components/spinner/Spinner';
 import ajax from '../../service/FetchService';
 
 import {jwtDecode } from 'jwt-decode';
@@ -38,7 +39,7 @@ const ProfileCard = () => {
     fetchUserProfile();
   }, [jwt, getUserDetails, setUserProfile]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p><Spinner/></p>;
 
   if (!userProfile) return <p>Няма създадени акаунти.</p>;
 

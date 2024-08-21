@@ -13,6 +13,7 @@ import ItemListSet from "../createOrder/itemLists/ItemListSet";
 import ItemListUnspecified from "../createOrder/itemLists/ItemListUnspecified";
 import ItemListService from "../createOrder/itemLists/ItemListService";
 import ItemListTransport from "../createOrder/itemLists/ItemListTransport";
+import Spinner from "../spinner/Spinner";
 
 const OrderDetails = () => {
     const id = window.location.href.split("/order-details/")[1];
@@ -28,7 +29,7 @@ const OrderDetails = () => {
     }, [user.jwt, id]);
 
 
-    if (!order) return <p>Loading...</p>;
+    if (!order) return <p><Spinner/></p>;
 
     return (
         <div className="order-details-container">
