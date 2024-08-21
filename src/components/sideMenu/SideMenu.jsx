@@ -57,7 +57,7 @@ const SideMenu = () => {
                 <div className={`nav flex-column nav-pills ${classes.navPills}`} id="v-pills-tab"
                      role="tablist"
                      aria-orientation="vertical">
-                    {/* {userRole && (
+                    {userRole && (
                         <button
                             className={`nav-link active ${classes.navLink}`}
                             id="v-pills-home-tab"
@@ -70,7 +70,7 @@ const SideMenu = () => {
                             <FontAwesomeIcon icon={faPlus} className={classes.icon}
                             /> Създай Поръчки
                         </button>
-                    )} */}
+                    )}
                     <button className={`nav-link ${classes.navLink}`}
                             id="v-pills-profile-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-profile"

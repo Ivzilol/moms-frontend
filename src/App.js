@@ -15,6 +15,7 @@ import OrderDetails from "./components/ordersAdmin/OrderDetails";
 import OrderDetailsUser from "./components/ordersUser/OrderDetailsUser";
 import UserForgottenPassword from "./components/userForgottenPassword/UserForgottenPassword";
 import UserCreateNewPassword from "./components/userForgottenPassword/UserCreateNewPassword";
+import NotFoundPage from './pages/404/NotFoundPage';
 
 
 function App() {
@@ -120,6 +121,7 @@ function App() {
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/forgotten-password" element={<UserForgottenPassword/>}/>
             <Route path="/create-new-password" element={<UserCreateNewPassword/>}/>
+            <Route path="/404" element={<NotFoundPage/>}/>
         </Routes>
     );
 }
