@@ -6,6 +6,8 @@ import GalvanizedSheetTemplate from "../createOrder/template/GalvanizedSheetTemp
 import InsulationTemplate from "../createOrder/template/InsulationTemplate";
 import MetalTemplate from "../createOrder/template/MetalTemplate";
 import PanelsTemplate from "../createOrder/template/PanelsTemplate";
+import RebarTemplate from "../createOrder/template/RebarTemplate";
+import SetTemplate from "../createOrder/template/SetTemplate";
 
 const CreateInventory = () => {
 
@@ -29,7 +31,12 @@ const CreateInventory = () => {
         case 'PANELS':
             template = <PanelsTemplate category={selectedCategory}/>
             break;
-
+        case 'REBAR':
+            template = <RebarTemplate category={selectedCategory}/>
+            break
+        case 'SET':
+            template = <SetTemplate category={selectedCategory}/>
+            break;
     }
 
     return (
@@ -51,9 +58,6 @@ const CreateInventory = () => {
                        <option value="PANELS">Панели</option>
                        <option value="REBAR">Армировка</option>
                        <option value="SET">Обшивки</option>
-                       <option value="UNSPECIFIED">Други</option>
-                       <option value="SERVICE">Услуги</option>
-                       <option value="TRANSPORT">Транспорт</option>
                    </select>
                </div>
            </div>

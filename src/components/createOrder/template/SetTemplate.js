@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const SetTemplate = ({onSave}) => {
+const SetTemplate = ({onSave, category}) => {
     const [name, setName] = useState('');
     const [galvanisedSheetThickness, setGalvanisedSheetThickness] = useState('');
     const [galvanisedSheetThicknessUnit, setGalvanisedSheetThicknessUnit] = useState('');
