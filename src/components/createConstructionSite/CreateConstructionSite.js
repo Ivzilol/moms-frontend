@@ -29,7 +29,7 @@ const CreateConstructionSite = () => {
                 }
             })
             .catch(() => {
-                alert("Construction site already exists. Please choose a different name or number.");
+                alert("Обектът вече съществува.Моля исберете друго име или номер.");
             });
     }
 
@@ -47,7 +47,7 @@ const CreateConstructionSite = () => {
                             createConstructionSite();
                         }}>
                             <div className={styles.formGroup}>
-                                <label htmlFor="name" className={styles.formLabel}>Name</label>
+                                <label htmlFor="name" className={styles.formLabel}>Име</label>
                                 <input
                                     type="text"
                                     className={styles.formControl}
@@ -58,8 +58,9 @@ const CreateConstructionSite = () => {
                                 />
                             </div>
                             <div className={styles.formGroup}>
-                                <label htmlFor="constructionNumber" className={styles.formLabel}>Construction
-                                    Number</label>
+                                <label htmlFor="constructionNumber" className={styles.formLabel}>
+                                    Номер 
+                                </label>
                                 <input
                                     type="text"
                                     className={styles.formControl}
@@ -73,7 +74,7 @@ const CreateConstructionSite = () => {
                                 className={styles.submitButton}
                                 onClick={createConstructionSite}
                             >
-                                Create
+                                Създай
                             </button>
                         </div>
                     </div>
