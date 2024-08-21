@@ -162,6 +162,26 @@
 }
 
 /*---------------------------------------
+  CUSTOM ОBJECT BUTTON               
+-----------------------------------------*/
+.create_btn {
+  background: linear-gradient(135deg, #007bff, #0056b3); 
+  color: white;
+  padding: 4px 16px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.create_btn:hover {
+  background: linear-gradient(135deg, #0056b3, #003d79); 
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+/*---------------------------------------
   CUSTOM BUTTON               
 -----------------------------------------*/
 .custom-btn {

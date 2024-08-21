@@ -47,6 +47,10 @@ const UserForgottenPassword = () => {
 
     return (
         <div className="forgotten-password">
+            <div className="background">
+                <div className="shape"></div>
+                <div className="shape"></div>
+            </div>
             <div className="forgotten-password-container">
                 <h2>Забравена Парола</h2>
                 <label>Моля въведете Вашия имейл</label>
