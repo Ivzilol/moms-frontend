@@ -68,4 +68,15 @@
   .successContainer {
     margin-top: 20px;
 }
+
+.role_option {
+  color: #000; 
+  background-color: #f1f1f1; 
+}
+
+select.form-select option:checked.role_option,
+select.form-select option:checked.role_option {
+  color: #fff; 
+  background-color: #4caf50; 
+}
   
