@@ -134,7 +134,7 @@ const FastenersTemplate = ({onSave, category}) => {
             diameter: diameter,
             length: length,
             lengthUnit: lengthUnit,
-            standard: standard,
+            model: standard,
             clazz: clazz,
             description: description
         }

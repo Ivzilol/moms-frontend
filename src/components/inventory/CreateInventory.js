@@ -2,17 +2,21 @@ import {useUser} from "../../userProvider/UserProvider";
 import {useState} from "react";
 import FastenersTemplate from "../createOrder/template/FastenersTemplate";
 import Header from "../Header/Header";
+import GalvanizedSheetTemplate from "../createOrder/template/GalvanizedSheetTemplate";
 
 const CreateInventory = () => {
 
-    const user = useUser();
     const [selectedCategory, setSelectedCategory] = useState('');
 
 
     let template;
-
-    if (selectedCategory === 'FASTENERS') {
-        template = <FastenersTemplate category={selectedCategory}/>
+    switch (selectedCategory) {
+        case 'FASTENERS':
+            template = <FastenersTemplate category={selectedCategory}/>
+            break;
+        case 'GALVANIZED_SHEET':
+            template = <GalvanizedSheetTemplate category={selectedCategory}/>
+            break;
     }
 
     return (
