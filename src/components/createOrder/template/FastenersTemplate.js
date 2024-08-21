@@ -116,8 +116,8 @@ const FastenersTemplate = ({onSave, category}) => {
     const handleSelectResult = (result) => {
         setType(result.type);
         setDiameter(result.diameter);
-        setLength(result.length.split(' ')[0]);
-        setLengthUnit(result.length.split(' ')[1]);
+        setLength(result.length);
+        setLengthUnit(result.lengthUnit);
         setStandard(result.standard);
         setClazz(result.clazz);
         setQuantity(result.quantity);
