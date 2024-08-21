@@ -5,6 +5,7 @@ import Header from "../Header/Header";
 import GalvanizedSheetTemplate from "../createOrder/template/GalvanizedSheetTemplate";
 import InsulationTemplate from "../createOrder/template/InsulationTemplate";
 import MetalTemplate from "../createOrder/template/MetalTemplate";
+import PanelsTemplate from "../createOrder/template/PanelsTemplate";
 
 const CreateInventory = () => {
 
@@ -25,6 +26,10 @@ const CreateInventory = () => {
         case 'METAL':
             template = <MetalTemplate category={selectedCategory}/>
             break;
+        case 'PANELS':
+            template = <PanelsTemplate category={selectedCategory}/>
+            break;
+
     }
 
     return (
