@@ -79,7 +79,8 @@ const InsulationTemplate = ({ onSave, category }) => {
             type: type,
             thickness: thickness,
             thicknessUnit: lengthUnit,
-            quantity: quantity
+            quantity: quantity,
+            description: description
         }
         fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
             method: "post",
@@ -119,7 +120,7 @@ const InsulationTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Дебелина:
-                <input type="text" value={thickness} onChange={(e) => setThickness(e.target.value)} />
+                <input type="number" value={thickness} onChange={(e) => setThickness(e.target.value)} />
                 {/*{errors.diameter && <span className="error">{errors.diameter}</span>}*/}
             </label>
             <label>
@@ -134,7 +135,7 @@ const InsulationTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
             </label>
             <label>

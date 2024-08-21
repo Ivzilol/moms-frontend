@@ -3,7 +3,6 @@ import '../CreateAndSendOrder.css'
 import ajax from "../../../service/FetchService";
 import {useUser} from "../../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
-import baseURL from "../../baseURL/BaseURL";
 
 const FastenersTemplate = ({onSave, category}) => {
     const user = useUser();
@@ -134,7 +133,7 @@ const FastenersTemplate = ({onSave, category}) => {
             diameter: diameter,
             length: length,
             lengthUnit: lengthUnit,
-            model: standard,
+            standard: standard,
             clazz: clazz,
             description: description
         }
@@ -162,6 +161,7 @@ const FastenersTemplate = ({onSave, category}) => {
         setLengthUnit('');
         setStandard('');
         setClazz('');
+        setDescription('');
     }
 
     return (
@@ -192,12 +192,12 @@ const FastenersTemplate = ({onSave, category}) => {
             </label>
             <label>
                 Диаметър:
-                <input type="text" value={diameter} onChange={(e) => setDiameter(e.target.value)}/>
+                <input type="number" value={diameter} onChange={(e) => setDiameter(e.target.value)}/>
                 {/*{errors.diameter && <span className="error">{errors.diameter}</span>}*/}
             </label>
             <label>
                 Дължина:
-                <input type="text" value={length} onChange={(e) => setLength(e.target.value)}/>
+                <input type="number" value={length} onChange={(e) => setLength(e.target.value)}/>
                 {/*{errors.length && <span className="error">{errors.length}</span>}*/}
             </label>
             <label>

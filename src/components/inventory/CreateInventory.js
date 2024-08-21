@@ -1,4 +1,3 @@
-import {useUser} from "../../userProvider/UserProvider";
 import {useState} from "react";
 import FastenersTemplate from "../createOrder/template/FastenersTemplate";
 import Header from "../Header/Header";
@@ -8,6 +7,7 @@ import MetalTemplate from "../createOrder/template/MetalTemplate";
 import PanelsTemplate from "../createOrder/template/PanelsTemplate";
 import RebarTemplate from "../createOrder/template/RebarTemplate";
 import SetTemplate from "../createOrder/template/SetTemplate";
+import UnspecifiedTemplate from "../createOrder/template/UnspecifiedTemplate";
 
 const CreateInventory = () => {
 
@@ -37,6 +37,8 @@ const CreateInventory = () => {
         case 'SET':
             template = <SetTemplate category={selectedCategory}/>
             break;
+        case 'UNSPECIFIED':
+            template = <UnspecifiedTemplate category={selectedCategory}/>
     }
 
     return (
@@ -58,6 +60,7 @@ const CreateInventory = () => {
                        <option value="PANELS">Панели</option>
                        <option value="REBAR">Армировка</option>
                        <option value="SET">Обшивки</option>
+                       <option value="UNSPECIFIED">Други</option>
                    </select>
                </div>
            </div>

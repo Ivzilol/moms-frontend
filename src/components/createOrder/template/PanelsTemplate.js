@@ -136,7 +136,8 @@ const PanelsTemplate = ({ onSave, category }) => {
             backSheetThickness: backSheetThickness,
             backSheetThicknessUnit: backSheetThicknessUnit,
             quantity: quantity,
-            quantityUnit: quantityUnit
+            quantityUnit: quantityUnit,
+            description: description
 
         }
         fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
@@ -171,6 +172,7 @@ const PanelsTemplate = ({ onSave, category }) => {
         setBackSheetThicknessUnit('');
         setQuantity('');
         setQuantityUnit('');
+        setDescription('');
     }
 
     return (
@@ -191,7 +193,7 @@ const PanelsTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Дължина:
-                <input type="text" value={length} onChange={(e) => setLength(e.target.value)} />
+                <input type="number" value={length} onChange={(e) => setLength(e.target.value)} />
             </label>
             <label>
                 м. ед. :
@@ -204,7 +206,7 @@ const PanelsTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Ширина:
-                <input type="text" value={width} onChange={(e) => setWidth(e.target.value)} />
+                <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} />
             </label>
             <label>
                 м. ед. :
@@ -217,7 +219,7 @@ const PanelsTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Обща д.:
-                <input type="text" value={totalThickness} onChange={(e) => setTotalThickness(e.target.value)} />
+                <input type="number" value={totalThickness} onChange={(e) => setTotalThickness(e.target.value)} />
             </label>
             <label>
                 м. ед. :
@@ -230,7 +232,7 @@ const PanelsTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Д. пр. лист:
-                <input type="text" value={frontSheetThickness} onChange={(e) => setFrontSheetThickness(e.target.value)} />
+                <input type="number" value={frontSheetThickness} onChange={(e) => setFrontSheetThickness(e.target.value)} />
                 {errors.frontSheetThickness && <span className="error">{errors.frontSheetThickness}</span>}
             </label>
             <label>
@@ -245,7 +247,7 @@ const PanelsTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Д. з. лист:
-                <input type="text" value={backSheetThickness} onChange={(e) => setBackSheetThickness(e.target.value)} />
+                <input type="number" value={backSheetThickness} onChange={(e) => setBackSheetThickness(e.target.value)} />
                 {errors.backSheetThickness && <span className="error">{errors.backSheetThickness}</span>}
             </label>
             <label>
@@ -260,7 +262,7 @@ const PanelsTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
             </label>
             <label>

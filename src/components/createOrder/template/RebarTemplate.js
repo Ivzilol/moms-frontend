@@ -119,7 +119,7 @@ const RebarTemplate = ( { onSave, category }) => {
             </label>
             <label>
                 M. Дължина:
-                <input type="text" value={maxLength} onChange={(e) => setMaxLength(e.target.value)} />
+                <input type="number" value={maxLength} onChange={(e) => setMaxLength(e.target.value)} />
             </label>
             <label>
                 м. ед. :
@@ -133,7 +133,7 @@ const RebarTemplate = ( { onSave, category }) => {
             </label>
             <label>
                 Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
             </label>
             <label>

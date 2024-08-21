@@ -68,6 +68,7 @@ const MetalTemplate = ({ onSave, category }) => {
             materialType: category,
             totalWeight: totalWeight,
             totalWeightUnit: totalWeightUnit,
+            kind: kind,
             description: description
         }
         fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
@@ -89,6 +90,7 @@ const MetalTemplate = ({ onSave, category }) => {
     function clearInputs() {
         setTotalWeight('');
         setTotalWeightUnit('');
+        setKind('')
         setDescription('');
     }
 
@@ -100,7 +102,7 @@ const MetalTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Общо тегло:
-                <input type="text" value={totalWeight} onChange={(e) => setTotalWeight(e.target.value)} />
+                <input type="number" value={totalWeight} onChange={(e) => setTotalWeight(e.target.value)} />
                 {errors.totalWeight && <span className="error">{errors.totalWeight}</span>}
             </label>
             <label>
