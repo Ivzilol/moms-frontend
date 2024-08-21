@@ -9,7 +9,6 @@ const GalvanizedSheetTemplate = ({ onSave, category }) => {
     const [type, setType] = useState('');
     const [maxLength, setMaxLength] = useState('');
     const [maxLengthUnit, setMaxLengthUnit] = useState('');
-    const [area, setArea] = useState('');
     const [areaUnit, setAreaUnit] = useState('');
     const [quantity, setQuantity] = useState('');
     const [description, setDescription] = useState('');
@@ -120,6 +119,7 @@ const GalvanizedSheetTemplate = ({ onSave, category }) => {
         setNumberOfSheets('');
         setQuantity('');
         setQuantityUnit('');
+        setDescription('');
     }
 
     return (
@@ -135,7 +135,7 @@ const GalvanizedSheetTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Дължина:
-                <input type="text" value={maxLength} onChange={(e) => setMaxLength(e.target.value)} />
+                <input type="number" value={maxLength} onChange={(e) => setMaxLength(e.target.value)} />
                 {/*{errors.length && <span className="error">{errors.length}</span>}*/}
             </label>
             <label>
@@ -150,12 +150,12 @@ const GalvanizedSheetTemplate = ({ onSave, category }) => {
             </label>
             <label>
                 Брой листа:
-                <input type="text" value={numberOfSheets} onChange={(e) => setNumberOfSheets(e.target.value)} />
+                <input type="number" value={numberOfSheets} onChange={(e) => setNumberOfSheets(e.target.value)} />
                 {/*{errors.area && <span className="error">{errors.area}</span>}*/}
             </label>
             <label>
                 Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
             </label>
             <label>

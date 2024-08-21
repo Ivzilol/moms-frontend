@@ -130,7 +130,7 @@ const SetTemplate = ({onSave, category}) => {
             </label>
             <label>
                 M. дължина:
-                <input type="text" value={maxLength} onChange={(e) => setMaxLength(e.target.value)}/>
+                <input type="number" value={maxLength} onChange={(e) => setMaxLength(e.target.value)}/>
                 {errors.maxLength && <span className="error">{errors.maxLength}</span>}
             </label>
             <label>
@@ -145,7 +145,7 @@ const SetTemplate = ({onSave, category}) => {
             </label>
             <label>
                 Количество:
-                <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
+                <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
             </label>
             <label>

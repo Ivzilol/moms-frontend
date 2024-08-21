@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {useUser} from "../../../userProvider/UserProvider";
 import ajax from "../../../service/FetchService";
+import {jwtDecode} from "jwt-decode";
 
 const UnspecifiedTemplate = ({ onSave, category }) => {
 
@@ -10,6 +11,22 @@ const UnspecifiedTemplate = ({ onSave, category }) => {
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [response, setResponse] = useState([]);
+    const [roles, setRoles] = useState(getRolesFromJWT());
+
+    useEffect(() => {
+        setRoles(getRolesFromJWT())
+    }, [user.jwt])
+
+    function getRolesFromJWT() {
+        if (user.jwt) {
+            const decodeJwt = jwtDecode(user.jwt)
+            return decodeJwt.roles.split(",")
+        }
+        return [];
+    }
+
+    const userRole = roles.length === 1 && roles.includes('USER');
+    const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleFileChange = (e) => {
         setSpecification(e.target.files[0]);
@@ -61,6 +78,33 @@ const UnspecifiedTemplate = ({ onSave, category }) => {
         setResponse([]);
     };
 
+    function createInventory() {
+        const requestBody = {
+            materialType: category,
+            description: description
+        }
+        fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
+            method: "post",
+            headers: {
+                "Authorization": `Bearer ${user.jwt}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    clearInputs()
+                    alert("Успешно създадохте материал")
+                }
+            })
+
+    }
+
+    function clearInputs() {
+        setQuantity('');
+        setDescription('');
+    }
+
     return (
         <div className="template-form">
             <label>
@@ -94,9 +138,18 @@ const UnspecifiedTemplate = ({ onSave, category }) => {
                 Спецификация:
                 <input type="file" onChange={handleFileChange} />
             </label>
-            <label>
-                <button onClick={handleSave}>Запази</button>
-            </label>
+            {userRole &&
+                <label>
+                    <button onClick={handleSave}>Запази</button>
+                </label>
+            }
+            {adminRole &&
+                <label>
+                    <button
+                        type="submit"
+                        onClick={() => createInventory()}>Създай</button>
+                </label>
+            }
         </div>
     );
 }
