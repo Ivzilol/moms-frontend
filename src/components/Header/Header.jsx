@@ -6,6 +6,9 @@ import {useUser} from "../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding } from '@fortawesome/free-solid-svg-icons';
+
 export default function Header() {
 
     const navigate = useNavigate();
@@ -44,7 +47,12 @@ export default function Header() {
         <nav className={classNames(styles.navbar, 'navbar-expand-lg')}>
             <div className="container d-flex justify-content-between align-items-center">
                 <a className={classNames('d-flex', 'align-items-center', styles['navbar-brand'])} href='/'>
-                    <img src={logo} className={classNames(styles['img-fluid'], styles['logo-image'])} alt='Logo' />
+                    <FontAwesomeIcon 
+                        icon={faBuilding} 
+                        className={classNames(styles['logo-icon'], 'me-2')} 
+                        size="2x" 
+                        alt='Building Icon' 
+                    />
                     <div className="d-flex flex-column">
                         <strong className={styles['logo-text']}>Supply</strong>
                         <strong className={styles['logo-slogan']}>Manager</strong>

@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import {useFormik} from 'formik';
-
+import classNames from 'classnames';
 import {LoginFormKeys} from '../../core/environments/constants';
 import loginValidation from './loginValidation';
 import classes from './LoginForm.module.css';
-import logo from '../../assets/images/MCK-logo.png';
+import styles from '../Header/Header.module.css'
 import {useUser} from "../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
 import Spinner from '../spinner/Spinner';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 
 const initialValues = {
     [LoginFormKeys.Email]: '',
@@ -87,8 +90,21 @@ const LoginForm = () => {
                             <div className={classes.shape}></div>
                         </div>
                         <form className={classes.poppins} onSubmit={formik.handleSubmit}>
-                            <img src={logo} alt="Logo" className={classes.logo}/>
-
+                            <div className={classes.logo}>
+                                <div className={classNames('d-flex', 'align-items-center', styles['navbar-brand'])}>
+                                    <FontAwesomeIcon 
+                                        icon={faBuilding} 
+                                        className={classNames(styles['logo-icon'], 'me-2')} 
+                                        size="2x" 
+                                        alt='Building Icon' 
+                                    />
+                                    <div className="d-flex flex-column">
+                                        <strong className={styles['logo-text']}>Supply</strong>
+                                        <strong className={styles['logo-slogan']}>Manager</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <label htmlFor={LoginFormKeys.Email}>Имейл</label>
                             <input
                                 type="text"
