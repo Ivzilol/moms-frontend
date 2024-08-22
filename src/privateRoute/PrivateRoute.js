@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useUser} from "../userProvider/UserProvider";
 import {Navigate} from "react-router-dom";
 
+import Spinner from '../components/spinner/Spinner';
+
 
 const PrivateRoute = ({ children }) => {
     const user = useUser();
@@ -39,7 +41,7 @@ const PrivateRoute = ({ children }) => {
     }, [user.jwt]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div><Spinner/></div>;
     }
 
     if (isValid) {

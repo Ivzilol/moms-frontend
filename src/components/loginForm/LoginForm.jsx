@@ -1,15 +1,13 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {useFormik} from 'formik';
 
-import {LoginFormKeys, PATH} from '../../core/environments/constants';
+import {LoginFormKeys} from '../../core/environments/constants';
 import loginValidation from './loginValidation';
-import AuthContext from '../../context/AuthContext';
 import classes from './LoginForm.module.css';
 import logo from '../../assets/images/MCK-logo.png';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import {useUser} from "../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
-
+import Spinner from '../spinner/Spinner';
 
 const initialValues = {
     [LoginFormKeys.Email]: '',
@@ -18,41 +16,27 @@ const initialValues = {
 
 const LoginForm = () => {
     const [serverError, setServerError] = useState({});
-    const {
-        values,
-        errors,
-        touched,
-        isSubmitting,
-        handleSubmit,
-        handleChange,
-        handleBlur,
-    } = useFormik({
-        initialValues,
-        // onSubmit,
-        validationSchema: loginValidation,
-    });
-
-    // const { loginSubmitHandler } = useContext(AuthContext);
-
-    // async function onSubmit(values) {
-    //     try {
-    //         await loginSubmitHandler(values);
-    //     } catch (error) {
-    //         setServerError(error);
-    //     }
-    // }
     const [isLoading, setIsLoading] = useState(false);
     const user = useUser();
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    function sendLoginRequest(event) {
+    const formik = useFormik({
+        initialValues,
+        validationSchema: loginValidation,
+        validateOnBlur: false, 
+        validateOnChange: false, 
+        onSubmit: (values) => {
+            sendLoginRequest(values);
+        },
+    });
+
+    function sendLoginRequest(values) {
         setIsLoading(true);
         const requestBody = {
-            "email": email,
-            "password": password,
+            "email": values.email,
+            "password": values.password,
         };
+
         fetch(`http://localhost:8080/v1/user/user/query/login`, {
             method: "post",
             headers: {
@@ -60,43 +44,38 @@ const LoginForm = () => {
             },
             body: JSON.stringify(requestBody)
         })
-            .then((response) => {
-                if (!response.ok) {
-                    return Promise.reject("Invalid login attempt");
-                }
-                return response.json().then(data => ({data, headers: response.headers}));
-            })
-            .then(({data, headers}) => {
-                const authHeader = data.token;
-                const token = authHeader.split(' ');
-                const userData = {
-                        "id": data.id,
-                        "email": data.email,
-                        "roles": data.roles     
-                }
-                
-                if (token[1]) {
-                    user.setJwt(token[1]);
-                    localStorage.setItem('jwt', token[1]);
-                    localStorage.setItem('userData', JSON.stringify(userData))
-                    setIsLoading(false);
-                    navigate('/')
-                 }
-            })
-            .catch(error => {
+        .then((response) => {
+            if (!response.ok) {
+                return Promise.reject("Invalid login attempt");
+            }
+            return response.json().then(data => ({data, headers: response.headers}));
+        })
+        .then(({data, headers}) => {
+            const authHeader = data.token;
+            const token = authHeader.split(' ');
+            const userData = {
+                "id": data.id,
+                "email": data.email,
+                "roles": data.roles
+            }
+            
+            if (token[1]) {
+                user.setJwt(token[1]);
+                localStorage.setItem('jwt', token[1]);
+                localStorage.setItem('userData', JSON.stringify(userData))
                 setIsLoading(false);
-            });
+                navigate('/')
+             }
+        })
+        .catch(error => {
+            setIsLoading(false);
+            setServerError({message: error});
+        });
     }
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div><Spinner/></div>;
     }
-
-    const handleCustomSubmit = (e) => {
-        e.preventDefault();
-        sendLoginRequest(e)
-    };
-
 
     return (
         <div className="container mt-5">
@@ -107,44 +86,45 @@ const LoginForm = () => {
                             <div className={classes.shape}></div>
                             <div className={classes.shape}></div>
                         </div>
-                        <form className={classes.poppins}>
+                        <form className={classes.poppins} onSubmit={formik.handleSubmit}>
                             <img src={logo} alt="Logo" className={classes.logo}/>
 
                             <label htmlFor={LoginFormKeys.Email}>Имейл</label>
                             <input
                                 type="text"
-                                name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                onBlur={handleBlur}
+                                name={LoginFormKeys.Email}
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 placeholder="Имейл"
                                 id="username"
-                                className={`${classes.input} ${touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? 'is-invalid' : ''}`}
+                                className={`${classes.input} ${formik.errors[LoginFormKeys.Email] ? 'is-invalid' : ''}`}
                             />
-                            {touched[LoginFormKeys.Email] && errors[LoginFormKeys.Email] ? (
-                                <div className="invalid-feedback">{errors[LoginFormKeys.Email]}</div>
-                            ) : null}
+                            {formik.errors[LoginFormKeys.Email] && (
+                                <div className="invalid-feedback">{formik.errors[LoginFormKeys.Email]}</div>
+                            )}
 
-                            <label htmlFor="password">Парола</label>
+                            <label htmlFor={LoginFormKeys.Password}>Парола</label>
                             <input
                                 type="password"
-                                name="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                onBlur={handleBlur}
+                                name={LoginFormKeys.Password}
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 placeholder="Парола"
                                 id="password"
-                                className={`${classes.input} ${touched[LoginFormKeys.Password] && errors[LoginFormKeys.password] ? 'is-invalid' : ''}`}
+                                className={`${classes.input} ${formik.errors[LoginFormKeys.Password] ? 'is-invalid' : ''}`}
                             />
-                            {touched[LoginFormKeys.Password] && errors[LoginFormKeys.Password] ? (
-                                <div className="invalid-feedback">{errors[LoginFormKeys.Password]}</div>
-                            ) : null}
+                            {formik.errors[LoginFormKeys.Password] && (
+                                <div className="invalid-feedback">{formik.errors[LoginFormKeys.Password]}</div>
+                            )}
 
-                            <button type="submit" className={classes.button}
-                                    onClick={handleCustomSubmit}
-                            >
+                            <button type="submit" className={classes.button}>
                                 Вход
                             </button>
+                            {serverError.message && (
+                                <div className="alert alert-danger mt-3">Паролата или имейла са некоректни</div>
+                            )}
                             <a href="/forgotten-password">Забравена парола</a>
                         </form>
                     </div>
@@ -155,87 +135,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-
-// import React, { useState } from 'react';
-// import { useFormik } from 'formik';
-// import loginValidation from './loginValidation';
-// import classes from './LoginForm.module.css';
-// import logo from '../../assets/images/MCK-logo.png';
-// import '@fortawesome/fontawesome-free/css/all.min.css';
-// import useAuth from '../../hooks/useAuth';
-
-// const LoginForm = () => {
-
-//   const { login } = useAuth();
-
-//   const formik = useFormik({
-//     initialValues: {
-//       email: '',
-//       password: ''
-//     },
-//     validationSchema: loginValidation,
-//     onSubmit: async (values, { setSubmitting }) => {
-//       try {
-//         await login(values.email, values.password);
-//       } catch (error) {
-//         console.error('Login failed', error);
-//       }
-//       setSubmitting(false);
-//     }
-//   });
-
-//   return (
-//     <div className="container mt-5">
-//       <div className="row justify-content-center">
-//         <div className="col-md-4">
-//           <div className="card-body">
-//             <div className={classes.background}>
-//               <div className={classes.shape}></div>
-//               <div className={classes.shape}></div>
-//             </div>
-//             <form className={classes.poppins} onSubmit={formik.handleSubmit}>
-//               <img src={logo} alt="Logo" className={classes.logo} />
-
-//               <label htmlFor="email">Имейл</label>
-//               <input
-//                 type="text"
-//                 name="email"
-//                 value={formik.values.email}
-//                 onChange={formik.handleChange}
-//                 onBlur={formik.handleBlur}
-//                 placeholder="Имейл"
-//                 id="username"
-//                 className={`${classes.input} ${formik.touched.email && formik.errors.email ? 'is-invalid' : ''}`}
-//               />
-//               {formik.touched.email && formik.errors.email ? (
-//                 <div className="invalid-feedback">{formik.errors.email}</div>
-//               ) : null}
-
-//               <label htmlFor="password">Парола</label>
-//               <input
-//                 type="password"
-//                 name="password"
-//                 value={formik.values.password}
-//                 onChange={formik.handleChange}
-//                 onBlur={formik.handleBlur}
-//                 placeholder="Парола"
-//                 id="password"
-//                 className={`${classes.input} ${formik.touched.password && formik.errors.password ? 'is-invalid' : ''}`}
-//               />
-//               {formik.touched.password && formik.errors.password ? (
-//                 <div className="invalid-feedback">{formik.errors.password}</div>
-//               ) : null}
-
-//               <button type="submit" className={classes.button} disabled={formik.isSubmitting}>
-//                 Вход
-//               </button>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default LoginForm;

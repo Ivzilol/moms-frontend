@@ -18,6 +18,7 @@ import UserCreateNewPassword from "./components/userForgottenPassword/UserCreate
 import CreateInventory from "./components/inventory/CreateInventory";
 
 
+
 function App() {
     const user = useUser([]);
     const [roles, setRoles] = useState(getRolesFromJWT());
@@ -132,6 +133,7 @@ function App() {
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/forgotten-password" element={<UserForgottenPassword/>}/>
             <Route path="/create-new-password" element={<UserCreateNewPassword/>}/>
+            {/* <Route path="/404" element={<NotFoundPage/>}/> */}
         </Routes>
     );
 }

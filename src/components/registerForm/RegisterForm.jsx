@@ -185,8 +185,8 @@ const RegisterForm = ({ onSuccess }) => {
                                         onBlur={handleBlur}
                                         value={values[RegisterFormKeys.Role]}
                                     >
-                                        <option value="USER">Юзър</option>
-                                        <option value="ADMIN">Админ</option>
+                                        <option className={styles.role_option} value="USER">Потребител</option>
+                                        <option className={styles.role_option} value="ADMIN">Модератор</option>
                                     </select>
                                     {touched[RegisterFormKeys.Role] && errors[RegisterFormKeys.Role] && <div className={styles.errorText}>{errors[RegisterFormKeys.Role]}</div>}
                                 </div>

@@ -58,7 +58,7 @@ export default function Header() {
                 <div className={classNames('collapse', 'navbar-collapse')} id='navbarNav'>
                     <ul className={classNames('navbar-nav', 'ms-auto', 'd-flex', 'align-items-center')}>
                         {adminRole &&
-                            <li className={classNames('nav-item', 'me-3')}>
+                            <li className={classNames('nav-item', 'me-3', styles.create_btn)}>
                                 <a
                                     className={classNames('nav-link', 'btn')}
                                     href='#'
@@ -75,9 +75,20 @@ export default function Header() {
                                     href='#'
                                     onClick={navigateToCreateSite}
                                 >
-                                    Създай Обект
+                                    Създай Обект 
                                 </a>
-                            </li>
+                            </li>    
+                        }
+                        {adminRole &&
+                            <li className={classNames('nav-item', 'me-3', styles.create_btn)}>
+                                <a
+                                    className={classNames('nav-link', 'btn')}
+                                    href='#'
+                                    onClick={navigateToCreateSite}
+                                >
+                                    Създай Материал
+                                </a>
+                            </li>    
                         }
                         <li className={classNames('nav-item', 'ms-3')}>
                             <a
