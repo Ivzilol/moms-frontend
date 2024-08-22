@@ -71,7 +71,7 @@
 .search-results {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin-top: 22px;
     position: absolute;
     top: 280px;
     left: 0;
@@ -82,23 +82,18 @@
     overflow-y: auto;
     z-index: 1000;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
-.search-results li {
-    padding: 10px;
+.search-results-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
 
-.search-results li:hover {
-    background-color: #f0f0f0;
-}
 
-.search-results li:last-child {
-    border-bottom: none;
-}
 
-.error {
-    color: red;
-    font-size: 0.8em;
-}
+
+

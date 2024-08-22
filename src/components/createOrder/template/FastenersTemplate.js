@@ -115,8 +115,8 @@ const FastenersTemplate = ({onSave, category}) => {
     const handleSelectResult = (result) => {
         setType(result.type);
         setDiameter(result.diameter);
-        setLength(result.length.split(' ')[0]);
-        setLengthUnit(result.length.split(' ')[1]);
+        setLength(result.length);
+        setLengthUnit(result.lengthUnit);
         setStandard(result.standard);
         setClazz(result.clazz);
         setQuantity(result.quantity);
@@ -179,8 +179,15 @@ const FastenersTemplate = ({onSave, category}) => {
             {response.length > 0 && (
                 <ul className="search-results">
                     {response.map((result, index) => (
-                        <li key={index} onClick={() => handleSelectResult(result)}>
-                            {result.name}
+                        <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
+                            <p>{result.name}</p>
+                            <p>{result.type}</p>
+                            <p>{result.diameter}</p>
+                            <p>{result.length}</p>
+                            <p>{result.lengthUnit}</p>
+                            <p>{result.standard}</p>
+                            <p>{result.clazz}</p>
+                            <p>{result.description}</p>
                         </li>
                     ))}
                 </ul>

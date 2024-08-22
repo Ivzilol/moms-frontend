@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import './PanelsTemplate.css'
 import {useUser} from "../../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
+import ajax from "../../../service/FetchService";
 const PanelsTemplate = ({ onSave, category }) => {
     const user = useUser();
     const [name, setName] = useState('');
@@ -24,6 +25,7 @@ const PanelsTemplate = ({ onSave, category }) => {
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
     const [roles, setRoles] = useState(getRolesFromJWT());
+    const [response, setResponse] = useState([]);
 
     useEffect(() => {
         setRoles(getRolesFromJWT())
@@ -175,12 +177,83 @@ const PanelsTemplate = ({ onSave, category }) => {
         setDescription('');
     }
 
+    const getSearchResult = (searchTerm) => {
+        console.log(category);
+        ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
+            .then((response) => {
+                if (response && Array.isArray(response)) {
+                    setResponse(response);
+                    console.log(response)
+                } else {
+                    setResponse([]);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching search results:', error);
+                setResponse([]);
+            });
+    };
+
+    useEffect(() => {
+        if (name.length >= 2) {
+            getSearchResult(name);
+        } else {
+            setResponse([]);
+        }
+    }, [name]);
+
+    const handleSelectResult = (result) => {
+        setType(result.type);
+        setColor(result.color)
+        setLength(result.length);
+        setLengthUnit(result.lengthUnit)
+        setWidth(result.width)
+        setWidthUnit(result.widthUnit)
+        setTotalThickness(result.totalThickness)
+        setTotalThicknessUnit(result.totalThicknessUnit)
+        setFrontSheetThickness(result.frontSheetThickness)
+        setFrontSheetThicknessUnit(result.frontSheetThicknessUnit)
+        setBackSheetThickness(result.backSheetThickness)
+        setBackSheetThicknessUnit(result.backSheetThicknessUnit)
+        setDescription(result.description)
+        setName('')
+        setResponse([]);
+    };
+
     return (
         <div className="template-form">
             <label>
                 Търси:
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
+                />
             </label>
+            {response.length > 0 && (
+                <ul className="search-results">
+                    {response.map((result, index) => (
+                        <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
+                            <p>{result.name}</p>
+                            <p>{result.type}</p>
+                            <p>{result.color}</p>
+                            <p>{result.length}</p>
+                            <p>{result.lengthUnit}</p>
+                            <p>{result.width}</p>
+                            <p>{result.widthUnit}</p>
+                            <p>{result.totalThickness}</p>
+                            <p>{result.totalThicknessUnit}</p>
+                            <p>{result.frontSheetThickness}</p>
+                            <p>{result.frontSheetThicknessUnit}</p>
+                            <p>{result.backSheetThickness}</p>
+                            <p>{result.backSheetThicknessUnit}</p>
+                            <p>{result.description}</p>
+                        </li>
+                    ))}
+                </ul>
+            )}
             <label>
                 Тип:
                 <input type="text" value={type} onChange={(e) => setType(e.target.value)} />
