@@ -176,11 +176,9 @@ const GalvanizedSheetTemplate = ({ onSave, category }) => {
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
                             <p>{result.name}</p>
                             <p>{result.type}</p>
-                            <p>{result.diameter}</p>
-                            <p>{result.length}</p>
-                            <p>{result.lengthUnit}</p>
-                            <p>{result.standard}</p>
-                            <p>{result.clazz}</p>
+                            <p>{result.maxLength}</p>
+                            <p>{result.maxLengthUnit}</p>
+                            <p>{result.numberOfSheets}</p>
                             <p>{result.description}</p>
                         </li>
                     ))}
