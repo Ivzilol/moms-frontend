@@ -209,7 +209,7 @@ const ItemListGalvanizedSheet = ({
                             </select>
                         </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank"
+                        <p>Обща спецификация: <a href={specificationFileUrl} target="_blank"
                                                      rel="noopener noreferrer">
                             изтегли спецификация
                         </a></p>
