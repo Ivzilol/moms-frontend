@@ -72,7 +72,6 @@ const UnspecifiedTemplate = ({ onSave, category }) => {
     }, [name]);
 
     const handleSelectResult = (result) => {
-        setQuantity(result.quantity);
         setDescription(result.description);
         setName('');
         setResponse([]);
@@ -120,8 +119,9 @@ const UnspecifiedTemplate = ({ onSave, category }) => {
             {response.length > 0 && (
                 <ul className="search-results">
                     {response.map((result, index) => (
-                        <li key={index} onClick={() => handleSelectResult(result)}>
-                            {result.name}
+                        <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
+                            <p>{result.name}</p>
+                            <p>{result.description}</p>
                         </li>
                     ))}
                 </ul>
