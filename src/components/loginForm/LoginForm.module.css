@@ -77,9 +77,10 @@ form *{
 
 .logo {
     display: block;
-    margin: 0 auto 50px; 
+    align-items: center;
+    margin: 20%;
     max-width: 20%;
-    height: auto;
+    height: 10%;
 }
 form h3{
     font-size: 32px;
