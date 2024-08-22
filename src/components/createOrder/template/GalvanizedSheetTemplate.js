@@ -155,6 +155,7 @@ const GalvanizedSheetTemplate = ({ onSave, category }) => {
         setMaxLengthUnit(result.maxLengthUnit);
         setNumberOfSheets(result.numberOfSheets);
         setDescription(result.description)
+        setName('');
         setResponse([]);
     };
 
