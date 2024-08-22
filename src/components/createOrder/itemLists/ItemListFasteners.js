@@ -295,7 +295,7 @@ const ItemListFasteners = ({
                                             className="fas fa-edit"
                                             onClick={() => onEdit(item, index)}
                                             title="Edit"
-                                        ></i>
+                                        >Редактирай</i>
                                     </td>
                                 )}
                                 {userRole && orderStatus === undefined && (
@@ -304,7 +304,7 @@ const ItemListFasteners = ({
                                             className="fas fa-trash"
                                             onClick={() => onDelete(index)}
                                             title="Delete"
-                                        ></i>
+                                        >Изтрии</i>
                                     </td>
                                 )}
                                 {adminRole && item.adminNote === null && (

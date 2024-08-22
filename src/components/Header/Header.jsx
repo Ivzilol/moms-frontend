@@ -69,24 +69,13 @@ export default function Header() {
                             </li>
                         }
                         {adminRole &&
-                            <li className={classNames('nav-item', 'me-3')}>
-                                <a
-                                    className={classNames('nav-link', 'btn')}
-                                    href='#'
-                                    onClick={navigateToCreateSite}
-                                >
-                                    Създай Обект 
-                                </a>
-                            </li>    
-                        }
-                        {adminRole &&
                             <li className={classNames('nav-item', 'me-3', styles.create_btn)}>
                                 <a
                                     className={classNames('nav-link', 'btn')}
                                     href='#'
                                     onClick={navigateToCreateSite}
                                 >
-                                    Създай Материал
+                                    Създай Обект
                                 </a>
                             </li>    
                         }

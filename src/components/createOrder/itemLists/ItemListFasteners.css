@@ -1,4 +1,4 @@
-/* Стилове за ItemListFasteners */
+
 .item-list {
     width: 100%;
     max-height: 60vh;
@@ -43,6 +43,11 @@
 
 .item-list tr.selected {
     background-color: red;
+}
+
+.fas {
+    color: black;
+    cursor: pointer;
 }
 
 .order-info {
