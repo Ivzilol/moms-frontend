@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useUser} from "../../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
+import ajax from "../../../service/FetchService";
 
 const SetTemplate = ({onSave, category}) => {
     const user = useUser();
@@ -16,6 +17,7 @@ const SetTemplate = ({onSave, category}) => {
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
     const [roles, setRoles] = useState(getRolesFromJWT());
+    const [response, setResponse] = useState([]);
 
     useEffect(() => {
         setRoles(getRolesFromJWT())
@@ -117,12 +119,65 @@ const SetTemplate = ({onSave, category}) => {
         setDescription('');
     }
 
+    const getSearchResult = (searchTerm) => {
+        console.log(category);
+        ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
+            .then((response) => {
+                if (response && Array.isArray(response)) {
+                    setResponse(response);
+                    console.log(response)
+                } else {
+                    setResponse([]);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching search results:', error);
+                setResponse([]);
+            });
+    };
+
+    useEffect(() => {
+        if (name.length >= 2) {
+            getSearchResult(name);
+        } else {
+            setResponse([]);
+        }
+    }, [name]);
+
+    const handleSelectResult = (result) => {
+        setColor(result.color)
+        setMaxLength(result.maxLength)
+        setMaxLengthUnit(result.maxLengthUnit);
+        setDescription(result.description)
+        setName('');
+        setResponse([]);
+    };
+
     return (
         <div className="template-form">
             <label>
                 Търси:
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
+                />
             </label>
+            {response.length > 0 && (
+                <ul className="search-results">
+                    {response.map((result, index) => (
+                        <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
+                            <p>{result.name}</p>
+                            <p>{result.color}</p>
+                            <p>{result.maxLength}</p>
+                            <p>{result.maxLengthUnit}</p>
+                            <p>{result.description}</p>
+                        </li>
+                    ))}
+                </ul>
+            )}
             <label>
                 Цвят:
                 <input type="text" value={color} onChange={(e) => setColor(e.target.value)}/>
