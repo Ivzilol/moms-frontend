@@ -97,12 +97,14 @@ const ItemListGalvanizedSheet = ({
         }));
     };
 
+    const [haveNewNote, setHaveNewNote] = useState(false);
     const handleNoteChangeSecondNote = (index, note) => {
         console.log(note);
         setAdminNotes(prevNotes => ({
             ...prevNotes,
             [index]: note
         }))
+        setHaveNewNote(true);
         closeNoteModal();
     }
 
@@ -369,7 +371,7 @@ const ItemListGalvanizedSheet = ({
                                                         id="save-button"
                                                         type="submit"
                                                         onClick={() => handleNoteChangeSecondNote(index, currentNote + "##" + newNote)}
-                                                    >Save
+                                                    >Изпрати
                                                     </button>
                                                     {/*<input*/}
                                                     {/*    type="text"*/}
@@ -395,12 +397,19 @@ const ItemListGalvanizedSheet = ({
                         </tbody>
                     </table>
                 )}
-                {orderNumber !== undefined &&
+                {adminRole && orderNumber !== undefined &&
                     <button
                         id="save-button"
                         type="submit"
                         onClick={() => updateOrder()}
-                    >Save</button>
+                    >Изпрати</button>
+                }
+                {userRole && orderNumber !== undefined && haveNewNote &&
+                    <button
+                        id="save-button"
+                        type="submit"
+                        onClick={() => updateOrder()}
+                    >Изпрати</button>
                 }
             </div>
         </div>

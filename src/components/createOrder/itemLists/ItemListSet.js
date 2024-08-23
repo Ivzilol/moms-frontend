@@ -95,12 +95,14 @@ const ItemListSet = ({
         }));
     };
 
+    const [haveNewNote, setHaveNewNote] = useState(false);
     const handleNoteChangeSecondNote = (index, note) => {
         console.log(note);
         setAdminNotes(prevNotes => ({
             ...prevNotes,
             [index]: note
         }))
+        setHaveNewNote(true);
         closeNoteModal();
     }
 
@@ -364,7 +366,7 @@ const ItemListSet = ({
                                                         id="save-button"
                                                         type="submit"
                                                         onClick={() => handleNoteChangeSecondNote(index, currentNote + "##" + newNote)}
-                                                    >Save
+                                                    >Запази
                                                     </button>
                                                     {/*<input*/}
                                                     {/*    type="text"*/}
@@ -390,12 +392,19 @@ const ItemListSet = ({
                         </tbody>
                     </table>
                 )}
-                {orderNumber !== undefined &&
+                {adminRole && orderNumber !== undefined &&
                     <button
                         id="save-button"
                         type="submit"
                         onClick={() => updateOrder()}
-                    >Save</button>
+                    >Изпрати</button>
+                }
+                {userRole && orderNumber !== undefined && haveNewNote &&
+                    <button
+                        id="save-button"
+                        type="submit"
+                        onClick={() => updateOrder()}
+                    >Изпрати</button>
                 }
             </div>
         </div>

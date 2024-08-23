@@ -98,12 +98,13 @@ const ItemListFasteners = ({
         }));
     };
 
+    const [haveNewNote, setHaveNewNote] = useState(false);
     const handleNoteChangeSecondNote = (index, note) => {
-        console.log(note);
         setAdminNotes(prevNotes => ({
             ...prevNotes,
             [index]: note
         }))
+        setHaveNewNote(true);
         closeNoteModal();
     }
 
@@ -368,7 +369,7 @@ const ItemListFasteners = ({
                                                         id="save-button"
                                                         type="submit"
                                                         onClick={() => handleNoteChangeSecondNote(index,currentNote + "##" + newNote)}
-                                                    >Save</button>
+                                                    >Изпрати</button>
                                                     {/*<input*/}
                                                     {/*    type="text"*/}
                                                     {/*    value={adminNotes[index] !== undefined ? adminNotes[index] : ''}*/}
@@ -393,12 +394,19 @@ const ItemListFasteners = ({
                         </tbody>
                     </table>
                 )}
-                {orderNumber !== undefined &&
+                {adminRole && orderNumber !== undefined &&
                     <button
                         id="save-button"
                         type="submit"
                         onClick={() => updateOrder()}
-                    >Save</button>
+                    >Изпрати</button>
+                }
+                {userRole && orderNumber !== undefined && haveNewNote &&
+                    <button
+                        id="save-button"
+                        type="submit"
+                        onClick={() => updateOrder()}
+                    >Изпрати</button>
                 }
             </div>
         </div>
