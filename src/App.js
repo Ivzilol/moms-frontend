@@ -16,7 +16,7 @@ import OrderDetailsUser from "./components/ordersUser/OrderDetailsUser";
 import UserForgottenPassword from "./components/userForgottenPassword/UserForgottenPassword";
 import UserCreateNewPassword from "./components/userForgottenPassword/UserCreateNewPassword";
 import CreateInventory from "./components/inventory/CreateInventory";
-
+import EditConstructionSite from "./components/createConstructionSite/EditConstructionSite";
 
 
 function App() {
@@ -59,6 +59,17 @@ function App() {
                        hasAdminSuperadminRole ?
                            <PrivateRoute>
                                <CreateConstructionSite/>
+                           </PrivateRoute>
+                           :
+                           <PrivateRoute>
+                               <HomePage/>
+                           </PrivateRoute>
+                   }/>
+            <Route path="/edit-construction-site"
+                   element={
+                       adminRole ?
+                           <PrivateRoute>
+                               <EditConstructionSite/>
                            </PrivateRoute>
                            :
                            <PrivateRoute>
@@ -133,7 +144,7 @@ function App() {
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/forgotten-password" element={<UserForgottenPassword/>}/>
             <Route path="/create-new-password" element={<UserCreateNewPassword/>}/>
-            {/* <Route path="/404" element={<NotFoundPage/>}/> */}
+                {/* <Route path="/404" element={<NotFoundPage/>}/> */}
         </Routes>
     );
 }
