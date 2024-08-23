@@ -95,12 +95,14 @@ const ItemListPanel = ({
         }));
     };
 
+    const [haveNewNote, setHaveNewNote] = useState(false);
     const handleNoteChangeSecondNote = (index, note) => {
         console.log(note);
         setAdminNotes(prevNotes => ({
             ...prevNotes,
             [index]: note
         }))
+        setHaveNewNote(true);
         closeNoteModal();
     }
 
@@ -207,7 +209,7 @@ const ItemListPanel = ({
                             </select>
                         </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank"
+                        <p>Обща спецификация: <a href={specificationFileUrl} target="_blank"
                                                      rel="noopener noreferrer">
                             изтегли спецификация
                         </a></p>
@@ -223,7 +225,7 @@ const ItemListPanel = ({
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката: {orderStatus} </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: {specificationFileUrl && <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                        <p>Обща спецификация: {specificationFileUrl && <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
                             изтегли спецификация
                         </a>}
                         </p>
@@ -306,7 +308,7 @@ const ItemListPanel = ({
                                             className="fas fa-edit"
                                             onClick={() => onEdit(item, index)}
                                             title="Edit"
-                                        ></i>
+                                        >Редактирай</i>
                                     </td>
                                 )}
                                 {userRole && orderStatus === undefined && (
@@ -315,7 +317,7 @@ const ItemListPanel = ({
                                             className="fas fa-trash"
                                             onClick={() => onDelete(index)}
                                             title="Delete"
-                                        ></i>
+                                        >Изтрии</i>
                                     </td>
                                 )}
                                 {adminRole && item.adminNote === null && (
@@ -360,6 +362,9 @@ const ItemListPanel = ({
                                         )}
                                     </td>
                                 )}
+                                {userRole && item.adminNote === null &&
+                                    <td></td>
+                                }
                                 {userRole && item.adminNote !== null && orderNumber !== undefined && (
                                     <td>
                                         <button className="note-button"
@@ -380,7 +385,7 @@ const ItemListPanel = ({
                                                         id="save-button"
                                                         type="submit"
                                                         onClick={() => handleNoteChangeSecondNote(index, currentNote + "##" + newNote)}
-                                                    >Save
+                                                    >Запази
                                                     </button>
                                                     {/*<input*/}
                                                     {/*    type="text"*/}
@@ -406,12 +411,19 @@ const ItemListPanel = ({
                         </tbody>
                     </table>
                 )}
-                {orderNumber !== undefined &&
+                {adminRole && orderNumber !== undefined &&
                     <button
                         id="save-button"
                         type="submit"
                         onClick={() => updateOrder()}
-                    >Save</button>
+                    >Изпрати</button>
+                }
+                {userRole && orderNumber !== undefined && haveNewNote &&
+                    <button
+                        id="save-button"
+                        type="submit"
+                        onClick={() => updateOrder()}
+                    >Изпрати</button>
                 }
             </div>
         </div>

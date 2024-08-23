@@ -1,0 +1,91 @@
+.formContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f7f9;
+}
+
+.card {
+    width: 100%;
+    max-width: 500px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 20px;
+}
+
+.cardHeader {
+    background: linear-gradient(145deg, #007bff, #0056b3);
+    color: white;
+    padding: 20px;
+    border-bottom: 2px solid #0056b3;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.cardHeader h2 {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cardHeader:hover {
+    background: linear-gradient(145deg, #0056b3, #003d80);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3),
+    0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.cardBody {
+    padding: 20px;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.formControl {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.formControl:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.submitButton:hover {
+    background-color: #0056b3;
+}

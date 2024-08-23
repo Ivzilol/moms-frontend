@@ -46,7 +46,7 @@ const OrderCategoryAndConstructionsSite = () => {
     const [currentIndex, setCurrentIndex] = useState(null);
     const [specification, setSpecification] = useState(null);
     const [orderDescription, setOrderDescription] = useState('');
-
+    const now = new Date().toISOString().slice(0, 16);
 
     useEffect(() => {
         if (selectedCategory) {
@@ -63,6 +63,10 @@ const OrderCategoryAndConstructionsSite = () => {
         }
     }, [requestBody, selectedCategory]);
 
+    const handleDateChange = (e) => {
+        setDateOfDelivery(e.target.value);
+        e.target.blur(); // Затваря прозореца за избор на дата
+    };
 
     let template;
     let itemListTemplate
@@ -533,7 +537,8 @@ const OrderCategoryAndConstructionsSite = () => {
                         id="timeOfDelivery"
                         type="datetime-local"
                         value={dateOfDelivery}
-                        onChange={(e) => setDateOfDelivery(e.target.value)}
+                        onChange={handleDateChange}
+                        min={now}
                     />
                 </div>
                 <div className="dropdown">
@@ -566,7 +571,7 @@ const OrderCategoryAndConstructionsSite = () => {
                 <button
                     type="submit"
                     onClick={createOrder}
-                    disabled={!selectedCategory || !selectedSite || !dateOfDelivery}
+                    disabled={!selectedCategory || !selectedSite || !dateOfDelivery || requestBody.length === 0}
                 >Send Order
                 </button>
             </div>
