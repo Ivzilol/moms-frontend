@@ -333,7 +333,7 @@ const ItemListTransport = ({
                                                         id="save-button"
                                                         type="submit"
                                                         onClick={() => handleNoteChangeSecondNote(index, currentNote + "##" + newNote)}
-                                                    >Save
+                                                    >Запази
                                                     </button>
                                                     {/*<input*/}
                                                     {/*    type="text"*/}
