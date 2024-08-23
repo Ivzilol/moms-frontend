@@ -208,7 +208,7 @@ const ItemListInsulation = ({
                             </select>
                         </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: <a href={specificationFileUrl} target="_blank"
+                        <p>Обща спецификация: <a href={specificationFileUrl} target="_blank"
                                                      rel="noopener noreferrer">
                             изтегли спецификация
                         </a></p>
@@ -345,6 +345,9 @@ const ItemListInsulation = ({
                                         )}
                                     </td>
                                 )}
+                                {userRole && item.adminNote === null &&
+                                    <td></td>
+                                }
                                 {userRole && item.adminNote !== null && orderNumber !== undefined && (
                                     <td>
                                         <button className="note-button"

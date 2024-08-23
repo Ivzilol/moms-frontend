@@ -225,7 +225,7 @@ const ItemListGalvanizedSheet = ({
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката: {orderStatus} </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: {specificationFileUrl && <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                        <p>Обща спецификация: {specificationFileUrl && <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
                             изтегли спецификация
                         </a>}
                         </p>
@@ -346,6 +346,9 @@ const ItemListGalvanizedSheet = ({
                                         )}
                                     </td>
                                 )}
+                                {userRole && item.adminNote === null &&
+                                    <td></td>
+                                }
                                 {userRole && item.adminNote !== null && orderNumber !== undefined && (
                                     <td>
                                         <button className="note-button"
