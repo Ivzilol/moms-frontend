@@ -3,6 +3,7 @@ import ajax from "../../service/FetchService";
 import baseURL from "../baseURL/BaseURL";
 import {useUser} from "../../userProvider/UserProvider";
 import './EditConstructionSite.css'
+import {useNavigate} from "react-router-dom";
 
 const EditConstructionSite = () => {
 
@@ -12,6 +13,7 @@ const EditConstructionSite = () => {
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         ajax(`${baseURL}user/order/query/construction/all`, "GET", user.jwt)
@@ -48,6 +50,7 @@ const EditConstructionSite = () => {
         }).then((response) => {
             if (response.status === 200) {
                 alert("Успешно променихте строителния обект");
+                navigate('/create-construction-site')
             }
         })
     }
