@@ -1,13 +1,13 @@
 .template-form {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
-    width: 100%;
+    width: 98%;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     background-color: #ffffff;
-    margin-top: 100px;
+    /* margin-top: 100px; */
     justify-content: center;
     align-items: start;
     font-size: 12px;
@@ -19,14 +19,15 @@
     font-weight: bold;
     margin-bottom: 20px;
     color: #6c757d;
+    font-size: 16px;
 }
 
 .template-form input,
 .template-form textarea {
-    padding: 5px;
+    padding: 0px;
     margin-top: 2px;
     font-size: 12px;
-    height: 20px;
+    height: 30px;
 }
 
 .template-form select {
@@ -41,21 +42,28 @@
 
 .template-form button {
     grid-column: span 2;
-    padding: 5px;
-    margin-left: 50px;
-    background-color: #ff9900; /* Orange background */
-    color: #ffffff; /* White text */
+    padding: 10px 20px;
+    background-color: #007bff; 
+    color: #ffffff; 
     border: none;
+    border-radius: 8px; 
     cursor: pointer;
     margin-top: 10px;
-    font-size: 12px;
-    width: 50%;
+    font-size: 16px; 
+    width: 60%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+    box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3); 
+}
 
+.template-form button:hover {
+    background-color: #0056b3; 
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.4); 
 }
 
 .template-form button:disabled {
-    background-color: #cccccc;
-
+    background-color: #cccccc; 
+    cursor: not-allowed; 
+    box-shadow: none; 
 }
 
 .constructionSite-data {

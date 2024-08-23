@@ -1,7 +1,7 @@
+/* General Navbar Styles */
 .navbar {
   background: var(--white-color);
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 0.5rem 1rem;
 }
 
 .navbar-brand {
@@ -10,6 +10,8 @@
   display: flex;
   align-items: center;
   text-decoration: none;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .logo-image {
@@ -24,10 +26,13 @@
 }
 
 .logo-slogan {
-  color:var(--primary-color);
+  color: var(--primary-color);
   font-size: 24px;
   font-weight: var(--font-weight-bold);
-  /* text-transform: uppercase; */
+}
+
+.logo-icon {
+  color: #007bff; /* Customize your color */
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
@@ -35,10 +40,11 @@
   margin-left: 0;
   padding: 20px;
   transition: color 0.3s, background-color 0.3s;
-}
-
-.navbar-expand-lg .navbar-nav {
-  width: 100%;
+  color: var(--p-bg-color);
+  font-size: var(--menu-font-size);
+  font-weight: var(--font-weight-medium);
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .navbar-nav {
@@ -46,14 +52,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-}
-
-.navbar-nav .nav-link {
-  color: var(--p-bg-color);
-  font-size: var(--menu-font-size);
-  font-weight: var(--font-weight-medium);
-  padding-top: 15px;
-  padding-bottom: 15px;
+  width: 100%;
 }
 
 .navbar-nav .nav-link.active,
@@ -62,9 +61,60 @@
   background-color: var(--hover-bg-color);
 }
 
+/* Burger Menu */
+.navbar-toggler {
+  display: none; /* Hide the burger menu by default */
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  width: 30px;
+  height: 35px;
+}
+
+/* Show the burger menu on smaller screens */
+@media (max-width: 768px) {
+  .navbar-toggler {
+    display: block;
+    z-index: 9999 !important;
+  }
+
+  .navbar-brand {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .navbar-collapse {
+    text-align: center;
+    width: 100%;
+  }
+
+  .create_btn {
+    margin-bottom: 0.5rem;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .navbar-collapse.collapsing,
+  .navbar-collapse.show {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding: 10px;
+  }
+}
+
+/* Dropdown Menu */
 .dropdown-menu {
   background: var(--white-color);
-  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
   border: 0;
   padding: 0;
   margin-top: 20px;
@@ -80,10 +130,6 @@
   transition: color 0.3s, background-color 0.3s;
 }
 
-.dropdown-menu li:last-child .dropdown-item {
-  border-bottom: 0;
-}
-
 .dropdown-item.active, 
 .dropdown-item:active,
 .dropdown-item:focus, 
@@ -92,78 +138,7 @@
   color: var(--custom-btn-bg-color);
 }
 
-.dropdown-toggle::after {
-  content: "\f282";
-  font-family: bootstrap-icons !important;
-  font-size: var(--copyright-font-size);
-  position: relative;
-  left: 2px;
-}
-
-@media screen and (min-width: 992px) {
-  .dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0;
-  }
-}
-
-.navbar-toggler {
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  width: 30px;
-  height: 35px;
-}
-
-.navbar-toggler:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-  background: transparent;
-}
-
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before,
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
-  top: 0;
-}
-
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
-  transform: rotate(45deg);
-}
-
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
-  transform: rotate(-45deg);
-}
-
-.navbar-toggler .navbar-toggler-icon {
-  background: var(--dark-color);
-  width: 30px;
-  height: 2px;
-}
-
-.navbar-toggler .navbar-toggler-icon:before,
-.navbar-toggler .navbar-toggler-icon:after {
-  position: absolute;
-  right: 0;
-  left: 0;
-  background: var(--dark-color);
-  width: 30px;
-  height: 2px;
-}
-
-.navbar-toggler .navbar-toggler-icon::before {
-  top: -8px;
-}
-
-.navbar-toggler .navbar-toggler-icon::after {
-  top: 8px;
-}
-
-/*---------------------------------------
-  CUSTOM ОBJECT BUTTON               
------------------------------------------*/
+/* Custom Buttons */
 .create_btn {
   background: linear-gradient(135deg, #007bff, #0056b3); 
   color: white;
@@ -181,9 +156,7 @@
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
-/*---------------------------------------
-  CUSTOM BUTTON               
------------------------------------------*/
+
 .custom-btn {
   background: var(--custom-btn-bg-color);
   border: 2px solid transparent;
@@ -200,27 +173,7 @@
   color: var(--hover-bg-color);
 }
 
-/*---------------------------------------
-  RESPONSIVE STYLES               
------------------------------------------*/
-@media screen and (max-width: 991px) {
-  .navbar-collapse {
-    padding-bottom: 20px;
-  }
-
-  .navbar-expand-lg .navbar-nav .nav-link {
-    padding: 10px;
-  }
-
-  .navbar-expand-lg .navbar-nav .nav-link.custom-btn {
-    margin-top: 10px;
-  }
-}
-
-
-/*---------------------------------------
-  RESPONSIVE STYLES               
------------------------------------------*/
+/* Responsive Styles */
 @media screen and (min-width: 1025px) {
   .job-featured-section .job-thumb {
     max-width: 1120px;
@@ -276,10 +229,6 @@
 
   .navbar-collapse {
     padding-bottom: 20px;
-  }
-
-  .navbar-expand-lg .navbar-nav .nav-link {
-    padding: 10px;
   }
 
   .navbar-expand-lg .navbar-nav .nav-link.custom-btn {
@@ -398,3 +347,65 @@
 }
 
 
+.navbar-collapse {
+  z-index: 99999999 !important; 
+  position: absolute; 
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--white-color);
+  background-color: aliceblue; 
+}
+
+
+.navbar-nav {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  width: 100%;
+}
+
+
+.navbar-collapse.show {
+  z-index: 1050; 
+  position: absolute; 
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--white-color); 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+
+.navbar-toggler {
+  z-index: 1100; 
+  position: relative;
+}
+
+
+.navbar-collapse.collapsing,
+.navbar-collapse.show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .navbar-collapse {
+    z-index: 1050;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--white-color);
+  }
+
+  .navbar-collapse.show {
+    z-index: 1050;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}
