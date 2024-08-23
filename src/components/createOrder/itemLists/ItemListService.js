@@ -95,12 +95,14 @@ const ItemListService = ({
         }));
     };
 
+    const [haveNewNote, setHaveNewNote] = useState(false);
     const handleNoteChangeSecondNote = (index, note) => {
         console.log(note);
         setAdminNotes(prevNotes => ({
             ...prevNotes,
             [index]: note
         }))
+        setHaveNewNote(true);
         closeNoteModal();
     }
 
@@ -224,7 +226,7 @@ const ItemListService = ({
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката: {orderStatus} </p>
                         <p>Тип материал: {materialType}</p>
-                        <p>URL на спецификацията: {specificationFileUrl && <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
+                        <p>Обща спецификация: {specificationFileUrl && <a href={specificationFileUrl} target="_blank" rel="noopener noreferrer">
                             изтегли спецификация
                         </a>}
                         </p>
@@ -331,6 +333,9 @@ const ItemListService = ({
                                         )}
                                     </td>
                                 )}
+                                {userRole && item.adminNote === null &&
+                                    <td></td>
+                                }
                                 {userRole && item.adminNote !== null && orderNumber !== undefined &&(
                                     <td>
                                         <button className="note-button"
@@ -350,7 +355,7 @@ const ItemListService = ({
                                                         id="save-button"
                                                         type="submit"
                                                         onClick={() => handleNoteChangeSecondNote(index,currentNote + "##" + newNote)}
-                                                    >Save</button>
+                                                    >Запази</button>
                                                     {/*<input*/}
                                                     {/*    type="text"*/}
                                                     {/*    value={adminNotes[index] !== undefined ? adminNotes[index] : ''}*/}
@@ -375,12 +380,19 @@ const ItemListService = ({
                         </tbody>
                     </table>
                 )}
-                {orderNumber !== undefined &&
+                {adminRole && orderNumber !== undefined &&
                     <button
                         id="save-button"
                         type="submit"
                         onClick={() => updateOrder()}
-                    >Save</button>
+                    >Изпрати</button>
+                }
+                {userRole && orderNumber !== undefined && haveNewNote &&
+                    <button
+                        id="save-button"
+                        type="submit"
+                        onClick={() => updateOrder()}
+                    >Изпрати</button>
                 }
             </div>
         </div>
