@@ -55,7 +55,7 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
-    margin: 20px 0;
+    /*margin: 20px 0;*/
     font-family: Arial, sans-serif;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -130,10 +130,12 @@
 }
 
 .note-button {
-    height: 5px;
+    margin: 0;
+    padding: 0;
+    /*height: 5px;*/
     font-size: 10px;
     border: none;
     text-align: center;
-    margin-bottom: 12px;
+    background-color: white;
 }
 
