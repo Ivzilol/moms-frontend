@@ -109,10 +109,10 @@ const ItemListMetal = ({
     }
 
     const handleNoteBlur = (index) => {
-        setAdminNotes(prevNotes => ({
-            ...prevNotes,
-            [index]: `##${prevNotes[index]}`
-        }));
+        // setAdminNotes(prevNotes => ({
+        //     ...prevNotes,
+        //     [index]: `##${prevNotes[index]}`
+        // }));
     };
 
     const handleViewNote = (index) => {

@@ -110,10 +110,10 @@ const ItemListFasteners = ({
     }
 
     const handleNoteBlur = (index) => {
-        setAdminNotes(prevNotes => ({
-            ...prevNotes,
-            [index]: `##${prevNotes[index]}`
-        }));
+        // setAdminNotes(prevNotes => ({
+        //     ...prevNotes,
+        //     [index]: `##${prevNotes[index]}`
+        // }));
     };
 
     const handleViewNote = (index) => {
@@ -253,7 +253,7 @@ const ItemListFasteners = ({
                             <th>Стандарт</th>
                             <th>Клас</th>
                             <th>Количество</th>
-                            <th>Описани</th>
+                            <th>Описание</th>
                             {orderNumber !== undefined &&
                                 <th>Спецификация</th>
                             }
