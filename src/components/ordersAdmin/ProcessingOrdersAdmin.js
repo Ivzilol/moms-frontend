@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useUser} from "../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
 import ajax from "../../service/FetchService";
@@ -87,6 +87,7 @@ const ProcessingOrdersAdmin = () => {
                              className="order-summary"
                              onClick={() => handleOrderClick(parseFloat(order.id))}>
                             <p>Обект: {order.constructionSite.name}</p>
+                            <p>Автор на поръчката: {order.fullName}</p>
                             <p>Статус: {order.orderStatus}</p>
                             <p>Тип материал: {order.materialType}</p>
                             <p>Дата на доставка: {new Date(order.deliveryDate).toLocaleDateString()}</p>

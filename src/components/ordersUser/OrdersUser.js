@@ -85,6 +85,7 @@ const OrdersUser = () => {
                              className="order-summary"
                              onClick={() => handleOrderClick(order.orderNumber)}>
                             <p>Обект: {order.constructionSite.name}</p>
+                            <p>Автор на поръчката: {order.fullName}</p>
                             <p>Статус: {order.orderStatus}</p>
                             <p>Тип материал: {order.materialType}</p>
                             <p>Дата на доставка: {new Date(order.deliveryDate).toLocaleDateString()}</p>
