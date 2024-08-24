@@ -44,7 +44,7 @@ const TransportTemplate = ({ onSave }) => {
     return (
         <div className="template-form">
             <label>
-                Търси:
+                Търси материал:
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>

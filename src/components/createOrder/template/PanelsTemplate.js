@@ -223,7 +223,7 @@ const PanelsTemplate = ({ onSave, category }) => {
     return (
         <div className="template-form">
             <label>
-                Търси:
+                Търси материал:
                 <input
                     type="text"
                     value={name}
