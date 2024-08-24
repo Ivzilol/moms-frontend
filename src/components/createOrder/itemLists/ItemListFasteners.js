@@ -240,7 +240,7 @@ const ItemListFasteners = ({
             )}
             <div className="item-list">
                 {items.length === 0 ? (
-                    <p>Няма добавени материали.</p>
+                    <p>За да можете да изпратите заявка моля добавете поне един материал.</p>
                 ) : (
                     <table>
                         <thead>

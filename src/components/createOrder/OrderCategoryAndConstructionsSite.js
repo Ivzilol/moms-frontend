@@ -494,6 +494,7 @@ const OrderCategoryAndConstructionsSite = () => {
             <Header/>
             <div className="dropdown-container">
                 <div className="dropdown">
+                    <p className="dropdown-container-required-field">*задължително поле</p>
                     <label htmlFor="category">Категория:</label>
                     <select
                         id="category"
@@ -515,6 +516,7 @@ const OrderCategoryAndConstructionsSite = () => {
                     </select>
                 </div>
                 <div className="dropdown">
+                    <p className="dropdown-container-required-field">*задължително поле</p>
                     <label htmlFor="constructionSite">Строителен Обект:</label>
                     <select id="constructionSite"
                             value={selectedSite}
@@ -531,6 +533,7 @@ const OrderCategoryAndConstructionsSite = () => {
                     </select>
                 </div>
                 <div className="dropdown">
+                    <p className="dropdown-container-required-field">*задължително поле</p>
                     <label htmlFor="timeOfDelivery">Дата на доставка</label>
                     <input
                         className="dropdown-container-date"
@@ -548,6 +551,7 @@ const OrderCategoryAndConstructionsSite = () => {
                     </label>
                 </div>
                 <div className="dropdown">
+                    <p className="dropdown-container-required-field">*задължително поле</p>
                     <label>
                         Описание:
                         <textarea value={orderDescription}
