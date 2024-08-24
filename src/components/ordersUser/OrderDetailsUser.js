@@ -49,6 +49,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -67,6 +68,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -85,6 +87,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -103,6 +106,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -121,6 +125,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -139,6 +144,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -157,6 +163,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -175,6 +182,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -193,6 +201,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}
@@ -211,6 +220,7 @@ const OrderDetailsUser = () => {
                         specificationFileUrl={order.specificationFileUrl}
                         orderNumber={order.orderNumber}
                         constructionName={order.constructionSite.name}
+                        authorName={order.fullName}
                     />
                 </div>
             )}

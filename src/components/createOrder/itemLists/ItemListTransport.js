@@ -14,7 +14,8 @@ const parseAdminNote = (note) => {
 const ItemListTransport = ({
                                orderId, items, onEdit, onDelete,
                                orderDescription, orderDate, deliveryDate, orderStatus,
-                               materialType, specificationFileUrl, orderNumber, constructionName
+                               materialType, specificationFileUrl, orderNumber, constructionName,
+                               authorName
                            }) => {
     const user = useUser([]);
     const [roles, setRoles] = useState(getRolesFromJWT());
@@ -194,6 +195,7 @@ const ItemListTransport = ({
                     <Header/>
                     <div className="order-info">
                         <p>Обект: {constructionName}</p>
+                        <p>Автор на поръчката: {authorName}</p>
                         <p>Описание на поръчката: {orderDescription}</p>
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката:
@@ -220,6 +222,7 @@ const ItemListTransport = ({
                     <Header/>
                     <div className="order-info">
                         <p>Обект: {constructionName}</p>
+                        <p>Автор на поръчката: {authorName}</p>
                         <p>Описание на поръчката: {orderDescription}</p>
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката: {orderStatus} </p>
