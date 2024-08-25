@@ -196,14 +196,38 @@ const FastenersTemplate = ({onSave, category}) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.type}</p>
-                            <p>{result.diameter}</p>
-                            <p>{result.length}</p>
-                            <p>{result.lengthUnit}</p>
-                            <p>{result.standard}</p>
-                            <p>{result.clazz}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Тип:</strong>
+                                <p>{result.type}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Диаметър:</strong>
+                                <p>{result.diameter}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Дължина:</strong>
+                                <p>{result.length}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Мерна единица:</strong>
+                                <p>{result.lengthUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Стандарт:</strong>
+                                <p>{result.standard}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Клас:</strong>
+                                <p>{result.clazz}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>
