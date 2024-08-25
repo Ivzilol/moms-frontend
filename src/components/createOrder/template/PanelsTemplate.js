@@ -252,20 +252,58 @@ const PanelsTemplate = ({ onSave, category }) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.type}</p>
-                            <p>{result.color}</p>
-                            <p>{result.length}</p>
-                            <p>{result.lengthUnit}</p>
-                            <p>{result.width}</p>
-                            <p>{result.widthUnit}</p>
-                            <p>{result.totalThickness}</p>
-                            <p>{result.totalThicknessUnit}</p>
-                            <p>{result.frontSheetThickness}</p>
-                            <p>{result.frontSheetThicknessUnit}</p>
-                            <p>{result.backSheetThickness}</p>
-                            <p>{result.backSheetThicknessUnit}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Тип:</strong>
+                                <p>{result.type}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Цвят:</strong>
+                                <p>{result.color}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Дължина:</strong>
+                                <p>{result.length}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.lengthUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Ширина:</strong>
+                                <p>{result.width}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.widthUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Обща д.:</strong>
+                                <p>{result.totalThickness}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.totalThicknessUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Д. пр. лист:</strong>
+                                <p>{result.frontSheetThickness}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.frontSheetThicknessUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Д. з. лист:</strong>
+                                <p>{result.backSheetThickness}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.backSheetThicknessUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>

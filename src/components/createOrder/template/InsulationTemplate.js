@@ -173,11 +173,26 @@ const InsulationTemplate = ({ onSave, category }) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.type}</p>
-                            <p>{result.thickness}</p>
-                            <p>{result.thicknessUnit}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Тип:</strong>
+                                <p>{result.type}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Дебелина:</strong>
+                                <p>{result.thickness}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед.:</strong>
+                                <p>{result.thicknessUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>

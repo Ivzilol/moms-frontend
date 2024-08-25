@@ -191,12 +191,30 @@ const GalvanizedSheetTemplate = ({ onSave, category }) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.type}</p>
-                            <p>{result.maxLength}</p>
-                            <p>{result.maxLengthUnit}</p>
-                            <p>{result.numberOfSheets}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Тип:</strong>
+                                <p>{result.type}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Максимална дължина:</strong>
+                                <p>{result.maxLength}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед.</strong>
+                                <p>{result.maxLengthUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Брой листове:</strong>
+                                <p>{result.numberOfSheets}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>

@@ -162,11 +162,26 @@ const MetalTemplate = ({ onSave, category }) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.totalWeight}</p>
-                            <p>{result.totalWeightUnit}</p>
-                            <p>{result.kind}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Тегло:</strong>
+                                <p>{result.totalWeight}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.totalWeightUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Вид:</strong>
+                                <p>{result.kind}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>

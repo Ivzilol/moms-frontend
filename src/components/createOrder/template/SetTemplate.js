@@ -185,11 +185,26 @@ const SetTemplate = ({onSave, category}) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.color}</p>
-                            <p>{result.maxLength}</p>
-                            <p>{result.maxLengthUnit}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Цвят:</strong>
+                                <p>{result.color}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>M. дължина:</strong>
+                                <p>{result.maxLength}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.maxLengthUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>

@@ -213,7 +213,7 @@ const FastenersTemplate = ({onSave, category}) => {
                                 <p>{result.length}</p>
                             </div>
                             <div className="search-result-item">
-                                <strong>Мерна единица:</strong>
+                                <strong>м. ед. :</strong>
                                 <p>{result.lengthUnit}</p>
                             </div>
                             <div className="search-result-item">

@@ -176,10 +176,22 @@ const RebarTemplate = ( { onSave, category }) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.maxLength}</p>
-                            <p>{result.maxLengthUnit}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Максимална дължина:</strong>
+                                <p>{result.maxLength}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Единица за дължина:</strong>
+                                <p>{result.maxLengthUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>
