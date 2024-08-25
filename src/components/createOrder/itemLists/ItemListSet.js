@@ -197,6 +197,7 @@ const ItemListSet = ({
                         <p>Обект: {constructionName}</p>
                         <p>Автор на поръчката: {authorName}</p>
                         <p>Описание на поръчката: {orderDescription}</p>
+                        <p>Дата на създаване: {new Date(orderDate).toLocaleDateString()}</p>
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката:
                             <select value={currentOrderStatus} onChange={handleStatusChange}>
@@ -224,6 +225,7 @@ const ItemListSet = ({
                         <p>Обект: {constructionName}</p>
                         <p>Автор на поръчката: {authorName}</p>
                         <p>Описание на поръчката: {orderDescription}</p>
+                        <p>Дата на създаване: {new Date(orderDate).toLocaleDateString()}</p>
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката: {orderStatus} </p>
                         <p>Тип материал: {materialType}</p>
