@@ -19,23 +19,13 @@ import EditConstructionSite from "./components/createConstructionSite/EditConstr
 import NotFoundPage from './pages/404/NotFoundPage'
 import ActiveUserOrders from "./components/ordersUser/ActiveUserOrders";
 import ActiveAdminOrders from "./components/ordersAdmin/ActiveAdminOrders";
+import useRolesFromJWT from "./components/customHooks/useRolesFromJWT";
 
 
 function App() {
     const user = useUser([]);
-    const [roles, setRoles] = useState(getRolesFromJWT());
+    const roles = useRolesFromJWT(user);
 
-    useEffect(() => {
-        setRoles(getRolesFromJWT())
-    }, [user.jwt])
-
-    function getRolesFromJWT() {
-        if (user.jwt) {
-            const decodeJwt = jwtDecode(user.jwt)
-            return decodeJwt.roles.split(",")
-        }
-        return [];
-    }
 
     const hasValidRole = ['SUPERADMIN', 'ADMIN', 'USER'].some(role => roles.includes(role));
     const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
