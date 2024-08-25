@@ -15,6 +15,8 @@ import {
 import {useUser} from "../../userProvider/UserProvider";
 import {jwtDecode} from "jwt-decode";
 import {useNavigate} from "react-router-dom";
+import OrdersUser from "../ordersUser/OrdersUser";
+import ActiveUserOrders from "../ordersUser/ActiveUserOrders";
 
 
 const SideMenu = () => {
@@ -99,6 +101,7 @@ const SideMenu = () => {
                     )}
                 </div>
                 <div className={`tab-content ${classes.tabContent}`} id="v-pills-tabContent">
+                    <ActiveUserOrders/>
                     {/* <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                          aria-labelledby="v-pills-home-tab" tabIndex="0">Home content...
                     </div> */}
