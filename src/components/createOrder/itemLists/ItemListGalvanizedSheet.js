@@ -42,6 +42,18 @@ const ItemListGalvanizedSheet = ({
         updateRequestBody();
     }, [adminNotes, selectedItems]);
 
+    useEffect(() => {
+        const initialSelectedItems = items.reduce((selected, item, index) => {
+            if (item.materialStatus === "APPROVED") {
+                selected.push(index);
+            }
+            return selected;
+        }, []);
+
+        setSelectedItems(initialSelectedItems);
+        updateRequestBody();
+    }, [items]);
+
     function getRolesFromJWT() {
         if (user.jwt) {
             const decodeJwt = jwtDecode(user.jwt);
@@ -73,8 +85,18 @@ const ItemListGalvanizedSheet = ({
     const handleSelectItem = (index) => {
         if (selectedItems.includes(index)) {
             setSelectedItems(selectedItems.filter(i => i !== index));
+            setRequestBody(prevRequestBody =>
+                prevRequestBody.map((item, idx) =>
+                    idx === index ? { ...item, materialStatus: 'NOT_APPROVED' } : item
+                )
+            );
         } else {
             setSelectedItems([...selectedItems, index]);
+            setRequestBody(prevRequestBody =>
+                prevRequestBody.map((item, idx) =>
+                    idx === index ? { ...item, materialStatus: 'APPROVED' } : item
+                )
+            );
         }
     };
 
@@ -100,7 +122,6 @@ const ItemListGalvanizedSheet = ({
 
     const [haveNewNote, setHaveNewNote] = useState(false);
     const handleNoteChangeSecondNote = (index, note) => {
-        console.log(note);
         setAdminNotes(prevNotes => ({
             ...prevNotes,
             [index]: note
@@ -131,6 +152,7 @@ const ItemListGalvanizedSheet = ({
     function updateRequestBody() {
         const body = items.map((item, index) => ({
             ...item,
+            materialStatus: selectedItems.includes(index) ? 'APPROVED' : 'NOT_APPROVED',
             adminNote: adminNotes[index] ? `##${adminNotes[index]}` : ''
         }));
         setRequestBody(body);
