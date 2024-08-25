@@ -37,7 +37,23 @@ const FastenersTemplate = ({onSave, category}) => {
     const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleFileChange = (e) => {
-        setSpecification(e.target.files[0]);
+        const file = e.target.files[0];
+        const maxSize = 50 * 1024 * 1024;
+
+        if (file && file.size > maxSize) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                specification: 'Файлът е твърде голям. Максималният размер е 50MB.'
+            }));
+            setSpecification(null);
+        } else {
+            setErrors(prevErrors => {
+                const newErrors = {...prevErrors};
+                delete newErrors.specification;
+                return newErrors;
+            });
+            setSpecification(file);
+        }
     };
 
     const validate = () => {
@@ -180,14 +196,38 @@ const FastenersTemplate = ({onSave, category}) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.type}</p>
-                            <p>{result.diameter}</p>
-                            <p>{result.length}</p>
-                            <p>{result.lengthUnit}</p>
-                            <p>{result.standard}</p>
-                            <p>{result.clazz}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Тип:</strong>
+                                <p>{result.type}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Диаметър:</strong>
+                                <p>{result.diameter}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Дължина:</strong>
+                                <p>{result.length}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.lengthUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Стандарт:</strong>
+                                <p>{result.standard}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Клас:</strong>
+                                <p>{result.clazz}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>
@@ -231,7 +271,7 @@ const FastenersTemplate = ({onSave, category}) => {
                 <label>
                     Количество:
                     <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
-                    {/*{errors.quantity && <span className="error">{errors.quantity}</span>}*/}
+                    {errors.quantity && <span className="error">{errors.quantity}</span>}
                 </label>
             }
             <label>
@@ -241,6 +281,7 @@ const FastenersTemplate = ({onSave, category}) => {
             <label>
                 Спецификация:
                 <input type="file" onChange={handleFileChange}/>
+                {errors.specification && <span className="error">{errors.specification}</span>}
             </label>
             {userRole &&
                 <label>

@@ -9,9 +9,26 @@ const ServiceTemplate = ({ onSave, category }) => {
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [response, setResponse] = useState([]);
+    const [errors, setErrors] = useState({});
 
     const handleFileChange = (e) => {
-        setSpecification(e.target.files[0]);
+        const file = e.target.files[0];
+        const maxSize = 50 * 1024 * 1024;
+
+        if (file && file.size > maxSize) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                specification: 'Файлът е твърде голям. Максималният размер е 50MB.'
+            }));
+            setSpecification(null);
+        } else {
+            setErrors(prevErrors => {
+                const newErrors = {...prevErrors};
+                delete newErrors.specification;
+                return newErrors;
+            });
+            setSpecification(file);
+        }
     };
 
 
@@ -76,7 +93,14 @@ const ServiceTemplate = ({ onSave, category }) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li key={index} onClick={() => handleSelectResult(result)}>
-                            {result.name}
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>
@@ -92,6 +116,7 @@ const ServiceTemplate = ({ onSave, category }) => {
             <label>
                 Спецификация:
                 <input type="file" onChange={handleFileChange} />
+                {errors.specification && <span className="error">{errors.specification}</span>}
             </label>
             <label>
                 <button onClick={handleSave}>Запази</button>

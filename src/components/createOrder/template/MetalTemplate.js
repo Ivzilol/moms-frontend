@@ -31,7 +31,23 @@ const MetalTemplate = ({ onSave, category }) => {
     const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleFileChange = (e) => {
-        setSpecification(e.target.files[0]);
+        const file = e.target.files[0];
+        const maxSize = 50 * 1024 * 1024;
+
+        if (file && file.size > maxSize) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                specification: 'Файлът е твърде голям. Максималният размер е 50MB.'
+            }));
+            setSpecification(null);
+        } else {
+            setErrors(prevErrors => {
+                const newErrors = {...prevErrors};
+                delete newErrors.specification;
+                return newErrors;
+            });
+            setSpecification(file);
+        }
     };
 
     const validate = () => {
@@ -146,11 +162,26 @@ const MetalTemplate = ({ onSave, category }) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.totalWeight}</p>
-                            <p>{result.totalWeightUnit}</p>
-                            <p>{result.kind}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Тегло:</strong>
+                                <p>{result.totalWeight}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.totalWeightUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Вид:</strong>
+                                <p>{result.kind}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>
@@ -182,6 +213,7 @@ const MetalTemplate = ({ onSave, category }) => {
             <label>
                 Спецификация:
                 <input type="file" onChange={handleFileChange} />
+                {errors.specification && <span className="error">{errors.specification}</span>}
             </label>
             {userRole &&
                 <label>

@@ -46,6 +46,7 @@ const OrderCategoryAndConstructionsSite = () => {
     const [currentIndex, setCurrentIndex] = useState(null);
     const [specification, setSpecification] = useState(null);
     const [orderDescription, setOrderDescription] = useState('');
+    const [errors, setErrors] = useState({});
     const now = new Date().toISOString().slice(0, 16);
 
     useEffect(() => {
@@ -477,7 +478,23 @@ const OrderCategoryAndConstructionsSite = () => {
     }
 
     const handleFileChange = (e) => {
-        setSpecification(e.target.files[0]);
+        const file = e.target.files[0];
+        const maxSize = 50 * 1024 * 1024;
+
+        if (file && file.size > maxSize) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                specification: 'Файлът е твърде голям. Максималният размер е 50MB.'
+            }));
+            setSpecification(null);
+        } else {
+            setErrors(prevErrors => {
+                const newErrors = {...prevErrors};
+                delete newErrors.specification;
+                return newErrors;
+            });
+            setSpecification(file);
+        }
     };
 
     const [constructions, setConstructions] = useState([]);
@@ -494,6 +511,7 @@ const OrderCategoryAndConstructionsSite = () => {
             <Header/>
             <div className="dropdown-container">
                 <div className="dropdown">
+                    <p className="dropdown-container-required-field">*задължително поле</p>
                     <label htmlFor="category">Категория:</label>
                     <select
                         id="category"
@@ -515,6 +533,7 @@ const OrderCategoryAndConstructionsSite = () => {
                     </select>
                 </div>
                 <div className="dropdown">
+                    <p className="dropdown-container-required-field">*задължително поле</p>
                     <label htmlFor="constructionSite">Строителен Обект:</label>
                     <select id="constructionSite"
                             value={selectedSite}
@@ -531,6 +550,7 @@ const OrderCategoryAndConstructionsSite = () => {
                     </select>
                 </div>
                 <div className="dropdown">
+                    <p className="dropdown-container-required-field">*задължително поле</p>
                     <label htmlFor="timeOfDelivery">Дата на доставка</label>
                     <input
                         className="dropdown-container-date"
@@ -545,9 +565,11 @@ const OrderCategoryAndConstructionsSite = () => {
                     <label>
                         Спецификация:
                         <input type="file" onChange={handleFileChange}/>
+                        {errors.specification && <span className="error">{errors.specification}</span>}
                     </label>
                 </div>
                 <div className="dropdown">
+                    <p className="dropdown-container-required-field">*задължително поле</p>
                     <label>
                         Описание:
                         <textarea value={orderDescription}

@@ -24,6 +24,7 @@ const OrderDetailsUser = () => {
     useEffect(() => {
         ajax(`${baseURL}user/order/query/get-order-by-orderNumber/${number}`, "GET", user.jwt)
             .then((response) => {
+                console.log(response)
                 setOrder(response);
             })
 
@@ -42,6 +43,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -61,6 +63,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -80,6 +83,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -99,6 +103,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -118,6 +123,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -137,6 +143,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -156,6 +163,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -175,6 +183,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -194,6 +203,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}
@@ -213,6 +223,7 @@ const OrderDetailsUser = () => {
                         onDelete={() => {
                         }}
                         orderDescription={order.orderDescription}
+                        orderDate={order.orderDate}
                         deliveryDate={order.deliveryDate}
                         orderStatus={order.orderStatus}
                         materialType={order.materialType}

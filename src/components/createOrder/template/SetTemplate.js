@@ -35,7 +35,23 @@ const SetTemplate = ({onSave, category}) => {
     const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleFileChange = (e) => {
-        setSpecification(e.target.files[0]);
+        const file = e.target.files[0];
+        const maxSize = 50 * 1024 * 1024;
+
+        if (file && file.size > maxSize) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                specification: 'Файлът е твърде голям. Максималният размер е 50MB.'
+            }));
+            setSpecification(null);
+        } else {
+            setErrors(prevErrors => {
+                const newErrors = {...prevErrors};
+                delete newErrors.specification;
+                return newErrors;
+            });
+            setSpecification(file);
+        }
     };
 
     const validate = () => {
@@ -169,11 +185,26 @@ const SetTemplate = ({onSave, category}) => {
                 <ul className="search-results">
                     {response.map((result, index) => (
                         <li className="search-results-row" key={index} onClick={() => handleSelectResult(result)}>
-                            <p>{result.name}</p>
-                            <p>{result.color}</p>
-                            <p>{result.maxLength}</p>
-                            <p>{result.maxLengthUnit}</p>
-                            <p>{result.description}</p>
+                            <div className="search-result-item">
+                                <strong>Име:</strong>
+                                <p>{result.name}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Цвят:</strong>
+                                <p>{result.color}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>M. дължина:</strong>
+                                <p>{result.maxLength}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>м. ед. :</strong>
+                                <p>{result.maxLengthUnit}</p>
+                            </div>
+                            <div className="search-result-item">
+                                <strong>Описание:</strong>
+                                <p>{result.description}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>
@@ -220,6 +251,7 @@ const SetTemplate = ({onSave, category}) => {
             <label>
                 Спецификация:
                 <input type="file" onChange={handleFileChange}/>
+                {errors.specification && <span className="error">{errors.specification}</span>}
             </label>
             {userRole &&
                 <label>

@@ -199,6 +199,7 @@ const ItemListGalvanizedSheet = ({
                     <div className="order-info">
                         <p>Обект: {constructionName}</p>
                         <p>Автор на поръчката: {authorName}</p>
+                        <p>Дата на създаване: {new Date(orderDate).toLocaleDateString()}</p>
                         <p>Описание на поръчката: {orderDescription}</p>
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката:
@@ -227,6 +228,7 @@ const ItemListGalvanizedSheet = ({
                         <p>Обект: {constructionName}</p>
                         <p>Автор на поръчката: {authorName}</p>
                         <p>Описание на поръчката: {orderDescription}</p>
+                        <p>Дата на създаване: {new Date(orderDate).toLocaleDateString()}</p>
                         <p>Дата на доставка: {new Date(deliveryDate).toLocaleDateString()}</p>
                         <p>Статус на поръчката: {orderStatus} </p>
                         <p>Тип материал: {materialType}</p>
@@ -239,7 +241,7 @@ const ItemListGalvanizedSheet = ({
             )}
             <div className="item-list">
                 {items.length === 0 ? (
-                    <p>Няма добавени елементи.</p>
+                    <p>За да можете да изпратите заявка моля добавете поне един материал.</p>
                 ) : (
                     <table>
                         <thead>
