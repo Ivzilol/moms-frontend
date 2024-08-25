@@ -17,6 +17,7 @@ import {jwtDecode} from "jwt-decode";
 import {useNavigate} from "react-router-dom";
 import OrdersUser from "../ordersUser/OrdersUser";
 import ActiveUserOrders from "../ordersUser/ActiveUserOrders";
+import ActiveAdminOrders from "../ordersAdmin/ActiveAdminOrders";
 
 
 const SideMenu = () => {
@@ -44,7 +45,7 @@ const SideMenu = () => {
 
     const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
     const userRole = roles.length === 1 && roles.includes('USER');
-
+    const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
     const navigateToOrder = () => {
         if (hasAdminSuperadminRole) {
             navigate('/orders-admin')
@@ -101,7 +102,8 @@ const SideMenu = () => {
                     )}
                 </div>
                 <div className={`tab-content ${classes.tabContent}`} id="v-pills-tabContent">
-                    <ActiveUserOrders/>
+                    {userRole && <ActiveUserOrders/>}
+                    {adminRole && <ActiveAdminOrders/>}
                     {/* <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                          aria-labelledby="v-pills-home-tab" tabIndex="0">Home content...
                     </div> */}

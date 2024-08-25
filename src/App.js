@@ -18,6 +18,7 @@ import CreateInventory from "./components/inventory/CreateInventory";
 import EditConstructionSite from "./components/createConstructionSite/EditConstructionSite";
 import NotFoundPage from './pages/404/NotFoundPage'
 import ActiveUserOrders from "./components/ordersUser/ActiveUserOrders";
+import ActiveAdminOrders from "./components/ordersAdmin/ActiveAdminOrders";
 
 
 function App() {
@@ -147,6 +148,16 @@ function App() {
                 userRole ?
                     <PrivateRoute>
                         <ActiveUserOrders/>
+                    </PrivateRoute>
+                    :
+                    <PrivateRoute>
+                        <HomePage/>
+                    </PrivateRoute>
+            }/>
+            <Route element={
+                adminRole ?
+                    <PrivateRoute>
+                        <ActiveAdminOrders/>
                     </PrivateRoute>
                     :
                     <PrivateRoute>
