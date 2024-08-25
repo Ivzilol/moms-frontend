@@ -7,10 +7,10 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     background-color: #ffffff;
-    /* margin-top: 100px; */
     justify-content: center;
     align-items: start;
     font-size: 12px;
+    position: relative;
 }
 
 .template-form label {
@@ -28,6 +28,8 @@
     height: 30px;
     border: 1px solid rgb(204, 204, 204);
     padding: 0px 0px 0px 5px;
+    position: relative;
+    z-index: 2;
 }
 
 .template-form select {
@@ -102,16 +104,16 @@
 .search-results {
     list-style-type: none;
     padding: 0;
-    margin-top: 22px;
+    margin-top: 2px;
     position: absolute;
-    top: 280px;
+    top: 100%;
     left: 0;
-    width: calc(100% - 20px);
+    width: calc(100% - 10px);
     background-color: white;
     border: 1px solid #ccc;
     max-height: 200px;
     overflow-y: auto;
-    z-index: 1000;
+    z-index: 1;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
@@ -122,4 +124,5 @@
     gap: 20px;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
+    padding: 5px;
 }
