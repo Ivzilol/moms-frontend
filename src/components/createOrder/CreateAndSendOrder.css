@@ -22,48 +22,71 @@
     font-size: 16px;
 }
 
-.template-form input,
-.template-form textarea {
-    padding: 0px;
+.template-form input {
     margin-top: 2px;
-    font-size: 12px;
+    font-size: 16px;
     height: 30px;
+    border: 1px solid rgb(204, 204, 204);
+    padding: 0px 0px 0px 5px;
 }
 
 .template-form select {
-    padding: 0;
-    font-size: 12px;
-    height: 22px;
-    border: 1px solid #6c757d;
+    padding: 0px;
+    margin-top: 2px;
+    font-size: 16px;
+    height: 30px;
+    width: auto;
     background-color: #ffffff;
     color: #6c757d;
+    border: 1px solid rgb(204, 204, 204);
+}
 
+.template-form textarea {
+    padding: 0px;
+    margin-top: 2px;
+    font-size: 16px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid rgb(204, 204, 204);
+}
+
+.template-form input[type="file"] {
+    padding: 0px;
+    margin-top: 2px;
+    font-size: 16px;
+    height: 30px;
+    border: none;
+}
+
+.template-form > *:last-child{
+    align-items: center
 }
 
 .template-form button {
     grid-column: span 2;
     padding: 10px 20px;
-    background-color: #007bff; 
-    color: #ffffff; 
+    background-color: #007bff;
+    color: #ffffff;
     border: none;
-    border-radius: 8px; 
+    border-radius: 8px;
     cursor: pointer;
     margin-top: 10px;
-    font-size: 16px; 
+    font-size: 16px;
     width: 60%;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
-    box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3); 
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3);
+    align-items: center
 }
 
 .template-form button:hover {
-    background-color: #0056b3; 
-    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.4); 
+    background-color: #0056b3;
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.4);
 }
 
 .template-form button:disabled {
-    background-color: #cccccc; 
-    cursor: not-allowed; 
-    box-shadow: none; 
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .constructionSite-data {
@@ -100,8 +123,3 @@
     border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
-
-
-
-
-
