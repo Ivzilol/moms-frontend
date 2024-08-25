@@ -37,7 +37,23 @@ const FastenersTemplate = ({onSave, category}) => {
     const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));
 
     const handleFileChange = (e) => {
-        setSpecification(e.target.files[0]);
+        const file = e.target.files[0];
+        const maxSize = 50 * 1024 * 1024;
+
+        if (file && file.size > maxSize) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                specification: 'Файлът е твърде голям. Максималният размер е 50MB.'
+            }));
+            setSpecification(null);
+        } else {
+            setErrors(prevErrors => {
+                const newErrors = {...prevErrors};
+                delete newErrors.specification;
+                return newErrors;
+            });
+            setSpecification(file);
+        }
     };
 
     const validate = () => {
@@ -231,7 +247,7 @@ const FastenersTemplate = ({onSave, category}) => {
                 <label>
                     Количество:
                     <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
-                    {/*{errors.quantity && <span className="error">{errors.quantity}</span>}*/}
+                    {errors.quantity && <span className="error">{errors.quantity}</span>}
                 </label>
             }
             <label>
@@ -241,6 +257,7 @@ const FastenersTemplate = ({onSave, category}) => {
             <label>
                 Спецификация:
                 <input type="file" onChange={handleFileChange}/>
+                {errors.specification && <span className="error">{errors.specification}</span>}
             </label>
             {userRole &&
                 <label>
