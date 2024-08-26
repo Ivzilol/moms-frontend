@@ -594,7 +594,7 @@ const OrderCategoryAndConstructionsSite = () => {
                     type="submit"
                     onClick={createOrder}
                     disabled={!selectedCategory || !selectedSite || !dateOfDelivery || requestBody.length === 0}
-                >Send Order
+                >Изпрати поръчка
                 </button>
             </div>
         </>

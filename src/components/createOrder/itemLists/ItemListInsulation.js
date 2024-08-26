@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import './ItemListFasteners.css'
 import {useUser} from "../../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
 import baseURL from "../../baseURL/BaseURL";
 import Header from "../../Header/Header";
 import useRolesFromJWT from "../../customHooks/useRolesFromJWT";

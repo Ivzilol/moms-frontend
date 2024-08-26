@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import '../CreateAndSendOrder.css'
 import {useUser} from "../../../userProvider/UserProvider";
-import {jwtDecode} from "jwt-decode";
 import ajax from "../../../service/FetchService";
+import useRolesFromJWT from "../../customHooks/useRolesFromJWT";
 const MetalTemplate = ({ onSave, category }) => {
     const user = useUser();
     const [name, setName] = useState('');
@@ -12,20 +12,8 @@ const MetalTemplate = ({ onSave, category }) => {
     const [description, setDescription] = useState('');
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
-    const [roles, setRoles] = useState(getRolesFromJWT());
+    const roles = useRolesFromJWT(user);
     const [response, setResponse] = useState([]);
-
-    useEffect(() => {
-        setRoles(getRolesFromJWT())
-    }, [user.jwt])
-
-    function getRolesFromJWT() {
-        if (user.jwt) {
-            const decodeJwt = jwtDecode(user.jwt)
-            return decodeJwt.roles.split(",")
-        }
-        return [];
-    }
 
     const userRole = roles.length === 1 && roles.includes('USER');
     const adminRole = ['USER', 'ADMIN'].every(role => roles.includes(role));

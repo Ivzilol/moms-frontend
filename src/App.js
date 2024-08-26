@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import HomePage from './pages/home/HomePage';
 import LoginForm from "./components/loginForm/LoginForm";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import {useUser} from "./userProvider/UserProvider";
-import {jwtDecode} from "jwt-decode";
 import LoginPage from "./pages/login/LoginPage";
 import CreateConstructionSite from "./components/createConstructionSite/CreateConstructionSite";
 import CreateOrder from "./components/createOrder/CreateOrder";
