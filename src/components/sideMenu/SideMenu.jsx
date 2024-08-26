@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import classes from './SideMenu.module.css';
 
 import TopTabsNavUsers from '../topTabsNav/TopTabsNavUsers';
@@ -13,11 +13,7 @@ import {
 }
     from '@fortawesome/free-solid-svg-icons';
 import {useUser} from "../../userProvider/UserProvider";
-import {jwtDecode} from "jwt-decode";
 import {useNavigate} from "react-router-dom";
-import OrdersUser from "../ordersUser/OrdersUser";
-import ActiveUserOrders from "../ordersUser/ActiveUserOrders";
-import ActiveAdminOrders from "../ordersAdmin/ActiveAdminOrders";
 import useRolesFromJWT from "../customHooks/useRolesFromJWT";
 
 
