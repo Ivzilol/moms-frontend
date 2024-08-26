@@ -90,8 +90,8 @@ const SideMenu = () => {
                     )}
                 </div>
                 <div className={`tab-content ${classes.tabContent}`} id="v-pills-tabContent">
-                    {userRole && <ActiveUserOrders/>}
-                    {adminRole && <ActiveAdminOrders/>}
+                    {/*{userRole && <ActiveUserOrders/>}*/}
+                    {/*{adminRole && <ActiveAdminOrders/>}*/}
                     {/* <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                          aria-labelledby="v-pills-home-tab" tabIndex="0">Home content...
                     </div> */}
