@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import './ItemListFasteners.css'
 import {useUser} from "../../../userProvider/UserProvider";
 import {useNavigate} from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
 import baseURL from "../../baseURL/BaseURL";
 import Header from "../../Header/Header";
+import useRolesFromJWT from "../../customHooks/useRolesFromJWT";
 
 const parseAdminNote = (note) => {
     if (!note) return {dateTime: '', creator: '', message: ''};
@@ -20,7 +20,7 @@ const ItemListInsulation = ({
                             }) => {
 
     const user = useUser([]);
-    const [roles, setRoles] = useState(getRolesFromJWT());
+    const roles = useRolesFromJWT(user);
     const [selectedItems, setSelectedItems] = useState(getSelectedItemsFromStorage(orderId));
     const [currentOrderStatus, setCurrentOrderStatus] = useState(orderStatus);
     const [adminNotes, setAdminNotes] = useState({});
@@ -30,9 +30,6 @@ const ItemListInsulation = ({
     const [newNote, setNewNote] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        setRoles(getRolesFromJWT());
-    }, [user.jwt]);
 
     useEffect(() => {
         saveSelectedItemsToStorage(orderId, selectedItems);
@@ -54,13 +51,6 @@ const ItemListInsulation = ({
         updateRequestBody();
     }, [items]);
 
-    function getRolesFromJWT() {
-        if (user.jwt) {
-            const decodeJwt = jwtDecode(user.jwt);
-            return decodeJwt.roles.split(",");
-        }
-        return [];
-    }
 
     function getSelectedItemsFromStorage(orderId) {
         const storedItems = localStorage.getItem(`selectedItems_${orderId}`);
@@ -268,12 +258,11 @@ const ItemListInsulation = ({
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Дължина</th>
+                            <th>Тип</th>
+                            <th>Дебелина</th>
                             <th>м. ед.</th>
-                            <th>Тегло</th>
-                            <th>м. ед.</th>
-                            <th>Камион</th>
                             <th>Количество</th>
+                            <th>м. ед.</th>
                             <th>Описани</th>
                             {orderNumber !== undefined &&
                                 <th>Спецификация</th>
@@ -298,12 +287,11 @@ const ItemListInsulation = ({
                         {items.map((item, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{item.maxLength}</td>
-                                <td>{item.maxLengthUnit}</td>
-                                <td>{item.weight}</td>
-                                <td>{item.weightUnit}</td>
-                                <td>{item.truck}</td>
+                                <td>{item.type}</td>
+                                <td>{item.thickness}</td>
+                                <td>{item.lengthUnit}</td>
                                 <td>{item.quantity}</td>
+                                <td>{item.quantityUnit}</td>
                                 <td>{item.description}</td>
                                 {orderNumber !== undefined &&
                                     <td>

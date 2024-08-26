@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import '../CreateAndSendOrder.css'
 import ajax from "../../../service/FetchService";
 import {useUser} from "../../../userProvider/UserProvider";
-import {jwtDecode} from "jwt-decode";
+import useRolesFromJWT from "../../customHooks/useRolesFromJWT";
 
 const FastenersTemplate = ({onSave, category}) => {
     const user = useUser();
@@ -18,19 +18,7 @@ const FastenersTemplate = ({onSave, category}) => {
     const [specification, setSpecification] = useState(null);
     const [errors, setErrors] = useState({});
     const [response, setResponse] = useState([]);
-    const [roles, setRoles] = useState(getRolesFromJWT());
-
-    useEffect(() => {
-        setRoles(getRolesFromJWT())
-    }, [user.jwt])
-
-    function getRolesFromJWT() {
-        if (user.jwt) {
-            const decodeJwt = jwtDecode(user.jwt)
-            return decodeJwt.roles.split(",")
-        }
-        return [];
-    }
+    const roles = useRolesFromJWT(user);
 
 
     const userRole = roles.length === 1 && roles.includes('USER');

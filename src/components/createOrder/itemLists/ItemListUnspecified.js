@@ -1,9 +1,9 @@
 import {useUser} from "../../../userProvider/UserProvider";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
 import baseURL from "../../baseURL/BaseURL";
 import Header from "../../Header/Header";
+import useRolesFromJWT from "../../customHooks/useRolesFromJWT";
 
 
 const parseAdminNote = (note) => {
@@ -20,7 +20,7 @@ const ItemListUnspecified = ({
                              }) => {
 
     const user = useUser([]);
-    const [roles, setRoles] = useState(getRolesFromJWT());
+    const roles = useRolesFromJWT(user);
     const [selectedItems, setSelectedItems] = useState(getSelectedItemsFromStorage(orderId));
     const [currentOrderStatus, setCurrentOrderStatus] = useState(orderStatus);
     const [adminNotes, setAdminNotes] = useState({});
@@ -30,9 +30,6 @@ const ItemListUnspecified = ({
     const [newNote, setNewNote] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        setRoles(getRolesFromJWT());
-    }, [user.jwt]);
 
     useEffect(() => {
         saveSelectedItemsToStorage(orderId, selectedItems);
@@ -54,13 +51,6 @@ const ItemListUnspecified = ({
         updateRequestBody();
     }, [items]);
 
-    function getRolesFromJWT() {
-        if (user.jwt) {
-            const decodeJwt = jwtDecode(user.jwt);
-            return decodeJwt.roles.split(",");
-        }
-        return [];
-    }
 
     function getSelectedItemsFromStorage(orderId) {
         const storedItems = localStorage.getItem(`selectedItems_${orderId}`);

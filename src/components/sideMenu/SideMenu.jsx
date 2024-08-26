@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import classes from './SideMenu.module.css';
 
 import TopTabsNavUsers from '../topTabsNav/TopTabsNavUsers';
@@ -13,31 +13,15 @@ import {
 }
     from '@fortawesome/free-solid-svg-icons';
 import {useUser} from "../../userProvider/UserProvider";
-import {jwtDecode} from "jwt-decode";
 import {useNavigate} from "react-router-dom";
-import OrdersUser from "../ordersUser/OrdersUser";
-import ActiveUserOrders from "../ordersUser/ActiveUserOrders";
-import ActiveAdminOrders from "../ordersAdmin/ActiveAdminOrders";
+import useRolesFromJWT from "../customHooks/useRolesFromJWT";
 
 
 const SideMenu = () => {
 
     const user = useUser([]);
     const navigate = useNavigate()
-    const [roles, setRoles] = useState(getRolesFromJWT());
-
-
-    useEffect(() => {
-        setRoles(getRolesFromJWT())
-    }, [user.jwt])
-
-    function getRolesFromJWT() {
-        if (user.jwt) {
-            const decodeJwt = jwtDecode(user.jwt)
-            return decodeJwt.roles.split(",")
-        }
-        return [];
-    }
+    const roles = useRolesFromJWT(user);
 
     const handleNavigate = () => {
         navigate('/create-order');
@@ -102,8 +86,8 @@ const SideMenu = () => {
                     )}
                 </div>
                 <div className={`tab-content ${classes.tabContent}`} id="v-pills-tabContent">
-                    {userRole && <ActiveUserOrders/>}
-                    {adminRole && <ActiveAdminOrders/>}
+                    {/*{userRole && <ActiveUserOrders/>}*/}
+                    {/*{adminRole && <ActiveAdminOrders/>}*/}
                     {/* <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                          aria-labelledby="v-pills-home-tab" tabIndex="0">Home content...
                     </div> */}

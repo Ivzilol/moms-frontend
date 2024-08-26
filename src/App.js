@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import HomePage from './pages/home/HomePage';
 import LoginForm from "./components/loginForm/LoginForm";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import {useUser} from "./userProvider/UserProvider";
-import {jwtDecode} from "jwt-decode";
 import LoginPage from "./pages/login/LoginPage";
 import CreateConstructionSite from "./components/createConstructionSite/CreateConstructionSite";
 import CreateOrder from "./components/createOrder/CreateOrder";
@@ -19,23 +18,13 @@ import EditConstructionSite from "./components/createConstructionSite/EditConstr
 import NotFoundPage from './pages/404/NotFoundPage'
 import ActiveUserOrders from "./components/ordersUser/ActiveUserOrders";
 import ActiveAdminOrders from "./components/ordersAdmin/ActiveAdminOrders";
+import useRolesFromJWT from "./components/customHooks/useRolesFromJWT";
 
 
 function App() {
     const user = useUser([]);
-    const [roles, setRoles] = useState(getRolesFromJWT());
+    const roles = useRolesFromJWT(user);
 
-    useEffect(() => {
-        setRoles(getRolesFromJWT())
-    }, [user.jwt])
-
-    function getRolesFromJWT() {
-        if (user.jwt) {
-            const decodeJwt = jwtDecode(user.jwt)
-            return decodeJwt.roles.split(",")
-        }
-        return [];
-    }
 
     const hasValidRole = ['SUPERADMIN', 'ADMIN', 'USER'].some(role => roles.includes(role));
     const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
