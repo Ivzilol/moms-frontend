@@ -25,7 +25,7 @@ const SideMenu = () => {
 
     const user = useUser([]);
     const navigate = useNavigate()
-    const [roles, setRoles] = useRolesFromJWT(user);
+    const roles = useRolesFromJWT(user);
 
     const handleNavigate = () => {
         navigate('/create-order');
