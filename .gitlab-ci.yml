@@ -29,12 +29,15 @@ install:
 build:
   stage: build
   script:
-    - npm run build
-  artifacts:
-    paths:
-      - build/
+    - echo "Build Stage - Running tests and building project"
+    - npm run lint              # Run linting
+#    - npm test
+    - npm run build             # Build the project
   only:
     - main
+  artifacts:
+    paths:
+      - build/                  # Save the build artifacts
 
 # Deploy Stage
 deploy:
