@@ -1,9 +1,20 @@
 image: node:20.12.2
 
+
+# Define the stages of the pipeline
 stages:
+  - setup
   - install
+  - build
   - deploy
 
+# Setup Stage
+setup:
+  stage: setup
+  script:
+    - echo "Setup stage completed."
+
+# Install Stage
 install:
   stage: install
   script:
@@ -11,10 +22,28 @@ install:
   artifacts:
     paths:
       - node_modules/
+  only:
+    - main
 
+# Build Stage
+build:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - build/
+  only:
+    - main
+
+# Deploy Stage
 deploy:
   stage: deploy
   script:
-    - npm run build
+    - docker build -t $DOCKER_IMAGE_NAME .
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker tag $DOCKER_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
+    - docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
+    - ssh $SSH_USER@$SSH_HOST "docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest && docker stop $DOCKER_IMAGE_NAME || true && docker rm $DOCKER_IMAGE_NAME || true && docker run -d -p 80:80 --name $DOCKER_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest"
   only:
     - main
