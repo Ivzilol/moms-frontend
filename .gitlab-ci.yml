@@ -26,15 +26,15 @@ install:
     - main
 
 # Build Stage
-build:
-  stage: build
-  script:
-    - npm run build
-  artifacts:
-    paths:
-      - build/
-  only:
-    - main
+#build:
+#  stage: build
+#  script:
+#    - npm run build
+#  artifacts:
+#    paths:
+#      - build/
+#  only:
+#    - main
 
 # Deploy Stage
 deploy:
