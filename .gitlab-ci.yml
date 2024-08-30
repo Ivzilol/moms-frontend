@@ -40,10 +40,19 @@ build:
 deploy:
   stage: deploy
   script:
-    - docker build -t $DOCKER_IMAGE_NAME .
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker tag $DOCKER_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
-    - docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
-    - ssh $SSH_USER@$SSH_HOST "docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest && docker stop $DOCKER_IMAGE_NAME || true && docker rm $DOCKER_IMAGE_NAME || true && docker run -d -p 80:80 --name $DOCKER_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest"
+    - docker pull ivzilol/moms-frontend:latest
+    - docker run -d -p 80:80 --name moms-frontend ivzilol/moms-frontend:latest
+  environment:
+    name: production
   only:
     - main
+  before_script:
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+  after_script:
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker stop moms-frontend || true"
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker rm moms-frontend || true"
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d -p 80:80 --name moms-frontend ivzilol/moms-frontend:latest"
