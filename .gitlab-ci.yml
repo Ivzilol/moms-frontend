@@ -1,4 +1,8 @@
-image: node:20.12.2 # Use a Node.js image that includes npm
+before_script:
+  - apt-get update
+  - apt-get install -y docker.io
+
+image: node:20.12.2
 
 services:
   - docker:dind
