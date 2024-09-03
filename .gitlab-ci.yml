@@ -1,4 +1,4 @@
-image: docker:latest
+image: node:20.12.2 # Use a Node.js image that includes npm
 
 services:
   - docker:dind
@@ -59,4 +59,3 @@ deploy:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-
