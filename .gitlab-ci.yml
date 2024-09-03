@@ -1,5 +1,7 @@
-image: node:20.12.2
+image: docker:latest
 
+services:
+  - docker:dind
 
 # Define the stages of the pipeline
 stages:
@@ -30,22 +32,24 @@ build:
   stage: build
   script:
     - echo "Build Stage - Running tests and building project"
-    - npm run lint              # Run linting
-#    - npm test
-    - npm run build             # Build the project
+    - npm run lint
+    #    - npm test
+    - npm run build
   only:
     - main
   artifacts:
     paths:
-      - build/                  # Save the build artifacts
+      - build/
 
 # Deploy Stage
 deploy:
   stage: deploy
   script:
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker pull ivzilol/moms-frontend:latest
-    - docker run -d -p 80:80 --name moms-frontend ivzilol/moms-frontend:latest
+    - docker build -t moms-frontend:latest .
+    - docker save moms-frontend:latest | bzip2 | ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'bunzip2 | docker load'
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker stop moms-frontend || true"
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker rm moms-frontend || true"
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d -p 80:80 --name moms-frontend moms-frontend:latest"
   environment:
     name: production
   only:
@@ -55,7 +59,4 @@ deploy:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-  after_script:
-    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker stop moms-frontend || true"
-    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker rm moms-frontend || true"
-    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d -p 80:80 --name moms-frontend ivzilol/moms-frontend:latest"
+
