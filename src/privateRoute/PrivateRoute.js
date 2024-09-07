@@ -3,6 +3,7 @@ import {useUser} from "../userProvider/UserProvider";
 import {Navigate} from "react-router-dom";
 
 import Spinner from '../components/spinner/Spinner';
+import baseURL from "../components/baseURL/BaseURL";
 
 
 const PrivateRoute = ({ children }) => {
@@ -14,7 +15,7 @@ const PrivateRoute = ({ children }) => {
         const validateToken = async () => {
             if (user.jwt) {
                 try {
-                    const response = await fetch(`http://localhost:8080/v1/authentication/validate?token=${user.jwt}`, {
+                    const response = await fetch(`${baseURL}authentication/validate?token=${user.jwt}`, {
                         method: "GET",
                         headers: {
                             "Authorization": `Bearer ${user.jwt}`,
