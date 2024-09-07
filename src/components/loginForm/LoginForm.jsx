@@ -11,6 +11,7 @@ import Spinner from '../spinner/Spinner';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
+import baseURL from "../baseURL/BaseURL";
 
 const initialValues = {
     [LoginFormKeys.Email]: '',
@@ -40,7 +41,7 @@ const LoginForm = () => {
             "password": values.password,
         };
 
-        fetch(`http://localhost:8080/v1/user/user/query/login`, {
+        fetch(`${baseURL}user/user/query/login`, {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
