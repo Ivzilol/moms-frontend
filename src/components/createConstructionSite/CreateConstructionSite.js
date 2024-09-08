@@ -1,11 +1,10 @@
 import {useUser} from "../../userProvider/UserProvider";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import ajax from "../../service/FetchService";
 import BaseURL from "../baseURL/BaseURL";
 import {useNavigate} from "react-router-dom";
 import styles from './CreateConstructionSite.module.css';
 import Header from "../Header/Header";
-import {jwtDecode} from "jwt-decode";
 
 const CreateConstructionSite = () => {
 
@@ -29,8 +28,12 @@ const CreateConstructionSite = () => {
                 }
             })
             .catch(() => {
-                alert("Обектът вече съществува.Моля исберете друго име или номер.");
+                alert("Обектът вече съществува.Моля изберете друго име или номер.");
             });
+    }
+
+    function navigateToEditConstructionSite() {
+        navigate('/create-construction-site')
     }
 
     return (
@@ -75,6 +78,12 @@ const CreateConstructionSite = () => {
                                 onClick={createConstructionSite}
                             >
                                 Създай
+                            </button>
+                            <button
+                                className={styles.submitButton}
+                                onClick={navigateToEditConstructionSite}
+                            >
+                                Редактиране на обект
                             </button>
                         </div>
                     </div>
