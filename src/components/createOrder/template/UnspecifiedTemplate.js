@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useUser} from "../../../userProvider/UserProvider";
 import ajax from "../../../service/FetchService";
 import useRolesFromJWT from "../../customHooks/useRolesFromJWT";
+import baseURL from "../../baseURL/BaseURL";
 
 const UnspecifiedTemplate = ({ onSave, category }) => {
 
@@ -55,7 +56,7 @@ const UnspecifiedTemplate = ({ onSave, category }) => {
     };
 
     const getSearchResult = (searchTerm) => {
-        ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
+        ajax(`${baseURL}user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
             .then((response) => {
                 if (response && Array.isArray(response)) {
                     setResponse(response);
@@ -64,7 +65,6 @@ const UnspecifiedTemplate = ({ onSave, category }) => {
                 }
             })
             .catch((error) => {
-                console.error('Error fetching search results:', error);
                 setResponse([]);
             });
     };
@@ -88,7 +88,7 @@ const UnspecifiedTemplate = ({ onSave, category }) => {
             materialType: category,
             description: description
         }
-        fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
+        fetch(`${baseURL}admin/inventory/command/materials/create`, {
             method: "post",
             headers: {
                 "Authorization": `Bearer ${user.jwt}`,
