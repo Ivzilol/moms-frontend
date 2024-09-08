@@ -3,6 +3,7 @@ import '../CreateAndSendOrder.css'
 import ajax from "../../../service/FetchService";
 import {useUser} from "../../../userProvider/UserProvider";
 import useRolesFromJWT from "../../customHooks/useRolesFromJWT";
+import baseURL from "../../baseURL/BaseURL";
 
 const FastenersTemplate = ({onSave, category}) => {
     const user = useUser();
@@ -94,7 +95,7 @@ const FastenersTemplate = ({onSave, category}) => {
     };
 
     const getSearchResult = (searchTerm) => {
-        ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
+        ajax(`${baseURL}user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
             .then((response) => {
                 if (response && Array.isArray(response)) {
                     setResponse(response);
@@ -103,7 +104,6 @@ const FastenersTemplate = ({onSave, category}) => {
                 }
             })
             .catch((error) => {
-                console.error('Error fetching search results:', error);
                 setResponse([]);
             });
     };
@@ -141,7 +141,7 @@ const FastenersTemplate = ({onSave, category}) => {
             clazz: clazz,
             description: description
         }
-        fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
+        fetch(`${baseURL}admin/inventory/command/materials/create`, {
             method: "post",
             headers: {
                 "Authorization": `Bearer ${user.jwt}`,

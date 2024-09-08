@@ -1,6 +1,7 @@
 import {useUser} from "../../../userProvider/UserProvider";
 import {useEffect, useState} from "react";
 import ajax from "../../../service/FetchService";
+import baseURL from "../../baseURL/BaseURL";
 
 const ServiceTemplate = ({ onSave, category }) => {
     const user = useUser();
@@ -48,7 +49,7 @@ const ServiceTemplate = ({ onSave, category }) => {
     };
 
     const getSearchResult = (searchTerm) => {
-        ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
+        ajax(`${baseURL}user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
             .then((response) => {
                 if (response && Array.isArray(response)) {
                     setResponse(response);

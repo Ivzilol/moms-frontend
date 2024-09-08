@@ -3,6 +3,7 @@ import '../CreateAndSendOrder.css'
 import {useUser} from "../../../userProvider/UserProvider";
 import ajax from "../../../service/FetchService";
 import useRolesFromJWT from "../../customHooks/useRolesFromJWT";
+import baseURL from "../../baseURL/BaseURL";
 const InsulationTemplate = ({ onSave, category }) => {
     const user = useUser();
     const [name, setName] = useState('');
@@ -78,11 +79,10 @@ const InsulationTemplate = ({ onSave, category }) => {
 
     const getSearchResult = (searchTerm) => {
         console.log(category);
-        ajax(`http://localhost:9004/v1/user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
+        ajax(`${baseURL}user/inventory/query/materials/search?category=${category}&materialName=${searchTerm}`, "GET", user.jwt)
             .then((response) => {
                 if (response && Array.isArray(response)) {
                     setResponse(response);
-                    console.log(response)
                 } else {
                     setResponse([]);
                 }
@@ -120,7 +120,7 @@ const InsulationTemplate = ({ onSave, category }) => {
             quantity: quantity,
             description: description
         }
-        fetch(`http://localhost:9003/v1/admin/inventory/command/materials/create`, {
+        fetch(`${baseURL}admin/inventory/command/materials/create`, {
             method: "post",
             headers: {
                 "Authorization": `Bearer ${user.jwt}`,
