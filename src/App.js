@@ -123,6 +123,7 @@ function App() {
                         <HomePage/>
                     </PrivateRoute>
             }/>
+
             <Route path="/create-inventory" element={
                 adminRole ?
                     <PrivateRoute>
