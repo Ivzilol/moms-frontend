@@ -143,6 +143,7 @@ function App() {
                         <HomePage/>
                     </PrivateRoute>
             }/>
+
             <Route element={
                 adminRole ?
                     <PrivateRoute>
@@ -153,7 +154,7 @@ function App() {
                         <HomePage/>
                     </PrivateRoute>
             }/>
-            
+
             <Route path="/orders-user" element={<OrdersUser/>}/>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/forgotten-password" element={<UserForgottenPassword/>}/>
