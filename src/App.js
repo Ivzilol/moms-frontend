@@ -58,6 +58,7 @@ function App() {
                                <HomePage/>
                            </PrivateRoute>
                    }/>
+
             <Route path="/edit-construction-site"
                    element={
                        adminRole ?
