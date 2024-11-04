@@ -140,7 +140,6 @@ function App() {
                         <HomePage/>
                     </PrivateRoute>
             }/>
-
             <Route element={
                 userRole ?
                     <PrivateRoute>
