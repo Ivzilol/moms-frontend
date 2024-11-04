@@ -151,7 +151,6 @@ function App() {
                         <HomePage/>
                     </PrivateRoute>
             }/>
-
             <Route element={
                 adminRole ?
                     <PrivateRoute>
