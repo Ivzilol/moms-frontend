@@ -33,7 +33,6 @@ function App() {
     const userRole = roles.length === 1 && roles.includes('USER');
 
     return (
-
         <Routes>
             <Route path="/"
                    element={
