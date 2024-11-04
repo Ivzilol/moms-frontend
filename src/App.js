@@ -96,7 +96,6 @@ function App() {
                         <HomePage/>
                     </PrivateRoute>
             }/>
-
             <Route path="/order-details/:orderNumber" element={
                 hasValidRole ?
                     <PrivateRoute>
