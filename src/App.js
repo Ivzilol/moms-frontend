@@ -118,7 +118,6 @@ function App() {
                         <HomePage/>
                     </PrivateRoute>
             }/>
-
             <Route path="/order-details-user/:number" element={
                 hasUserSuperadminRole ?
                     <PrivateRoute>
