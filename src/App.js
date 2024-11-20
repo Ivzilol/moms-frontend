@@ -156,7 +156,6 @@ function App() {
             <Route path="/create-new-password" element={<UserCreateNewPassword/>}/>
             <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
-
     );
 }
 
