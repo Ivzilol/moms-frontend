@@ -12,7 +12,6 @@ const buildOptions = (data, requestType, token) => {
         };
     } 
 
-    // const token = localStorage.getItem(tokenName);
 
     if (token) {
         options.headers = {
