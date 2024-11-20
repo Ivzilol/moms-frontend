@@ -25,7 +25,6 @@ function App() {
     const user = useUser([]);
     const roles = useRolesFromJWT(user);
 
-
     const hasValidRole = ['SUPERADMIN', 'ADMIN', 'USER'].some(role => roles.includes(role));
     const hasAdminSuperadminRole = ['SUPERADMIN', 'ADMIN'].some(role => roles.includes(role));
     const hasUserSuperadminRole = ['SUPERADMIN', 'USER'].some(role => roles.includes(role));
